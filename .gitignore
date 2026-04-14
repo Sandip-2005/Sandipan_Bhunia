@@ -2,6 +2,7 @@
 .DS_Store
 .env
 .env.backup
+.env.local
 .env.production
 .phpactor.json
 .phpunit.result.cache
@@ -23,14 +24,8 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 
-# Deployment and build files
-deployment-package/
-*.zip
-/tests
-package.json
-package-lock.json
-vite.config.js
-phpunit.xml
+# Render deployment
+.env.render
 
 # Cache and temporary files
 /storage/framework/cache/data/*
@@ -38,8 +33,19 @@ phpunit.xml
 /storage/framework/views/*.php
 /storage/logs/*.log
 
-# Development files
-.editorconfig
-DEPLOYMENT_GUIDE.md
-GITHUB_DEPLOYMENT_GUIDE.md
+# Development database
+/database/database.sqlite
+
+# Docker development
+docker-compose.override.yml
+
+# Deployment packages (no longer needed)
+deployment-package/
+*.zip
+
+# InfinityFree files (removed)
+deploy.php
 prepare-deployment.*
+initial-setup.php
+find-path.php
+generate-key.php

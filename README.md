@@ -1,6 +1,6 @@
 # 🚀 Sandipan Bhunia - Portfolio Website
 
-A modern, responsive portfolio website built with Laravel 11, featuring a dark/light theme toggle, admin panel, and auto-deployment capabilities.
+A modern, responsive portfolio website built with Laravel 11, featuring a dark/light theme toggle, admin panel, and deployed on Render with Docker.
 
 ## ✨ Features
 
@@ -10,14 +10,15 @@ A modern, responsive portfolio website built with Laravel 11, featuring a dark/l
 - **🔐 Admin Panel**: Secret admin gateway for content management
 - **📊 Analytics**: Website visit tracking and statistics
 - **🖼️ Media Management**: Profile photo and project image uploads
-- **🚀 Auto-Deploy**: GitHub webhook integration for InfinityFree
+- **🐳 Docker Ready**: Containerized for consistent deployment
+- **🚀 Auto-Deploy**: Render integration for seamless deployments
 
 ## 🛠️ Tech Stack
 
 - **Backend**: Laravel 11, PHP 8.2+
 - **Frontend**: Bootstrap 5, Tailwind CSS (CDN), Vanilla JavaScript
-- **Database**: MySQL (SQLite for local development)
-- **Hosting**: InfinityFree (Free hosting with auto-deployment)
+- **Database**: MySQL/PostgreSQL (Render managed)
+- **Deployment**: Render.com with Docker
 - **Version Control**: Git & GitHub
 
 ## 📋 Content Management
@@ -48,12 +49,20 @@ A modern, responsive portfolio website built with Laravel 11, featuring a dark/l
 
 ## 🚀 Quick Start
 
-### Local Development
+### Local Development with Docker
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
+git clone https://github.com/Sandip-2005/Sandipan_Bhunia.git
+cd Sandipan_Bhunia
 
+# Start with Docker Compose
+docker-compose up --build
+
+# Visit: http://localhost:8000
+```
+
+### Traditional Laravel Setup
+```bash
 # Install dependencies
 composer install
 
@@ -76,37 +85,33 @@ php artisan serve
 
 ## 🌐 Deployment
 
-### Option 1: Manual Deployment
-```bash
-# Prepare deployment package
-./prepare-deployment.sh  # Linux/Mac
-# or
-prepare-deployment.bat   # Windows
+### Render Deployment (Recommended)
+This portfolio is optimized for Render deployment with automatic GitHub integration.
 
-# Upload the deployment-package/ contents to InfinityFree
-```
+**📖 Complete Guide**: See [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)
 
-### Option 2: Auto-Deployment (Recommended)
-Set up GitHub webhook for automatic deployment on every push.
+**Quick Deploy**:
+1. Fork this repository
+2. Sign up at [Render.com](https://render.com)
+3. Connect your GitHub repository
+4. Deploy with one click! 🚀
 
-**📖 Complete Guide**: See [GITHUB_DEPLOYMENT_GUIDE.md](GITHUB_DEPLOYMENT_GUIDE.md)
+**Live Demo**: [https://sandipan-portfolio.onrender.com](https://sandipan-portfolio.onrender.com)
 
 ## 📁 Project Structure
 
 ```
 portfolio/
 ├── app/                    # Laravel application logic
-│   ├── Http/Controllers/   # Controllers for web routes
-│   ├── Models/            # Eloquent models
-│   └── Services/          # Business logic services
-├── database/              # Migrations and seeders
-├── public/                # Public assets and uploads
-├── resources/             # Views, CSS, and JS
-│   └── views/            # Blade templates
-├── routes/                # Route definitions
-├── .htaccess             # Server configuration
-├── deploy.php            # Auto-deployment script
-└── README.md             # This file
+├── database/               # Migrations and seeders
+├── docker/                 # Docker configuration
+├── public/                 # Public assets and uploads
+├── resources/              # Views, CSS, and JS
+├── routes/                 # Route definitions
+├── Dockerfile              # Docker container configuration
+├── docker-compose.yml      # Local development setup
+├── render.yaml             # Render deployment config
+└── README.md               # This file
 ```
 
 ## 🔐 Admin Features
@@ -152,10 +157,23 @@ Update via Admin Panel → Settings or directly in the database.
 - Optimized card layouts for small screens
 - Fast loading with CDN assets
 
+## 🐳 Docker Support
+
+### Local Development
+```bash
+docker-compose up --build
+```
+
+### Production Build
+```bash
+docker build -t portfolio .
+docker run -p 8000:80 portfolio
+```
+
 ## 🔧 Configuration
 
 ### Environment Variables
-Key settings in `.env`:
+Key settings for production:
 ```env
 APP_NAME="Your Portfolio Name"
 APP_URL=https://yourdomain.com
@@ -171,20 +189,6 @@ if ($request->username === 'your_username' && $request->password === 'your_passw
 }
 ```
 
-## 🐛 Troubleshooting
-
-### Common Issues
-1. **500 Error**: Check file permissions (`chmod -R 755 storage/`)
-2. **Database Connection**: Verify `.env` credentials
-3. **File Uploads**: Ensure upload directories exist and are writable
-4. **Admin Access**: Clear browser cache and check session configuration
-
-### Debug Mode
-For development, enable debug mode:
-```env
-APP_DEBUG=true
-```
-
 ## 📊 Performance
 
 ### Optimization Features
@@ -193,6 +197,7 @@ APP_DEBUG=true
 - CDN assets (Bootstrap, Tailwind, Font Awesome)
 - Image compression and validation
 - Efficient database queries
+- Docker multi-stage builds
 
 ### Caching Commands
 ```bash
@@ -200,6 +205,13 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 ```
+
+## 🚀 Deployment Workflow
+
+1. **Code locally** → Make changes
+2. **Test with Docker** → `docker-compose up`
+3. **Push to GitHub** → `git push origin main`
+4. **Auto-deploy** → Render builds and deploys automatically! 🎉
 
 ## 🤝 Contributing
 
@@ -219,7 +231,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - 📧 Email: sandipanbhunia18@gmail.com
 - 🐙 GitHub: [@Sandip-2005](https://github.com/Sandip-2005)
 - 💼 LinkedIn: [sandipan-bhunia](https://linkedin.com/in/sandipan-bhunia/)
-- 🌐 Portfolio: [Live Demo](https://yourdomain.infinityfreeapp.com)
+- 🌐 Portfolio: [Live Demo](https://sandipan-portfolio.onrender.com)
 
 ## 🎯 Roadmap
 
@@ -229,9 +241,10 @@ This project is open source and available under the [MIT License](LICENSE).
 - [ ] Advanced analytics dashboard
 - [ ] API endpoints for mobile app
 - [ ] Integration with GitHub API for automatic project sync
+- [ ] Progressive Web App (PWA) features
 
 ---
 
 ⭐ **Star this repository if you found it helpful!**
 
-🚀 **Ready to deploy?** Check out the [deployment guide](GITHUB_DEPLOYMENT_GUIDE.md) for step-by-step instructions.
+🚀 **Ready to deploy?** Check out the [Render deployment guide](RENDER_DEPLOYMENT.md) for step-by-step instructions.
