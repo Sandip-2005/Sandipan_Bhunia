@@ -18,13 +18,15 @@ Deploy your Laravel portfolio to Render with automatic GitHub integration and fr
 
 ## 🚀 Deployment Steps
 
-### Step 1: Push to GitHub
+### Step 1: Fix Build Script Permissions
 
-Make sure all your code is pushed to GitHub:
+First, make sure the build script has executable permissions:
 
 ```bash
+git update-index --chmod=+x build.sh
+git update-index --chmod=+x docker/startup.sh
 git add .
-git commit -m "Add Render deployment configuration"
+git commit -m "Fix script permissions for Render deployment"
 git push origin main
 ```
 
@@ -34,7 +36,18 @@ git push origin main
 2. **Sign up** with your GitHub account
 3. **Authorize** Render to access your repositories
 
-### Step 3: Create Web Service
+### Step 3: Create Database First
+
+1. **Click "New +"** → **"PostgreSQL"**
+2. **Configure**:
+   - **Name**: `portfolio-db`
+   - **Database**: `portfolio`
+   - **User**: `portfolio_user`
+   - **Region**: `Oregon (US West)`
+   - **Plan**: `Free`
+3. **Wait for database** to be created (2-3 minutes)
+
+### Step 4: Create Web Service
 
 1. **Click "New +"** → **"Web Service"**
 2. **Connect your repository**: `Sandip-2005/Sandipan_Bhunia`
@@ -43,23 +56,13 @@ git push origin main
    - **Region**: `Oregon (US West)`
    - **Branch**: `main`
    - **Runtime**: `Docker`
-   - **Build Command**: `./build.sh`
-   - **Start Command**: `apache2-foreground`
-
-### Step 4: Create Database
-
-1. **Click "New +"** → **"PostgreSQL"** (or MySQL)
-2. **Configure**:
-   - **Name**: `portfolio-db`
-   - **Database**: `portfolio`
-   - **User**: `portfolio_user`
-   - **Region**: `Oregon (US West)`
-   - **Plan**: `Free`
+   - **Dockerfile Path**: `./Dockerfile`
 
 ### Step 5: Configure Environment Variables
 
 In your web service settings, add these environment variables:
 
+**Required Variables:**
 ```env
 APP_NAME=Sandipan Bhunia Portfolio
 APP_ENV=production
@@ -70,13 +73,15 @@ QUEUE_CONNECTION=database
 MAIL_MAILER=log
 ```
 
-**Database variables** (automatically set by Render):
-- `DB_CONNECTION=mysql` (or postgresql)
-- `DB_HOST` (from database)
-- `DB_PORT` (from database)
-- `DB_DATABASE` (from database)
-- `DB_USERNAME` (from database)
-- `DB_PASSWORD` (from database)
+**Database Variables** (get from your database dashboard):
+```env
+DB_CONNECTION=pgsql
+DB_HOST=[your-database-host]
+DB_PORT=5432
+DB_DATABASE=portfolio
+DB_USERNAME=portfolio_user
+DB_PASSWORD=[your-database-password]
+```
 
 ### Step 6: Deploy
 
@@ -129,19 +134,68 @@ git push origin main
 
 ## 🔧 Troubleshooting
 
-### Build Fails
-- Check `build.sh` permissions: `chmod +x build.sh`
-- Review build logs in Render dashboard
-- Ensure all dependencies in `composer.json`
+### Build Fails - Permission Denied
+
+**Problem**: `build.sh: Permission denied`
+
+**Solution**:
+```bash
+git update-index --chmod=+x build.sh
+git update-index --chmod=+x docker/startup.sh
+git add .
+git commit -m "Fix script permissions"
+git push origin main
+```
 
 ### Database Connection Issues
-- Verify database environment variables
-- Check database is in same region as web service
-- Review connection logs
 
-### File Permissions
-- Docker handles permissions automatically
-- Check `storage/` and `bootstrap/cache/` are writable
+**Problem**: `SQLSTATE[HY000] [2002] Connection refused`
+
+**Solutions**:
+1. **Check database is running** in Render dashboard
+2. **Verify environment variables** match database credentials
+3. **Ensure same region** for database and web service
+4. **Wait for database** to be fully provisioned (2-3 minutes)
+
+### Build Timeout
+
+**Problem**: Build takes too long and times out
+
+**Solution**:
+- **Free tier limitation** - builds can take 10-15 minutes
+- **Check build logs** for specific errors
+- **Retry deployment** if it times out
+
+### Application Key Missing
+
+**Problem**: `No application encryption key has been specified`
+
+**Solution**: The Dockerfile now generates the key automatically, but if you see this error:
+1. **Check environment variables** in Render dashboard
+2. **Redeploy** the service to regenerate the key
+
+### File Upload Issues
+
+**Problem**: Images not uploading in admin panel
+
+**Solution**:
+- **Check file permissions** in logs
+- **Verify uploads directory** exists
+- **Check file size limits** (Render has limits on free tier)
+
+### Slow Performance
+
+**Problem**: Site loads slowly or times out
+
+**Causes**:
+- **Free tier sleep** - services sleep after 15 minutes of inactivity
+- **Cold start** - first request after sleep takes 30-60 seconds
+- **Database connection** - initial connection can be slow
+
+**Solutions**:
+- **Upgrade to paid plan** for always-on service
+- **Use external monitoring** to keep service awake
+- **Optimize database queries** and caching
 
 ## 📈 Performance Optimization
 

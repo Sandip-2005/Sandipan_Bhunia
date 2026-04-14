@@ -7,12 +7,6 @@ services:
     dockerfilePath: ./Dockerfile
     region: oregon
     plan: free
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-    startCommand: apache2-foreground
     envVars:
       - key: APP_NAME
         value: "Sandipan Bhunia Portfolio"
@@ -34,7 +28,7 @@ services:
       - key: MAIL_MAILER
         value: log
       - key: DB_CONNECTION
-        value: mysql
+        value: pgsql
       - key: DB_HOST
         fromDatabase:
           name: portfolio-db

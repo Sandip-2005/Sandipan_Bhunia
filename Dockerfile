@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+    libpq-dev \
+    && docker-php-ext-install pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -24,6 +25,9 @@ COPY . /var/www/html
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Generate application key
+RUN php artisan key:generate --force
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
@@ -40,8 +44,16 @@ RUN mkdir -p /var/www/html/public/uploads/projects \
     && mkdir -p /var/www/html/public/uploads/profile \
     && chown -R www-data:www-data /var/www/html/public/uploads
 
+# Cache configurations for production
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
+
+# Make startup script executable
+RUN chmod +x /var/www/html/docker/startup.sh
+
 # Expose port 80
 EXPOSE 80
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Use startup script
+CMD ["/var/www/html/docker/startup.sh"]
