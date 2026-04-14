@@ -26,6 +26,9 @@ COPY . /var/www/html
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+# Create a temporary .env file for key generation
+RUN cp .env.example .env || echo "APP_KEY=" > .env
+
 # Generate application key
 RUN php artisan key:generate --force
 
@@ -43,11 +46,6 @@ RUN mkdir -p /var/www/html/public/uploads/projects \
     && mkdir -p /var/www/html/public/uploads/skills \
     && mkdir -p /var/www/html/public/uploads/profile \
     && chown -R www-data:www-data /var/www/html/public/uploads
-
-# Cache configurations for production
-RUN php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
 
 # Make startup script executable
 RUN chmod +x /var/www/html/docker/startup.sh

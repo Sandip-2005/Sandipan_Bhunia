@@ -2,6 +2,12 @@
 
 echo "🚀 Starting Sandipan Bhunia Portfolio..."
 
+# Generate application key if not set
+if [ -z "$APP_KEY" ]; then
+    echo "🔑 Generating application key..."
+    php artisan key:generate --force
+fi
+
 # Wait for database to be ready
 echo "⏳ Waiting for database connection..."
 until php artisan migrate:status > /dev/null 2>&1; do
@@ -21,6 +27,12 @@ if [ $(php artisan tinker --execute="echo App\Models\User::count();") -eq 0 ]; t
 else
     echo "✅ Database already seeded, skipping..."
 fi
+
+# Cache configurations for production
+echo "⚡ Caching configurations..."
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
 echo "🚀 Starting Apache server..."
 exec apache2-foreground
