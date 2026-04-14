@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+README.md
+DEPLOYMENT_GUIDE.md
+GITHUB_DEPLOYMENT_GUIDE.md
+AUTO_DEPLOYMENT_SETUP.md
+
+# Development files
+.env
+.env.example
+.env.production
+.env.render
+node_modules/
+npm-debug.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Laravel
+/vendor/
+/storage/logs/*.log
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*.php
+
+# Deployment packages
+deployment-package/
+prepare-deployment.*
+deploy.php
+
+# Tests
+/tests/
+phpunit.xml
+.phpunit.result.cache
