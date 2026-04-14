@@ -13,10 +13,10 @@
  */
 
 // Configuration
-$secret = 'your-webhook-secret-here'; // Change this to a secure random string
-$repo_path = '/home/vol4_1/infinityfree.com/if0_37516989/htdocs'; // Update with your actual path
+$secret = 'sandipan-portfolio-webhook-2024-secure'; // Change this to a secure random string
+$repo_path = '/home/vol4_1/infinityfree.com/if0_XXXXXXXX/htdocs'; // Update with your actual path
 $branch = 'main'; // or 'master' depending on your default branch
-$github_repo = 'https://github.com/Sandip-2005/Sandipan_Bhunia.git'; // Update with your repo
+$github_repo = 'https://github.com/Sandip-2005/Sandipan_Bhunia.git'; // Your repo URL
 
 // Security check
 $headers = getallheaders();
