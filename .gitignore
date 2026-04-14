@@ -22,3 +22,24 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Deployment and build files
+deployment-package/
+*.zip
+/tests
+package.json
+package-lock.json
+vite.config.js
+phpunit.xml
+
+# Cache and temporary files
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*.php
+/storage/logs/*.log
+
+# Development files
+.editorconfig
+DEPLOYMENT_GUIDE.md
+GITHUB_DEPLOYMENT_GUIDE.md
+prepare-deployment.*
