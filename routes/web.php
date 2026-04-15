@@ -73,6 +73,170 @@ Route::get('/debug', function () {
     }
 });
 
+// Cleanup route for removing duplicates - IMPROVED VERSION
+Route::get('/cleanup-duplicates', function () {
+    try {
+        $results = [
+            'projects' => [],
+            'skills' => [],
+            'qa_achievements' => [],
+            'upcoming_projects' => [],
+            'settings' => []
+        ];
+        
+        // Clean Projects - Keep the one with lowest ID (first created)
+        $projects = \App\Models\Project::all();
+        $projectGroups = $projects->groupBy('title');
+        $projectDuplicatesRemoved = 0;
+        
+        foreach ($projectGroups as $title => $group) {
+            if ($group->count() > 1) {
+                // Keep the first one (lowest ID), delete the rest
+                $keep = $group->sortBy('id')->first();
+                $duplicates = $group->reject(fn($item) => $item->id === $keep->id);
+                foreach ($duplicates as $duplicate) {
+                    $duplicate->delete();
+                    $projectDuplicatesRemoved++;
+                }
+            }
+        }
+        
+        $results['projects'] = [
+            'duplicates_found' => $projectGroups->filter(fn($group) => $group->count() > 1)->count(),
+            'duplicates_removed' => $projectDuplicatesRemoved,
+            'remaining' => \App\Models\Project::count()
+        ];
+        
+        // Clean Skills - Keep the one with lowest ID
+        $skills = \App\Models\Skill::all();
+        $skillGroups = $skills->groupBy(function($skill) {
+            return $skill->name . '|' . $skill->category; // Group by name AND category
+        });
+        $skillDuplicatesRemoved = 0;
+        
+        foreach ($skillGroups as $key => $group) {
+            if ($group->count() > 1) {
+                // Keep the first one (lowest ID), delete the rest
+                $keep = $group->sortBy('id')->first();
+                $duplicates = $group->reject(fn($item) => $item->id === $keep->id);
+                foreach ($duplicates as $duplicate) {
+                    $duplicate->delete();
+                    $skillDuplicatesRemoved++;
+                }
+            }
+        }
+        
+        $results['skills'] = [
+            'duplicates_found' => $skillGroups->filter(fn($group) => $group->count() > 1)->count(),
+            'duplicates_removed' => $skillDuplicatesRemoved,
+            'remaining' => \App\Models\Skill::count()
+        ];
+        
+        // Clean QA Achievements - Keep the one with lowest ID
+        $qaAchievements = \App\Models\QaAchievement::all();
+        $qaGroups = $qaAchievements->groupBy('title');
+        $qaDuplicatesRemoved = 0;
+        
+        foreach ($qaGroups as $title => $group) {
+            if ($group->count() > 1) {
+                // Keep the first one (lowest ID), delete the rest
+                $keep = $group->sortBy('id')->first();
+                $duplicates = $group->reject(fn($item) => $item->id === $keep->id);
+                foreach ($duplicates as $duplicate) {
+                    $duplicate->delete();
+                    $qaDuplicatesRemoved++;
+                }
+            }
+        }
+        
+        $results['qa_achievements'] = [
+            'duplicates_found' => $qaGroups->filter(fn($group) => $group->count() > 1)->count(),
+            'duplicates_removed' => $qaDuplicatesRemoved,
+            'remaining' => \App\Models\QaAchievement::count()
+        ];
+        
+        // Clean Upcoming Projects - Keep the one with lowest ID
+        $upcomingProjects = \App\Models\UpcomingProject::all();
+        $upcomingGroups = $upcomingProjects->groupBy('title');
+        $upcomingDuplicatesRemoved = 0;
+        
+        foreach ($upcomingGroups as $title => $group) {
+            if ($group->count() > 1) {
+                // Keep the first one (lowest ID), delete the rest
+                $keep = $group->sortBy('id')->first();
+                $duplicates = $group->reject(fn($item) => $item->id === $keep->id);
+                foreach ($duplicates as $duplicate) {
+                    $duplicate->delete();
+                    $upcomingDuplicatesRemoved++;
+                }
+            }
+        }
+        
+        $results['upcoming_projects'] = [
+            'duplicates_found' => $upcomingGroups->filter(fn($group) => $group->count() > 1)->count(),
+            'duplicates_removed' => $upcomingDuplicatesRemoved,
+            'remaining' => \App\Models\UpcomingProject::count()
+        ];
+        
+        // Clean Settings - Keep the latest one (highest updated_at)
+        $settings = \App\Models\Setting::all();
+        $settingGroups = $settings->groupBy('key');
+        $settingDuplicatesRemoved = 0;
+        
+        foreach ($settingGroups as $key => $group) {
+            if ($group->count() > 1) {
+                // Keep the latest one, delete the rest
+                $keep = $group->sortByDesc('updated_at')->first();
+                $duplicates = $group->reject(fn($item) => $item->id === $keep->id);
+                foreach ($duplicates as $duplicate) {
+                    $duplicate->delete();
+                    $settingDuplicatesRemoved++;
+                }
+            }
+        }
+        
+        $results['settings'] = [
+            'duplicates_found' => $settingGroups->filter(fn($group) => $group->count() > 1)->count(),
+            'duplicates_removed' => $settingDuplicatesRemoved,
+            'remaining' => \App\Models\Setting::count()
+        ];
+        
+        $totalRemoved = $projectDuplicatesRemoved + $skillDuplicatesRemoved + $qaDuplicatesRemoved + $upcomingDuplicatesRemoved + $settingDuplicatesRemoved;
+        
+        return response()->json([
+            'status' => 'SUCCESS',
+            'message' => "Cleanup completed! Removed {$totalRemoved} duplicate entries.",
+            'details' => $results,
+            'timestamp' => now()->toISOString()
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'ERROR',
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ], 500);
+    }
+});
+
+// Artisan command route for cleanup (can be called via URL)
+Route::get('/artisan/cleanup', function () {
+    try {
+        \Artisan::call('db:seed', ['--class' => 'PortfolioSeeder', '--force' => true]);
+        return response()->json([
+            'status' => 'SUCCESS',
+            'message' => 'Database reseeded successfully with duplicate prevention',
+            'output' => \Artisan::output()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'ERROR',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+});
+
 // Public Routes with error handling
 Route::get('/', function () {
     try {

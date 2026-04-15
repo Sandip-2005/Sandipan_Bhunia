@@ -63,11 +63,29 @@
             overflow-x: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.6;
+            padding-top: 80px; /* Add padding for fixed navbar */
         }
 
         body.dark-mode {
             background: var(--dark-bg);
             color: var(--text-light);
+        }
+
+        /* Fix main content positioning */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure sections don't overlap with navbar */
+        section {
+            scroll-margin-top: 100px; /* Offset for smooth scrolling */
+        }
+
+        /* Fix hero section height calculation */
+        #home {
+            min-height: calc(100vh - 80px);
+            padding-top: 2rem;
         }
 
         /* Enhanced Typography */
@@ -81,13 +99,36 @@
             letter-spacing: -0.05em;
         }
 
-        /* Light mode text colors */
-        body:not(.dark-mode) .text-white {
+        /* Hero title visibility improvements */
+        .hero-title {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             color: #ffffff !important;
         }
 
+        .hero-subtitle {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        /* Light mode text colors - IMPROVED VISIBILITY */
+        body:not(.dark-mode) .text-white {
+            color: #ffffff !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
         body:not(.dark-mode) .text-white-50 {
-            color: rgba(255, 255, 255, 0.7) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        body:not(.dark-mode) .display-5 {
+            color: #ffffff !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        body:not(.dark-mode) .lead {
+            color: rgba(255, 255, 255, 0.9) !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         /* Dark mode improvements */
@@ -173,6 +214,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 1rem 0;
+            height: 80px; /* Fixed navbar height */
         }
 
         .dark-mode .navbar-custom {
@@ -183,10 +225,64 @@
             background: rgba(255, 255, 255, 0.95) !important;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             padding: 0.5rem 0;
+            height: 70px; /* Slightly smaller when scrolled */
         }
 
         .dark-mode .navbar-scrolled {
             background: rgba(15, 15, 35, 0.95) !important;
+        }
+
+        /* Fix navbar text visibility on scroll - LIGHT MODE */
+        .navbar-scrolled .navbar-brand {
+            color: #1f2937 !important; /* Dark text on light background */
+        }
+
+        .navbar-scrolled .nav-link {
+            color: #374151 !important; /* Dark gray text on light background */
+        }
+
+        .navbar-scrolled .nav-link:hover {
+            color: #6366f1 !important; /* Primary color on hover */
+        }
+
+        /* Fix navbar text visibility on scroll - DARK MODE */
+        .dark-mode .navbar-scrolled .navbar-brand {
+            color: #ffffff !important; /* White text on dark background */
+        }
+
+        .dark-mode .navbar-scrolled .nav-link {
+            color: #e5e7eb !important; /* Light gray text on dark background */
+        }
+
+        .dark-mode .navbar-scrolled .nav-link:hover {
+            color: #a78bfa !important; /* Light purple on hover */
+        }
+
+        /* Ensure navbar brand is always visible */
+        .navbar-brand {
+            font-size: 1.5rem !important;
+            font-weight: 800 !important;
+            color: #ffffff !important;
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.3rem !important;
+            }
+            
+            body {
+                padding-top: 70px; /* Smaller padding on mobile */
+            }
+            
+            .navbar-custom {
+                height: 70px; /* Smaller navbar on mobile */
+                padding: 0.75rem 0;
+            }
+            
+            #home {
+                min-height: calc(100vh - 70px);
+                padding-top: 1rem;
+            }
         }
 
         /* Enhanced Mobile Navigation */
@@ -212,6 +308,15 @@
             box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
         }
 
+        /* Fix hamburger menu visibility on scroll */
+        .navbar-scrolled .navbar-toggler {
+            background: rgba(31, 41, 55, 0.1);
+        }
+
+        .dark-mode .navbar-scrolled .navbar-toggler {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         /* Hamburger Menu Animation */
         .hamburger-menu {
             width: 24px;
@@ -230,6 +335,16 @@
             border-radius: 2px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center;
+        }
+
+        /* Fix hamburger color on scroll - LIGHT MODE */
+        .navbar-scrolled .hamburger-menu span {
+            background: #1f2937; /* Dark hamburger on light background */
+        }
+
+        /* Fix hamburger color on scroll - DARK MODE */
+        .dark-mode .navbar-scrolled .hamburger-menu span {
+            background: #ffffff; /* White hamburger on dark background */
         }
 
         .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(1) {
@@ -390,6 +505,24 @@
             footer .contact-info .d-flex {
                 margin-bottom: 1rem;
             }
+
+            /* Navbar brand mobile fix */
+            .navbar-brand {
+                font-size: 1.4rem !important;
+                white-space: nowrap;
+                overflow: visible;
+            }
+
+            /* Mobile content spacing */
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -412,6 +545,74 @@
 
             .d-flex.flex-column.flex-sm-row {
                 flex-direction: column !important;
+            }
+
+            /* Mobile navbar brand fix */
+            .navbar-brand {
+                font-size: 1.2rem !important;
+                max-width: none !important;
+                flex: 1;
+            }
+
+            .navbar .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Ensure navbar content doesn't overflow */
+            .navbar-nav {
+                width: 100%;
+            }
+
+            .d-flex.align-items-center.order-lg-3 {
+                flex-shrink: 0;
+            }
+
+            /* Mobile section spacing */
+            section {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+            }
+
+            /* Mobile hero adjustments */
+            #home .col-lg-6:first-child {
+                margin-bottom: 2rem;
+            }
+
+            #home .col-lg-6:last-child {
+                margin-top: 1rem;
+            }
+
+            /* Mobile profile image */
+            #home img,
+            #home .bg-primary.rounded-circle {
+                width: 200px !important;
+                height: 200px !important;
+            }
+
+            #home .fa-code {
+                font-size: 4rem !important;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 375px) {
+            .hero-title {
+                font-size: 1.8rem !important;
+            }
+
+            .display-5 {
+                font-size: 1.5rem !important;
+            }
+
+            .navbar-brand {
+                font-size: 1.1rem !important;
+            }
+
+            #home img,
+            #home .bg-primary.rounded-circle {
+                width: 180px !important;
+                height: 180px !important;
             }
         }
 
@@ -542,6 +743,26 @@
         .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
+        }
+
+        /* Theme toggle on scroll - LIGHT MODE */
+        .navbar-scrolled .theme-toggle {
+            background: rgba(31, 41, 55, 0.1);
+            border-color: rgba(31, 41, 55, 0.2);
+        }
+
+        .navbar-scrolled .theme-toggle:hover {
+            background: rgba(31, 41, 55, 0.2);
+        }
+
+        /* Theme toggle on scroll - DARK MODE */
+        .dark-mode .navbar-scrolled .theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-mode .navbar-scrolled .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .theme-icon-light,
@@ -800,7 +1021,7 @@
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container">
             <a class="navbar-brand fw-bold text-white" href="#home">
-                <span style="color: var(--primary-color);">S</span>andipan
+                <span style="color: var(--primary-color);">S</span>andipan Bhunia
             </a>
             
             <div class="d-flex align-items-center order-lg-3">
@@ -950,8 +1171,8 @@
     
     <!-- Simple Custom JavaScript -->
     <script>
-        // Theme Toggle
-        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+        // Theme Toggle - Default to LIGHT mode
+        let isDarkMode = localStorage.getItem('darkMode') === 'true' || false; // Default to false (light mode)
         
         function toggleTheme() {
             isDarkMode = !isDarkMode;
@@ -967,28 +1188,39 @@
             }
         }
         
-        // Initialize theme
+        // Initialize theme - Start with LIGHT mode by default
+        if (localStorage.getItem('darkMode') === null) {
+            localStorage.setItem('darkMode', 'false');
+            isDarkMode = false;
+        }
         document.body.classList.toggle('dark-mode', isDarkMode);
         
-        // Navbar scroll effect
+        // Navbar scroll effect with proper height handling
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('mainNavbar');
             if (window.scrollY > 50) {
                 navbar.classList.add('navbar-scrolled');
+                // Adjust body padding when navbar height changes
+                document.body.style.paddingTop = window.innerWidth <= 576 ? '60px' : '70px';
             } else {
                 navbar.classList.remove('navbar-scrolled');
+                // Reset body padding to original navbar height
+                document.body.style.paddingTop = window.innerWidth <= 576 ? '70px' : '80px';
             }
         });
         
-        // Smooth scrolling
+        // Smooth scrolling with proper offset
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const navbarHeight = window.innerWidth <= 576 ? 70 : 80;
+                    const targetPosition = target.offsetTop - navbarHeight - 20; // Extra 20px spacing
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
