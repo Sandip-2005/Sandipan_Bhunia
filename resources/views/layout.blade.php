@@ -433,9 +433,9 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Enhanced navbar brand - ULTRA COMPACT & SUPER VISIBLE */
+        /* Enhanced navbar brand - SUPER VISIBLE & CONTRAST FIXED */
         .navbar-brand {
-            font-size: 1.1rem !important; /* Smaller but still visible */
+            font-size: 1.1rem !important;
             font-weight: 900 !important;
             color: #ffffff !important;
             transition: all 0.3s ease;
@@ -444,11 +444,11 @@
             align-items: center;
             gap: 0.2rem;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9); /* Extra strong shadow for visibility */
-            letter-spacing: 0.8px; /* Better letter spacing for readability */
-            text-transform: none; /* Ensure proper casing */
-            white-space: nowrap; /* Prevent text wrapping */
-            overflow: visible; /* Ensure text is not cut off */
-            max-width: none; /* Remove any width restrictions */
+            letter-spacing: 0.8px;
+            text-transform: none;
+            white-space: nowrap;
+            overflow: visible;
+            max-width: none;
         }
 
         .navbar-brand:hover {
@@ -456,27 +456,42 @@
             color: #ffffff !important;
         }
 
+        /* CRITICAL: Fixed scrolled navbar brand visibility */
         .navbar-scrolled .navbar-brand {
-            color: #1f2937 !important;
-            font-size: 1rem !important; /* Slightly smaller when scrolled */
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9); /* Strong light shadow on light background */
+            color: #1f2937 !important; /* Dark text on light background */
+            font-size: 1rem !important;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9), 
+                         -1px -1px 2px rgba(0, 0, 0, 0.3); /* Multiple shadows for contrast */
             font-weight: 900 !important;
+            background: none !important;
         }
 
+        /* CRITICAL: Dark mode scrolled navbar brand */
         .dark-mode .navbar-scrolled .navbar-brand {
-            color: #ffffff !important;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9); /* Strong dark shadow on dark background */
+            color: #ffffff !important; /* White text on dark background */
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9),
+                         -1px -1px 2px rgba(255, 255, 255, 0.1);
         }
 
         /* Mobile navbar brand - ENSURE VISIBILITY */
         @media (max-width: 768px) {
             .navbar-brand {
-                font-size: 1rem !important; /* Smaller but readable on mobile */
+                font-size: 1rem !important;
                 letter-spacing: 0.5px;
+                text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9),
+                             -1px -1px 2px rgba(255, 255, 255, 0.2);
             }
             
             .navbar-scrolled .navbar-brand {
                 font-size: 0.95rem !important;
+                color: #1f2937 !important;
+                text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9),
+                             -1px -1px 2px rgba(0, 0, 0, 0.5);
+            }
+            
+            .dark-mode .navbar-scrolled .navbar-brand {
+                color: #ffffff !important;
+                text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
             }
         }
 
@@ -659,24 +674,50 @@
             background: #ffffff;
         }
 
-        /* Hamburger Animation States */
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(1) {
+        /* Hamburger Animation States - FIXED */
+        .navbar-toggler.collapsed .hamburger-menu span:nth-child(1) {
+            transform: rotate(0deg) translate(0px, 0px);
+            background: #ffffff;
+        }
+
+        .navbar-toggler.collapsed .hamburger-menu span:nth-child(2) {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            background: #ffffff;
+        }
+
+        .navbar-toggler.collapsed .hamburger-menu span:nth-child(3) {
+            transform: rotate(0deg) translate(0px, 0px);
+            background: #ffffff;
+        }
+
+        .navbar-toggler:not(.collapsed) .hamburger-menu span:nth-child(1) {
             transform: rotate(45deg) translate(7px, 7px);
             background: #ef4444;
         }
 
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(2) {
+        .navbar-toggler:not(.collapsed) .hamburger-menu span:nth-child(2) {
             opacity: 0;
             transform: scale(0) rotate(180deg);
         }
 
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(3) {
+        .navbar-toggler:not(.collapsed) .hamburger-menu span:nth-child(3) {
             transform: rotate(-45deg) translate(7px, -7px);
             background: #ef4444;
         }
+
+        /* Fix hamburger color on scroll - LIGHT MODE */
+        .navbar-scrolled .hamburger-menu span {
+            background: #1f2937 !important; /* Dark hamburger on light background */
         }
 
-        .hamburger-menu span {
+        /* Fix hamburger color on scroll - DARK MODE */
+        .dark-mode .navbar-scrolled .hamburger-menu span {
+            background: #ffffff !important; /* White hamburger on dark background */
+        }
+
+        /* Ensure hamburger is visible in all states */
+        .navbar-toggler .hamburger-menu span {
             display: block;
             height: 3px;
             width: 100%;
@@ -684,29 +725,6 @@
             border-radius: 2px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center;
-        }
-
-        /* Fix hamburger color on scroll - LIGHT MODE */
-        .navbar-scrolled .hamburger-menu span {
-            background: #1f2937; /* Dark hamburger on light background */
-        }
-
-        /* Fix hamburger color on scroll - DARK MODE */
-        .dark-mode .navbar-scrolled .hamburger-menu span {
-            background: #ffffff; /* White hamburger on dark background */
-        }
-
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(2) {
-            opacity: 0;
-            transform: scale(0);
-        }
-
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         .navbar-nav .nav-link {
@@ -1651,7 +1669,7 @@
                 </div>
                 
                 <!-- Mobile Menu Button -->
-                <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-0 p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <div class="hamburger-menu">
                         <span></span>
                         <span></span>
@@ -1668,15 +1686,26 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#about">About</a>
                     </li>
+                    @if($projects->count() > 0)
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#projects">Projects</a>
                     </li>
+                    @endif
+                    @if($upcomingProjects->count() > 0)
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#upcoming">In the Lab</a>
+                    </li>
+                    @endif
+                    @if($skills->count() > 0)
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#skills">Skills</a>
                     </li>
+                    @endif
+                    @if($qaAchievements->count() > 0)
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#qa-toolkit">QA Toolkit</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#contact">Contact</a>
                     </li>
@@ -1825,6 +1854,28 @@
                 navbar.classList.remove('navbar-scrolled');
                 // Reset body padding to original navbar height
                 document.body.style.paddingTop = window.innerWidth <= 576 ? '70px' : '75px';
+            }
+        });
+
+        // Mobile menu toggle functionality - FIXED
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            
+            if (navbarToggler && navbarCollapse) {
+                navbarToggler.addEventListener('click', function() {
+                    // Toggle Bootstrap collapse
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                        toggle: true
+                    });
+                    
+                    // Toggle hamburger animation
+                    navbarToggler.classList.toggle('collapsed');
+                    
+                    // Update aria-expanded
+                    const isExpanded = navbarToggler.getAttribute('aria-expanded') === 'true';
+                    navbarToggler.setAttribute('aria-expanded', !isExpanded);
+                });
             }
         });
         

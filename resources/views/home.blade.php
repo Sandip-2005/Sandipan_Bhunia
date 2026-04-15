@@ -127,6 +127,7 @@
 </section>
 
 <!-- Projects Section -->
+@if($projects->count() > 0)
 <section id="projects" class="py-5 section-animate">
     <div class="container">
         <div class="text-center mb-5">
@@ -171,15 +172,19 @@
             @endforeach
         </div>
         
+        @if($allProjects->count() > $projects->count())
         <div class="text-center mt-5">
             <button onclick="showAllProjects()" class="btn-handmade">
                 <i class="fas fa-eye me-2"></i>View All Projects
             </button>
         </div>
+        @endif
     </div>
 </section>
+@endif
 
 <!-- In the Lab Section -->
+@if($upcomingProjects->count() > 0)
 <section id="upcoming" class="py-5">
     <div class="container">
         <div class="text-center mb-5">
@@ -226,8 +231,10 @@
         </div>
     </div>
 </section>
+@endif
 
 <!-- Skills Section -->
+@if($skills->count() > 0)
 <section id="skills" class="py-5">
     <div class="container">
         <div class="text-center mb-5">
@@ -262,8 +269,10 @@
         @endforeach
     </div>
 </section>
+@endif
 
 <!-- QA Toolkit Section -->
+@if($qaAchievements->count() > 0)
 <section id="qa-toolkit" class="py-5">
     <div class="container">
         <div class="text-center mb-5">
@@ -317,6 +326,7 @@
         </div>
     </div>
 </section>
+@endif
 
 <!-- Contact Section -->
 <section id="contact" class="py-5">
@@ -401,6 +411,11 @@
 <script>
 function showAllProjects() {
     const allProjects = @json($allProjects);
+    
+    if (allProjects.length === 0) {
+        alert('No projects available to display.');
+        return;
+    }
     
     let projectsHtml = '<div class="row g-4">';
     allProjects.forEach((project, index) => {
