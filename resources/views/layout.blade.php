@@ -77,10 +77,10 @@
             z-index: 1;
         }
 
-        /* Ensure sections don't overlap with navbar - REDUCED GAPS */
+        /* Ensure sections don't overlap with navbar - ULTRA COMPACT GAPS */
         section {
             scroll-margin-top: 90px; /* Reduced offset */
-            padding: 2rem 0; /* Reduced section padding */
+            padding: 1.5rem 0; /* Much smaller section padding */
         }
 
         /* Fix hero section height calculation - BETTER SPACING */
@@ -98,7 +98,7 @@
             }
             
             section {
-                padding: 1.5rem 0; /* Even smaller padding on mobile */
+                padding: 1rem 0; /* Much smaller padding on mobile */
             }
             
             #home {
@@ -107,7 +107,7 @@
             }
         }
 
-        /* Enhanced Typography with Better Visibility */
+        /* Enhanced Typography with Better Visibility - ULTRA COMPACT SIZES */
         h1, h2, h3, h4, h5, h6 {
             font-weight: 700;
             letter-spacing: -0.025em;
@@ -116,14 +116,19 @@
         .display-3 {
             font-weight: 800;
             letter-spacing: -0.05em;
+            font-size: 2rem !important; /* Much smaller hero title */
         }
 
-        /* Hero title visibility improvements - FIXED */
+        .display-5 {
+            font-size: 1.4rem !important; /* Much smaller section titles */
+        }
+
+        /* Hero title visibility improvements - ULTRA COMPACT */
         .hero-title {
             color: #ffffff !important;
             font-weight: 900 !important;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
-            /* Remove gradient text that causes visibility issues */
+            font-size: 2rem !important; /* Much smaller hero title */
         }
 
         .hero-title span {
@@ -136,9 +141,10 @@
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
             color: rgba(255, 255, 255, 0.95) !important;
             font-weight: 600 !important;
+            font-size: 0.95rem !important; /* Much smaller subtitle */
         }
 
-        /* Enhanced text visibility for all elements */
+        /* Enhanced text visibility for all elements - ULTRA COMPACT */
         body:not(.dark-mode) .text-white {
             color: #ffffff !important;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
@@ -154,30 +160,66 @@
             color: #ffffff !important;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
             font-weight: 800 !important;
+            font-size: 1.4rem !important; /* Much smaller section titles */
         }
 
         body:not(.dark-mode) .lead {
             color: rgba(255, 255, 255, 0.95) !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
             font-weight: 500;
+            font-size: 0.9rem !important; /* Much smaller lead text */
         }
 
-        /* Section headings enhancement - FIXED */
+        /* Section headings enhancement - ULTRA COMPACT */
         .section-title {
             color: #ffffff !important;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
-            /* Remove gradient text that causes visibility issues */
+            font-size: 1.4rem !important; /* Much smaller section titles */
         }
 
         /* Dark mode text improvements */
         .dark-mode .hero-title {
             color: #ffffff !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 2rem !important; /* Much smaller */
         }
 
         .dark-mode .hero-title span {
             color: var(--primary-color) !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Mobile typography adjustments - ULTRA COMPACT */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 1.6rem !important; /* Much smaller on mobile */
+            }
+            
+            .hero-subtitle {
+                font-size: 0.85rem !important; /* Much smaller on mobile */
+            }
+
+            .display-5, .section-title {
+                font-size: 1.2rem !important; /* Much smaller on mobile */
+            }
+
+            .lead {
+                font-size: 0.8rem !important; /* Much smaller on mobile */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.4rem !important; /* Even smaller on small mobile */
+            }
+
+            .hero-subtitle {
+                font-size: 0.8rem !important; /* Even smaller on small mobile */
+            }
+
+            .display-5, .section-title {
+                font-size: 1.1rem !important; /* Even smaller on small mobile */
+            }
         }
 
         /* Dark mode improvements */
@@ -289,17 +331,22 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Enhanced navbar brand - BETTER VISIBILITY */
+        /* Enhanced navbar brand - ULTRA COMPACT & SUPER VISIBLE */
         .navbar-brand {
-            font-size: 1.6rem !important; /* Slightly smaller */
+            font-size: 1.1rem !important; /* Smaller but still visible */
             font-weight: 900 !important;
             color: #ffffff !important;
             transition: all 0.3s ease;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Added shadow for visibility */
+            gap: 0.2rem;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9); /* Extra strong shadow for visibility */
+            letter-spacing: 0.8px; /* Better letter spacing for readability */
+            text-transform: none; /* Ensure proper casing */
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: visible; /* Ensure text is not cut off */
+            max-width: none; /* Remove any width restrictions */
         }
 
         .navbar-brand:hover {
@@ -309,13 +356,38 @@
 
         .navbar-scrolled .navbar-brand {
             color: #1f2937 !important;
-            font-size: 1.4rem !important;
-            text-shadow: none; /* Remove shadow on light background */
+            font-size: 1rem !important; /* Slightly smaller when scrolled */
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9); /* Strong light shadow on light background */
+            font-weight: 900 !important;
         }
 
         .dark-mode .navbar-scrolled .navbar-brand {
             color: #ffffff !important;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9); /* Strong dark shadow on dark background */
+        }
+
+        /* Mobile navbar brand - ENSURE VISIBILITY */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1rem !important; /* Smaller but readable on mobile */
+                letter-spacing: 0.5px;
+            }
+            
+            .navbar-scrolled .navbar-brand {
+                font-size: 0.95rem !important;
+            }
+        }
+
+        /* Extra small mobile - MINIMUM READABLE SIZE */
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 0.95rem !important;
+                letter-spacing: 0.3px;
+            }
+            
+            .navbar-scrolled .navbar-brand {
+                font-size: 0.9rem !important;
+            }
         }
 
         /* Navigation Links Enhancement */
@@ -714,17 +786,18 @@
             transform: translateY(0);
         }
 
-        /* Enhanced Card Hover Effects */
+        /* Enhanced Card Styles - ULTRA COMPACT SIZE */
         .handmade-card {
             background: var(--light-card-bg);
             backdrop-filter: var(--blur-effect);
             -webkit-backdrop-filter: var(--blur-effect);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
+            border-radius: 12px; /* Much smaller border radius */
             box-shadow: var(--shadow-light);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            padding: 1rem !important; /* Much smaller padding */
         }
 
         .dark-mode .handmade-card {
@@ -739,7 +812,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 2px; /* Thinner accent line */
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
             transform: scaleX(0);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -750,8 +823,8 @@
         }
 
         .handmade-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+            transform: translateY(-4px) scale(1.005); /* Much smaller hover effect */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
             border-color: rgba(255, 255, 255, 0.3);
         }
 
@@ -770,18 +843,69 @@
             left: 100%;
         }
 
-        /* Skills Progress */
+        /* Ultra compact card content */
+        .handmade-card h5 {
+            font-size: 0.95rem !important; /* Much smaller headings */
+            margin-bottom: 0.5rem !important;
+        }
+
+        .handmade-card h6 {
+            font-size: 0.85rem !important; /* Much smaller subheadings */
+            margin-bottom: 0.5rem !important;
+        }
+
+        .handmade-card p {
+            font-size: 0.8rem !important; /* Much smaller text */
+            margin-bottom: 0.5rem !important;
+            line-height: 1.4;
+        }
+
+        .handmade-card .badge {
+            font-size: 0.65rem !important; /* Much smaller badges */
+            padding: 0.2rem 0.4rem !important;
+        }
+
+        .handmade-card small {
+            font-size: 0.7rem !important; /* Much smaller small text */
+        }
+
+        /* Mobile card adjustments - ULTRA COMPACT */
+        @media (max-width: 768px) {
+            .handmade-card {
+                padding: 0.8rem !important; /* Even smaller padding on mobile */
+                border-radius: 10px;
+            }
+            
+            .handmade-card h5 {
+                font-size: 0.9rem !important;
+            }
+            
+            .handmade-card h6 {
+                font-size: 0.8rem !important;
+            }
+            
+            .handmade-card p {
+                font-size: 0.75rem !important;
+            }
+            
+            .handmade-card .badge {
+                font-size: 0.6rem !important;
+                padding: 0.15rem 0.3rem !important;
+            }
+        }
+
+        /* Skills Progress - COMPACT */
         .skill-progress {
-            height: 8px;
+            height: 6px; /* Thinner progress bar */
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
         }
 
         .skill-progress-bar {
             height: 100%;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 10px;
+            border-radius: 8px;
             transition: width 1s ease-in-out;
         }
 
@@ -806,8 +930,13 @@
             }
 
             .btn-handmade {
-                padding: 12px 24px;
-                font-size: 0.9rem;
+                padding: 8px 16px; /* Much smaller on mobile */
+                font-size: 0.8rem;
+            }
+
+            .btn-outline-light {
+                padding: 6px 14px; /* Much smaller on mobile */
+                font-size: 0.8rem;
             }
 
             .theme-toggle {
@@ -912,15 +1041,19 @@
                 margin-top: 1rem;
             }
 
-            /* Mobile profile image */
+            /* Mobile profile image - ULTRA COMPACT */
             #home img,
             #home .bg-primary.rounded-circle {
-                width: 200px !important;
-                height: 200px !important;
+                width: 160px !important;
+                height: 160px !important;
+            }
+
+            #home .profile-badge {
+                padding: 0.5rem !important;
             }
 
             #home .fa-code {
-                font-size: 4rem !important;
+                font-size: 1rem !important;
             }
         }
 
@@ -940,8 +1073,8 @@
 
             #home img,
             #home .bg-primary.rounded-circle {
-                width: 180px !important;
-                height: 180px !important;
+                width: 140px !important;
+                height: 140px !important;
             }
         }
 
@@ -1009,11 +1142,12 @@
             transform: translateY(-2px);
         }
 
-        /* Badge Enhancements */
+        /* Badge Enhancements - COMPACT */
         .badge {
             font-weight: 500;
-            padding: 0.5em 0.75em;
-            border-radius: 8px;
+            padding: 0.3em 0.6em; /* Smaller padding */
+            border-radius: 6px; /* Smaller border radius */
+            font-size: 0.7rem; /* Smaller font size */
         }
 
         .bg-primary {
@@ -1024,25 +1158,27 @@
             background: linear-gradient(135deg, #6b7280, #9ca3af) !important;
         }
 
-        /* Form Enhancements */
+        /* Form Enhancements - COMPACT */
         .form-control {
-            border-radius: 12px;
+            border-radius: 10px; /* Smaller border radius */
             border: 2px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
-            padding: 0.75rem 1rem;
+            padding: 0.6rem 0.8rem; /* Smaller padding */
             transition: all 0.3s ease;
+            font-size: 0.85rem; /* Smaller font size */
         }
 
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+            box-shadow: 0 0 0 0.15rem rgba(99, 102, 241, 0.25); /* Smaller focus ring */
             background: rgba(255, 255, 255, 0.15);
         }
 
         .form-label {
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem; /* Smaller margin */
+            font-size: 0.85rem; /* Smaller font size */
         }
 
         /* Accessibility Improvements */
@@ -1135,12 +1271,12 @@
             color: #fbbf24;
         }
 
-        /* Enhanced Button Styles */
+        /* Enhanced Button Styles - ULTRA COMPACT */
         .btn-handmade {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border: none;
-            border-radius: 16px;
-            padding: 14px 32px;
+            border-radius: 12px; /* Smaller border radius */
+            padding: 10px 24px; /* Smaller padding */
             color: white;
             font-weight: 600;
             text-decoration: none;
@@ -1150,7 +1286,8 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 3px 15px rgba(99, 102, 241, 0.3); /* Smaller shadow */
+            font-size: 0.85rem; /* Smaller font size */
         }
 
         .btn-handmade::before {
@@ -1169,23 +1306,24 @@
         }
 
         .btn-handmade:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px) scale(1.03); /* Smaller hover effect */
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
             color: white;
         }
 
         .btn-outline-light {
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 16px;
-            padding: 12px 28px;
+            border-radius: 12px; /* Smaller border radius */
+            padding: 8px 20px; /* Smaller padding */
             font-weight: 500;
             transition: all 0.3s ease;
+            font-size: 0.85rem; /* Smaller font size */
         }
 
         .btn-outline-light:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
+            transform: translateY(-1px); /* Smaller hover effect */
         }
 
         /* Footer hover effects */
@@ -1350,7 +1488,7 @@
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container">
             <a class="navbar-brand fw-bold text-white" href="#home">
-                <span style="color: var(--primary-color);">S</span>andipan Bhunia
+                <span style="color: var(--primary-color); font-weight: 900;">S</span><span style="font-weight: 900;">andipan Bhunia</span>
             </a>
             
             <div class="d-flex align-items-center order-lg-3">

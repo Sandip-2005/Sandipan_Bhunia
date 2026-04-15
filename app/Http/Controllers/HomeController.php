@@ -36,12 +36,16 @@ class HomeController extends Controller
                                               ->take(4)
                                               ->get();
 
-            // Get skills grouped by category
+            // Get skills grouped by category - PROPERLY SORTED BY ORDER
             $skills = Skill::where('is_active', true)
-                          ->orderBy('sort_order')
+                          ->orderBy('sort_order', 'asc')
+                          ->orderBy('id', 'asc')
                           ->get();
             
-            $skillsByCategory = $skills->groupBy('category');
+            // Group by category while maintaining sort order within each category
+            $skillsByCategory = $skills->groupBy('category')->map(function ($categorySkills) {
+                return $categorySkills->sortBy('sort_order');
+            });
 
             // Get featured QA achievements (max 6 for mobile)
             $qaAchievements = QaAchievement::where('is_active', true)

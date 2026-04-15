@@ -38,9 +38,9 @@
                             <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}" 
                                  alt="Sandipan Bhunia" 
                                  class="rounded-circle border border-primary shadow-lg profile-image"
-                                 style="width: 300px; height: 300px; object-fit: cover; border-width: 4px !important;">
-                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
-                                <i class="fas fa-code text-white fa-2x"></i>
+                                 style="width: 220px; height: 220px; object-fit: cover; border-width: 3px !important;">
+                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2 shadow profile-badge">
+                                <i class="fas fa-code text-white fa-lg"></i>
                             </div>
                         </div>
                         @else
@@ -49,9 +49,9 @@
                             <img src="{{ asset('images/default-avatar.svg') }}" 
                                  alt="Sandipan Bhunia - Full Stack Developer" 
                                  class="rounded-circle border border-primary shadow-lg profile-image"
-                                 style="width: 300px; height: 300px; object-fit: cover; border-width: 4px !important;">
-                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
-                                <i class="fas fa-code text-white fa-2x"></i>
+                                 style="width: 220px; height: 220px; object-fit: cover; border-width: 3px !important;">
+                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2 shadow profile-badge">
+                                <i class="fas fa-code text-white fa-lg"></i>
                             </div>
                         </div>
                         @endif
@@ -73,8 +73,8 @@
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="handmade-card p-4 h-100 text-center section-animate">
-                    <div class="mb-4">
-                        <i class="fas fa-graduation-cap fa-3x animate-bounce-in" style="color: var(--primary-color);"></i>
+                    <div class="mb-3">
+                        <i class="fas fa-graduation-cap fa-2x animate-bounce-in" style="color: var(--primary-color);"></i>
                     </div>
                     <h5 class="fw-bold text-white mb-3">Education</h5>
                     <p class="text-white-50 mb-3">Bachelor of Computer Application</p>
@@ -87,8 +87,8 @@
             
             <div class="col-md-4">
                 <div class="handmade-card p-4 h-100 text-center section-animate">
-                    <div class="mb-4">
-                        <i class="fas fa-code fa-3x text-success animate-bounce-in"></i>
+                    <div class="mb-3">
+                        <i class="fas fa-code fa-2x text-success animate-bounce-in"></i>
                     </div>
                     <h5 class="fw-bold text-white mb-3">Experience</h5>
                     <p class="text-white-50 mb-3">Full Stack Development</p>
@@ -98,8 +98,8 @@
             
             <div class="col-md-4">
                 <div class="handmade-card p-4 h-100 text-center section-animate">
-                    <div class="mb-4">
-                        <i class="fas fa-map-marker-alt fa-3x text-warning animate-bounce-in"></i>
+                    <div class="mb-3">
+                        <i class="fas fa-map-marker-alt fa-2x text-warning animate-bounce-in"></i>
                     </div>
                     <h5 class="fw-bold text-white mb-3">Location</h5>
                     <p class="text-white-50 mb-3">{{ $settings['location'] ?? 'Chaltatalya, Khejuri' }}</p>
@@ -227,12 +227,12 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="handmade-card p-4 text-center h-100">
                         @if($skill->icon)
-                        <div class="mb-3" style="font-size: 2.5rem;">{{ $skill->icon }}</div>
+                        <div class="mb-2" style="font-size: 1.8rem;">{{ $skill->icon }}</div>
                         @endif
-                        <h6 class="fw-bold text-white mb-3">{{ $skill->name }}</h6>
-                        <div class="mb-3">
+                        <h6 class="fw-bold text-white mb-2">{{ $skill->name }}</h6>
+                        <div class="mb-2">
                             @for($i = 1; $i <= 5; $i++)
-                                <i class="fas fa-star {{ $i <= $skill->proficiency_level ? 'text-warning' : 'text-muted' }}"></i>
+                                <i class="fas fa-star {{ $i <= $skill->proficiency_level ? 'text-warning' : 'text-muted' }}" style="font-size: 0.7rem;"></i>
                             @endfor
                         </div>
                         @if($skill->description)
@@ -260,7 +260,7 @@
             <div class="col-lg-4">
                 <div class="handmade-card p-4 h-100">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="me-3" style="font-size: 2rem;">{{ $achievement->tool_icon }}</div>
+                        <div class="me-3" style="font-size: 1.5rem;">{{ $achievement->tool_icon }}</div>
                         <div>
                             <h6 class="fw-bold text-white mb-1">{{ $achievement->title }}</h6>
                             <span class="badge {{ $achievement->achievement_type == 'bug_found' ? 'bg-danger' : ($achievement->achievement_type == 'automation_created' ? 'bg-info' : 'bg-success') }}">
@@ -315,9 +315,9 @@
                 <div class="handmade-card p-4">
                     <h5 class="fw-bold text-white mb-4">Contact Information</h5>
                     
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="me-4">
-                            <i class="fas fa-envelope fa-2x" style="color: var(--primary-color);"></i>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                            <i class="fas fa-envelope fa-lg" style="color: var(--primary-color);"></i>
                         </div>
                         <div>
                             <h6 class="text-white mb-1">Email</h6>
@@ -325,9 +325,9 @@
                         </div>
                     </div>
                     
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="me-4">
-                            <i class="fas fa-phone fa-2x text-success"></i>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                            <i class="fas fa-phone fa-lg text-success"></i>
                         </div>
                         <div>
                             <h6 class="text-white mb-1">Phone</h6>
@@ -336,8 +336,8 @@
                     </div>
                     
                     <div class="d-flex align-items-center">
-                        <div class="me-4">
-                            <i class="fas fa-map-marker-alt fa-2x text-warning"></i>
+                        <div class="me-3">
+                            <i class="fas fa-map-marker-alt fa-lg text-warning"></i>
                         </div>
                         <div>
                             <h6 class="text-white mb-1">Location</h6>
