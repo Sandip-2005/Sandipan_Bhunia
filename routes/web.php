@@ -17,6 +17,38 @@ Route::get('/health', function () {
     ]);
 });
 
+// Test route to check projects without distinct
+Route::get('/test-projects', function () {
+    try {
+        $projects = \App\Models\Project::where('is_active', true)
+                                      ->where('is_featured', true)
+                                      ->orderBy('sort_order')
+                                      ->orderBy('id')
+                                      ->take(4)
+                                      ->get();
+        
+        return response()->json([
+            'status' => 'OK',
+            'projects_count' => $projects->count(),
+            'projects' => $projects->map(function($project) {
+                return [
+                    'id' => $project->id,
+                    'title' => $project->title,
+                    'is_active' => $project->is_active,
+                    'is_featured' => $project->is_featured
+                ];
+            })
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'ERROR',
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ], 500);
+    }
+});
+
 // Debug route for troubleshooting
 Route::get('/debug', function () {
     try {

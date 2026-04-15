@@ -49,12 +49,15 @@ else
     echo "⚠️ Database seeding failed or already exists, continuing..."
 fi
 
-# Clear and cache configurations (with error handling)
-echo "⚡ Clearing and caching configurations..."
+# Clear ALL caches to ensure fresh deployment
+echo "🧹 Clearing all caches..."
+php artisan cache:clear || echo "⚠️ Cache clear failed, continuing..."
 php artisan config:clear || echo "⚠️ Config clear failed, continuing..."
 php artisan route:clear || echo "⚠️ Route clear failed, continuing..."
 php artisan view:clear || echo "⚠️ View clear failed, continuing..."
 
+# Cache configurations (with error handling)
+echo "⚡ Caching configurations..."
 php artisan config:cache || echo "⚠️ Config cache failed, continuing..."
 php artisan route:cache || echo "⚠️ Route cache failed, continuing..."
 php artisan view:cache || echo "⚠️ View cache failed, continuing..."
