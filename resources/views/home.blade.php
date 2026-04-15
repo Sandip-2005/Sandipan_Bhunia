@@ -372,7 +372,9 @@
                         </div>
                         <div>
                             <h6 class="text-white mb-1">Email</h6>
-                            <p class="text-white-50 mb-0">{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}</p>
+                            <a href="mailto:{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}" class="text-white-50 text-decoration-none" onclick="return confirmNavigation(event, 'Open your email app?')">
+                                <p class="text-white-50 mb-0">{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}</p>
+                            </a>
                         </div>
                     </div>
                     
@@ -382,7 +384,9 @@
                         </div>
                         <div>
                             <h6 class="text-white mb-1">Phone</h6>
-                            <p class="text-white-50 mb-0">{{ $settings['phone'] ?? '+91 8972966158' }}</p>
+                            <a href="tel:{{ $settings['phone'] ?? '+918972966158' }}" class="text-white-50 text-decoration-none" onclick="return confirmNavigation(event, 'Open dialer to call?')">
+                                <p class="text-white-50 mb-0">{{ $settings['phone'] ?? '+91 8972966158' }}</p>
+                            </a>
                         </div>
                     </div>
                     
@@ -392,7 +396,9 @@
                         </div>
                         <div>
                             <h6 class="text-white mb-1">Location</h6>
-                            <p class="text-white-50 mb-0">{{ $settings['location'] ?? 'Purba Medinipur, West Bengal' }}</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($settings['location'] ?? 'Purba Medinipur, West Bengal, India') }}" target="_blank" rel="noopener noreferrer" class="text-white-50 text-decoration-none" onclick="return confirmNavigation(event, 'Open location in maps?')">
+                                <p class="text-white-50 mb-0">{{ $settings['location'] ?? 'Purba Medinipur, West Bengal' }}</p>
+                            </a>
                         </div>
                     </div>
                 </div>

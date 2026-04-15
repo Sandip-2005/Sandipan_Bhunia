@@ -812,6 +812,96 @@
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
         }
 
+        .navbar-toggler {
+            border: none;
+            background: rgba(255,255,255,0.08);
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler:hover {
+            background: rgba(255,255,255,0.16);
+        }
+
+        .theme-toggle {
+            width: 54px;
+            height: 44px;
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.08);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.16);
+        }
+
+        .theme-toggle .fas {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            color: #fffffe;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-custom {
+                background: rgba(255,255,255,0.95) !important;
+                color: #111827;
+                border-bottom: 1px solid rgba(15,23,42,0.08);
+            }
+
+            .navbar-custom .container {
+                position: relative;
+            }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .theme-toggle,
+            .navbar-custom .navbar-toggler {
+                color: #111827 !important;
+            }
+
+            .navbar-brand {
+                font-size: 1rem !important;
+                letter-spacing: 0.2px;
+                z-index: 2;
+            }
+
+            .navbar-custom .brand-initial,
+            .navbar-custom .brand-name {
+                color: #111827 !important;
+                text-shadow: none;
+            }
+
+            .theme-toggle {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background: #f8fafc;
+                border-color: rgba(15,23,42,0.1);
+            }
+
+            .navbar-toggler {
+                background: #f8fafc;
+                border: 1px solid rgba(15,23,42,0.12);
+                margin-left: auto;
+            }
+
+            .navbar-custom .navbar-collapse {
+                display: none !important;
+            }
+        }
+
         /* Scrolled state brand spans - LIGHT MODE */
         .navbar-scrolled .navbar-brand .brand-initial {
             color: #6366f1 !important; /* Indigo - visible on white */
@@ -2348,15 +2438,21 @@
                     <div class="contact-info">
                         <div class="d-flex align-items-center mb-2">
                             <i class="fas fa-envelope text-primary me-2"></i>
-                            <small class="footer-text">{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}</small>
+                            <a href="mailto:{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}" class="footer-link text-decoration-none" onclick="return confirmNavigation(event, 'Open your email app?')">
+                                <small class="footer-text">{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}</small>
+                            </a>
                         </div>
                         <div class="d-flex align-items-center mb-2">
                             <i class="fas fa-phone text-primary me-2"></i>
-                            <small class="footer-text">{{ $settings['phone'] ?? '+91 8972966158' }}</small>
+                            <a href="tel:{{ $settings['phone'] ?? '+918972966158' }}" class="footer-link text-decoration-none" onclick="return confirmNavigation(event, 'Open dialer to call?')">
+                                <small class="footer-text">{{ $settings['phone'] ?? '+91 8972966158' }}</small>
+                            </a>
                         </div>
                         <div class="d-flex align-items-start mb-3">
                             <i class="fas fa-map-marker-alt text-primary me-2 mt-1"></i>
-                            <small class="footer-text">{{ $settings['location'] ?? 'Chaltatalya, Khejuri, Purba Medinipur, 721431, West Bengal, India' }}</small>
+                            <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($settings['location'] ?? 'Chaltatalya, Khejuri, Purba Medinipur, 721431, West Bengal, India') }}" target="_blank" rel="noopener noreferrer" class="footer-link text-decoration-none" onclick="return confirmNavigation(event, 'Open location in maps?')">
+                                <small class="footer-text">{{ $settings['location'] ?? 'Chaltatalya, Khejuri, Purba Medinipur, 721431, West Bengal, India' }}</small>
+                            </a>
                         </div>
                         
                         <!-- Education Badge -->
@@ -2581,28 +2677,48 @@
         
         window.addEventListener('scroll', animateOnScroll);
         
+        // Confirm external actions for email, phone, and location links
+        function confirmNavigation(event, message) {
+            if (!confirm(message)) {
+                event.preventDefault();
+                return false;
+            }
+            return true;
+        }
+
         // Contact form handler
         function handleContact(event) {
             event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            
+            const form = event.target;
+            const formData = new FormData(form);
+
             fetch('{{ route("contact") }}', {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-            .then(response => response.json())
+            .then(async response => {
+                const data = await response.json();
+                if (!response.ok) {
+                    const message = data.message || 'Please check your form and try again.';
+                    throw new Error(message);
+                }
+                return data;
+            })
             .then(data => {
                 if (data.success) {
                     alert('Message sent successfully! Thank you for reaching out.');
-                    event.target.reset();
+                    form.reset();
+                } else {
+                    throw new Error(data.message || 'Unable to send message.');
                 }
             })
             .catch(error => {
-                alert('Something went wrong! Please try again.');
+                alert(error.message || 'Something went wrong! Please try again.');
             });
         }
         
