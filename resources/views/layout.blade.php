@@ -294,7 +294,7 @@
         }
 
         /* ============================================
-           CV DOWNLOAD BUTTON
+           CV DOWNLOAD & VIEW BUTTONS
         ============================================ */
         .btn-cv-download {
             display: inline-flex;
@@ -317,13 +317,42 @@
             white-space: nowrap;
         }
 
+        .btn-cv-view {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 16px;
+            padding: 14px 28px;
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
         .btn-cv-download:hover {
             transform: translateY(-4px) scale(1.05);
             box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
             color: #ffffff;
         }
 
-        .btn-cv-download::before {
+        .btn-cv-view:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.5);
+            color: #ffffff;
+        }
+
+        .btn-cv-download::before,
+        .btn-cv-view::before {
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 100%; height: 100%;
@@ -331,7 +360,197 @@
             transition: left 0.5s ease;
         }
 
-        .btn-cv-download:hover::before { left: 100%; }
+        .btn-cv-download:hover::before,
+        .btn-cv-view:hover::before { 
+            left: 100%; 
+        }
+
+        /* CV Modal Styles */
+        .cv-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cv-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cv-modal-content {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 800px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cv-modal.active .cv-modal-content {
+            transform: scale(1);
+        }
+
+        .dark-mode .cv-modal-content {
+            background: #1f2937;
+            color: #ffffff;
+        }
+
+        .cv-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .dark-mode .cv-modal-header {
+            border-bottom-color: #374151;
+        }
+
+        .cv-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .dark-mode .cv-modal-title {
+            color: #ffffff;
+        }
+
+        .cv-modal-close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #ef4444;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .cv-modal-close:hover {
+            background: #dc2626;
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .cv-viewer {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .dark-mode .cv-viewer {
+            border-color: #374151;
+        }
+
+        .cv-modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cv-action-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cv-download-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+        }
+
+        .cv-download-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .cv-fullscreen-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: #ffffff;
+        }
+
+        .cv-fullscreen-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        /* Mobile CV buttons */
+        @media (max-width: 768px) {
+            .btn-cv-download,
+            .btn-cv-view {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                flex: 1;
+                margin-bottom: 0.5rem;
+            }
+
+            .d-flex.gap-2 {
+                flex-direction: column;
+                gap: 0.5rem !important;
+            }
+
+            .cv-modal-content {
+                margin: 1rem;
+                padding: 1.5rem;
+                max-width: calc(100vw - 2rem);
+            }
+
+            .cv-viewer {
+                height: 400px;
+            }
+
+            .cv-modal-actions {
+                flex-direction: column;
+            }
+
+            .cv-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .btn-cv-download,
+            .btn-cv-view {
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+        }
 
         .hero-subtitle {
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
@@ -734,20 +953,24 @@
             color: #a78bfa !important;
         }
 
-        /* Animated Menu Button - STYLISH & PROFESSIONAL */
+        /* SUPER ATTRACTIVE Mobile Menu Button - UNIQUE DESIGN */
         .navbar-toggler {
             border: none !important;
-            padding: 0.75rem;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.15);
+            padding: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .navbar-toggler::before {
@@ -757,8 +980,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.8s ease;
         }
 
         .navbar-toggler:hover::before {
@@ -766,27 +989,38 @@
         }
 
         .navbar-toggler:hover {
-            background: rgba(255, 255, 255, 0.25);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(236, 72, 153, 0.3));
             transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .navbar-toggler:focus {
-            box-shadow: 0 0 0 0.3rem rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 0 0.3rem rgba(99, 102, 241, 0.4);
         }
 
         .navbar-scrolled .navbar-toggler {
-            background: rgba(31, 41, 55, 0.1);
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.15), rgba(55, 65, 81, 0.15));
+            border-color: rgba(31, 41, 55, 0.3);
+        }
+
+        .navbar-scrolled .navbar-toggler:hover {
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.25), rgba(55, 65, 81, 0.25));
         }
 
         .dark-mode .navbar-scrolled .navbar-toggler {
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.15));
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Advanced Hamburger Animation */
+        .dark-mode .navbar-scrolled .navbar-toggler:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.25));
+        }
+
+        /* UNIQUE Hamburger Animation - MORPHING DESIGN */
         .hamburger-menu {
-            width: 28px;
-            height: 20px;
+            width: 32px;
+            height: 24px;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -803,22 +1037,48 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center;
             position: relative;
+            overflow: hidden;
         }
 
         .hamburger-menu span::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 0;
+            left: -100%;
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #6366f1, #ec4899);
+            background: linear-gradient(90deg, #6366f1, #ec4899, #06b6d4);
             border-radius: 3px;
-            transition: width 0.3s ease;
+            transition: left 0.6s ease;
         }
 
         .navbar-toggler:hover .hamburger-menu span::before {
+            left: 0;
+        }
+
+        /* Unique morphing animation */
+        .hamburger-menu span:nth-child(1) {
             width: 100%;
+        }
+        .hamburger-menu span:nth-child(2) {
+            width: 80%;
+            margin-left: auto;
+        }
+        .hamburger-menu span:nth-child(3) {
+            width: 60%;
+            margin-left: auto;
+        }
+
+        .navbar-toggler:hover .hamburger-menu span:nth-child(1) {
+            width: 60%;
+        }
+        .navbar-toggler:hover .hamburger-menu span:nth-child(2) {
+            width: 100%;
+            margin-left: 0;
+        }
+        .navbar-toggler:hover .hamburger-menu span:nth-child(3) {
+            width: 80%;
+            margin-left: 0;
         }
 
         .navbar-scrolled .hamburger-menu span {
@@ -829,35 +1089,35 @@
             background: #ffffff;
         }
 
-        /* Hamburger animation — driven by aria-expanded CSS attribute (no JS needed) */
-        .navbar-toggler .hamburger-menu span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 2px;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center;
-        }
-
-        /* OPEN state — toggler has aria-expanded="true" */
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
+        /* OPEN state animation - X formation */
+        .navbar-toggler.menu-open .hamburger-menu span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
             background: #ef4444;
+            width: 100%;
         }
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(2) {
+        .navbar-toggler.menu-open .hamburger-menu span:nth-child(2) {
             opacity: 0;
             transform: scaleX(0);
         }
-        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
+        .navbar-toggler.menu-open .hamburger-menu span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
             background: #ef4444;
+            width: 100%;
+            margin-left: 0;
         }
 
-        /* CLOSED state — default */
-        .navbar-toggler[aria-expanded="false"] .hamburger-menu span,
-        .navbar-toggler.collapsed .hamburger-menu span {
-            background: #ffffff;
+        /* Pulsing effect when menu is open */
+        .navbar-toggler.menu-open {
+            animation: menuPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes menuPulse {
+            0%, 100% { 
+                box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+            }
+            50% { 
+                box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+            }
         }
 
         .navbar-nav .nav-link {
@@ -873,39 +1133,187 @@
             transform: translateY(-2px);
         }
 
-        /* Mobile Menu Enhancements */
+        /* Enhanced Mobile Menu - FIXED FLASH ISSUE */
         @media (max-width: 991.98px) {
-            /* IMPORTANT: Do NOT add animation here — Bootstrap controls the
-               collapse transition via max-height/height internally.
-               Adding a CSS animation conflicts with Bootstrap's transition
-               and causes the menu to flash open then immediately hide. */
-            .navbar-collapse {
-                background: rgba(30, 20, 80, 0.97);
+            /* Hide navbar links in mobile, only show menu button */
+            .navbar-nav {
+                display: none;
+            }
+            
+            /* Mobile menu overlay - FULL SCREEN ATTRACTIVE MENU */
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 50%, rgba(51, 65, 85, 0.98) 100%);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
-                border-radius: 0 0 16px 16px;
-                padding: 0.5rem 0.5rem 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                border-top: none;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: scale(0.9);
+            }
+            
+            .mobile-menu-overlay.active {
+                opacity: 1;
+                visibility: visible;
+                transform: scale(1);
+            }
+            
+            .dark-mode .mobile-menu-overlay {
+                background: linear-gradient(135deg, rgba(5, 5, 20, 0.98) 0%, rgba(15, 15, 35, 0.98) 50%, rgba(25, 25, 45, 0.98) 100%);
+            }
+            
+            /* Mobile menu close button */
+            .mobile-menu-close {
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+                width: 50px;
+                height: 50px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #ffffff;
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 10000;
+            }
+            
+            .mobile-menu-close:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: rgba(255, 255, 255, 0.4);
+                transform: rotate(90deg) scale(1.1);
+            }
+            
+            /* Mobile menu navigation */
+            .mobile-nav-menu {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                padding: 2rem;
+                max-width: 300px;
                 width: 100%;
             }
-
-            .dark-mode .navbar-collapse {
-                background: rgba(10, 5, 40, 0.97);
-            }
-
-            .navbar-nav .nav-link {
-                margin: 0.2rem 0;
+            
+            .mobile-nav-link {
+                display: block;
+                width: 100%;
+                padding: 1.2rem 2rem;
+                color: #ffffff !important;
+                text-decoration: none;
                 text-align: center;
-                padding: 0.85rem 1rem !important;
-                color: #ffffff !important;
-                border-radius: 10px;
+                font-size: 1.1rem;
+                font-weight: 600;
+                background: rgba(255, 255, 255, 0.08);
+                border: 2px solid rgba(255, 255, 255, 0.15);
+                border-radius: 16px;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                overflow: hidden;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                transform: translateY(30px);
+                opacity: 0;
             }
-
-            .navbar-nav .nav-link:hover {
+            
+            .mobile-menu-overlay.active .mobile-nav-link {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            /* Staggered animation for menu items */
+            .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
+            .mobile-nav-link:nth-child(2) { transition-delay: 0.15s; }
+            .mobile-nav-link:nth-child(3) { transition-delay: 0.2s; }
+            .mobile-nav-link:nth-child(4) { transition-delay: 0.25s; }
+            .mobile-nav-link:nth-child(5) { transition-delay: 0.3s; }
+            .mobile-nav-link:nth-child(6) { transition-delay: 0.35s; }
+            .mobile-nav-link:nth-child(7) { transition-delay: 0.4s; }
+            
+            .mobile-nav-link::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                transition: left 0.6s ease;
+            }
+            
+            .mobile-nav-link:hover::before {
+                left: 100%;
+            }
+            
+            .mobile-nav-link:hover {
                 background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.3);
+                transform: translateY(-4px) scale(1.02);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
                 color: #ffffff !important;
+            }
+            
+            /* Mobile menu brand */
+            .mobile-menu-brand {
+                position: absolute;
+                top: 2rem;
+                left: 2rem;
+                font-size: 1.2rem;
+                font-weight: 900;
+                color: #ffffff;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            
+            .mobile-menu-brand .brand-initial {
+                color: #a78bfa;
+            }
+            
+            /* CV Download button in mobile menu */
+            .mobile-cv-download {
+                margin-top: 2rem;
+                padding: 1rem 2rem;
+                background: linear-gradient(135deg, #10b981, #059669);
+                border: none;
+                border-radius: 16px;
+                color: #ffffff;
+                font-weight: 600;
+                text-decoration: none;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            
+            .mobile-menu-overlay.active .mobile-cv-download {
+                transform: translateY(0);
+                opacity: 1;
+                transition-delay: 0.5s;
+            }
+            
+            .mobile-cv-download:hover {
+                transform: translateY(-4px) scale(1.05);
+                box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+                color: #ffffff;
+            }
+            
+            /* Hide desktop navbar collapse in mobile */
+            .navbar-collapse {
+                display: none !important;
             }
         }
 
@@ -1754,7 +2162,7 @@
                 </div>
                 
                 <!-- Mobile Menu Button -->
-                <button class="navbar-toggler border-0 p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler d-lg-none" type="button" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
                     <div class="hamburger-menu">
                         <span></span>
                         <span></span>
@@ -1763,7 +2171,8 @@
                 </button>
             </div>
             
-            <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+            <!-- Desktop Navigation -->
+            <div class="collapse navbar-collapse order-lg-2 d-none d-lg-block" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#home">Home</a>
@@ -1798,6 +2207,83 @@
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu-brand">
+            <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
+        </div>
+        
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <nav class="mobile-nav-menu">
+            <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-home me-2"></i>Home
+            </a>
+            <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-user me-2"></i>About
+            </a>
+            @if($projects->count() > 0)
+            <a href="#projects" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-code me-2"></i>Projects
+            </a>
+            @endif
+            @if($upcomingProjects->count() > 0)
+            <a href="#upcoming" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-flask me-2"></i>In the Lab
+            </a>
+            @endif
+            @if($skills->count() > 0)
+            <a href="#skills" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-cogs me-2"></i>Skills
+            </a>
+            @endif
+            @if($qaAchievements->count() > 0)
+            <a href="#qa-toolkit" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-bug me-2"></i>QA Toolkit
+            </a>
+            @endif
+            <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-envelope me-2"></i>Contact
+            </a>
+            
+            <!-- CV Download in Mobile Menu -->
+            @if(isset($publicCvs) && $publicCvs->count() > 0)
+                @foreach($publicCvs as $cv)
+                <a href="{{ $cv->download_url }}" class="mobile-cv-download" target="_blank" onclick="closeMobileMenu()">
+                    <i class="fas fa-download me-2"></i>{{ $cv->label }}
+                </a>
+                @endforeach
+            @endif
+        </nav>
+    </div>
+
+    <!-- CV Viewer Modal -->
+    <div class="cv-modal" id="cvModal">
+        <div class="cv-modal-content">
+            <div class="cv-modal-header">
+                <h3 class="cv-modal-title" id="cvModalTitle">CV Viewer</h3>
+                <button class="cv-modal-close" onclick="closeCVModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <iframe class="cv-viewer" id="cvViewer" src="" frameborder="0"></iframe>
+            
+            <div class="cv-modal-actions">
+                <a href="#" class="cv-action-btn cv-download-btn" id="cvDownloadBtn" target="_blank">
+                    <i class="fas fa-download"></i>
+                    Download CV
+                </a>
+                <button class="cv-action-btn cv-fullscreen-btn" onclick="openCVFullscreen()">
+                    <i class="fas fa-expand"></i>
+                    Open in New Tab
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main>
@@ -1936,19 +2422,106 @@
             }
         });
 
-        // Mobile menu: auto-close when a nav link is clicked on mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            var navbarCollapse = document.getElementById('navbarNav');
-            if (!navbarCollapse) return;
+        // Mobile Menu Functions - SMOOTH & PROFESSIONAL
+        let mobileMenuOpen = false;
+        
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const toggler = document.querySelector('.navbar-toggler');
+            
+            mobileMenuOpen = !mobileMenuOpen;
+            
+            if (mobileMenuOpen) {
+                overlay.classList.add('active');
+                toggler.classList.add('menu-open');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            } else {
+                overlay.classList.remove('active');
+                toggler.classList.remove('menu-open');
+                document.body.style.overflow = ''; // Restore scroll
+            }
+        }
+        
+        function closeMobileMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const toggler = document.querySelector('.navbar-toggler');
+            
+            mobileMenuOpen = false;
+            overlay.classList.remove('active');
+            toggler.classList.remove('menu-open');
+            document.body.style.overflow = '';
+        }
+        
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileMenuOpen) {
+                closeMobileMenu();
+            }
+        });
+        
+        // Close mobile menu when clicking outside (on overlay background)
+        document.getElementById('mobileMenuOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMobileMenu();
+            }
+        });
 
-            navbarCollapse.querySelectorAll('.nav-link').forEach(function(link) {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
-                        var bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                        if (bsCollapse) bsCollapse.hide();
-                    }
-                });
-            });
+        // CV Viewer Functions
+        let currentCVUrl = '';
+        
+        function viewCV(cvId, cvLabel, cvUrl) {
+            const modal = document.getElementById('cvModal');
+            const title = document.getElementById('cvModalTitle');
+            const viewer = document.getElementById('cvViewer');
+            const downloadBtn = document.getElementById('cvDownloadBtn');
+            
+            // Use the view route for inline viewing
+            const viewUrl = `/cv/view/${cvId}`;
+            currentCVUrl = viewUrl;
+            
+            title.textContent = cvLabel;
+            viewer.src = viewUrl;
+            downloadBtn.href = `/cv/download/${cvId}`;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeCVModal() {
+            const modal = document.getElementById('cvModal');
+            const viewer = document.getElementById('cvViewer');
+            
+            modal.classList.remove('active');
+            viewer.src = '';
+            document.body.style.overflow = '';
+        }
+        
+        function openCVFullscreen() {
+            if (currentCVUrl) {
+                window.open(currentCVUrl, '_blank');
+            }
+        }
+        
+        // Close CV modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('cvModal');
+                if (modal.classList.contains('active')) {
+                    closeCVModal();
+                }
+            }
+        });
+        
+        // Close CV modal when clicking outside
+        document.getElementById('cvModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCVModal();
+            }
+        });
+
+        // Mobile menu: auto-close when a nav link is clicked on mobile - REMOVED BOOTSTRAP DEPENDENCY
+        document.addEventListener('DOMContentLoaded', function() {
+            // No longer needed since we're using custom mobile menu
         });
         
         // Smooth scrolling with proper offset - COMPACT

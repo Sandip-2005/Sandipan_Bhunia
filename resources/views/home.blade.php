@@ -56,9 +56,14 @@
                         </a>
                         @if(isset($publicCvs) && $publicCvs->count() > 0)
                             @foreach($publicCvs as $cv)
-                            <a href="{{ $cv->download_url }}" class="btn-cv-download" target="_blank" title="{{ $cv->label }}">
-                                <i class="fas fa-download me-2"></i>{{ $cv->label }}
-                            </a>
+                            <div class="d-flex gap-2">
+                                <a href="{{ $cv->download_url }}" class="btn-cv-download" target="_blank" title="Download {{ $cv->label }}">
+                                    <i class="fas fa-download me-2"></i>{{ $cv->label }}
+                                </a>
+                                <button onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ route('cv.view', $cv->id) }}')" class="btn-cv-view" title="View {{ $cv->label }}">
+                                    <i class="fas fa-eye me-2"></i>View
+                                </button>
+                            </div>
                             @endforeach
                         @endif
                     </div>

@@ -253,12 +253,24 @@ Route::get('/', function () {
 
 Route::post('/contact', [HomeController::class, 'contact'])->name('contact');
 
-// Public CV download routes
+// Public CV routes - Enhanced with viewing capability
 Route::get('/cv/download', function () {
     $cv = \App\Models\Cv::where('is_public', true)->orderBy('sort_order')->orderBy('id', 'desc')->first();
     if (!$cv) { abort(404, 'CV not available.'); }
     return redirect()->route('cv.download.multi', $cv->id);
 })->name('cv.download');
+
+Route::get('/cv/view/{cv}', function (\App\Models\Cv $cv) {
+    if (!$cv->is_public) { abort(403, 'This CV is private.'); }
+    $filePath = public_path('uploads/cv/' . $cv->filename);
+    if (!file_exists($filePath)) { abort(404, 'CV file not found.'); }
+    
+    // Return the file for inline viewing
+    return response()->file($filePath, [
+        'Content-Type' => $cv->extension === 'pdf' ? 'application/pdf' : 'application/octet-stream',
+        'Content-Disposition' => 'inline; filename="' . $cv->original_name . '"'
+    ]);
+})->name('cv.view');
 
 Route::get('/cv/download/{cv}', function (\App\Models\Cv $cv) {
     if (!$cv->is_public) { abort(403, 'This CV is private.'); }
