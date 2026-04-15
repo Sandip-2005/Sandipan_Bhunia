@@ -902,10 +902,7 @@
             }
 
             .theme-toggle {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
+                margin-right: 0.5rem;
                 background: rgba(255,255,255,0.95);
                 border-color: rgba(15,23,42,0.1);
             }
@@ -931,90 +928,17 @@
             }
         }
 
-        /* Scrolled state brand spans - LIGHT MODE */
-        .navbar-scrolled .navbar-brand .brand-initial {
-            color: #6366f1 !important; /* Indigo - visible on white */
-            text-shadow: none !important;
-        }
-
-        .navbar-scrolled .navbar-brand .brand-name {
-            color: #312e81 !important; /* Deep indigo - visible on white */
-            text-shadow: none !important;
-        }
-
-        /* Scrolled state brand spans - DARK MODE */
-        .dark-mode .navbar-scrolled .navbar-brand .brand-initial {
-            color: #a78bfa !important;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
-        }
-
-        .dark-mode .navbar-scrolled .navbar-brand .brand-name {
-            color: #ffffff !important;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
-        }
-
-        /* CRITICAL: Fixed scrolled navbar brand visibility - LIGHT MODE */
-        .navbar-scrolled .navbar-brand {
-            color: #312e81 !important; /* Deep indigo - visible on white bg */
-            font-size: 1rem !important;
-            text-shadow: none !important;
-            font-weight: 900 !important;
-            background: none !important;
-        }
-
-        .navbar-scrolled .navbar-brand span {
-            color: #312e81 !important;
-            text-shadow: none !important;
-        }
-
-        .navbar-scrolled .navbar-brand span:first-child {
-            color: #6366f1 !important; /* Brighter indigo for the S */
-        }
-
-        /* CRITICAL: Dark mode scrolled navbar brand */
-        .dark-mode .navbar-scrolled .navbar-brand {
-            color: #ffffff !important;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
-        }
-
-        .dark-mode .navbar-scrolled .navbar-brand span {
-            color: #ffffff !important;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
-        }
-
-        .dark-mode .navbar-scrolled .navbar-brand span:first-child {
-            color: #a78bfa !important;
-        }
-
-        /* Mobile navbar brand - ENSURE VISIBILITY */
-        @media (max-width: 768px) {
-            .navbar-brand {
-                font-size: 1rem !important;
-                letter-spacing: 0.5px;
-                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+        /* Desktop scrolled toggler override */
+        @media (min-width: 992px) {
+            .navbar-custom:not(.navbar-scrolled) .navbar-toggler {
+                display: none !important;
             }
-            
-            .navbar-scrolled .navbar-brand {
-                font-size: 0.95rem !important;
-                color: #312e81 !important;
-                text-shadow: none !important;
+            .navbar-custom.navbar-scrolled .navbar-toggler {
+                display: flex !important;
+                margin-left: auto;
             }
-            
-            .dark-mode .navbar-scrolled .navbar-brand {
-                color: #ffffff !important;
-                text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
-            }
-        }
-
-        /* Extra small mobile - MINIMUM READABLE SIZE */
-        @media (max-width: 576px) {
-            .navbar-brand {
-                font-size: 0.95rem !important;
-                letter-spacing: 0.3px;
-            }
-            
-            .navbar-scrolled .navbar-brand {
-                font-size: 0.9rem !important;
+            .navbar-custom.navbar-scrolled .container {
+                justify-content: flex-end;
             }
         }
 
@@ -2281,15 +2205,15 @@
                 <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
             </a>
             
-            <div class="d-flex align-items-center order-lg-3">
+            <div class="d-flex align-items-center order-lg-3 gap-2">
                 <!-- Theme Toggle -->
-                <div class="theme-toggle me-3" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
                     <i class="fas fa-sun theme-icon-light"></i>
                     <i class="fas fa-moon theme-icon-dark"></i>
                 </div>
                 
-                <!-- Mobile Menu Button -->
-                <button class="navbar-toggler d-lg-none" type="button" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
+                <!-- Mobile Menu Button - Also used as scroll menu button -->
+                <button class="navbar-toggler" type="button" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
                     <div class="hamburger-menu">
                         <span></span>
                         <span></span>
@@ -2411,6 +2335,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" onclick="scrollToTop()" class="scroll-top-btn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
 
     <!-- Main Content -->
     <main>
@@ -2674,8 +2604,26 @@
             });
         });
         
-        // Advanced scroll animations
+        // Advanced scroll animations and navbar state
         function animateOnScroll() {
+            var navbar = document.querySelector('.navbar-custom');
+            var scrollTopBtn = document.getElementById('scrollTopBtn');
+            var scrollPosition = window.scrollY;
+
+            // Handle Navbar Scrolled State
+            if (scrollPosition > 50) {
+                if(navbar) navbar.classList.add('navbar-scrolled');
+            } else {
+                if(navbar) navbar.classList.remove('navbar-scrolled');
+            }
+            
+            // Handle Scroll Top Button visibility
+            if (scrollPosition > 300) {
+                if(scrollTopBtn) scrollTopBtn.classList.add('visible');
+            } else {
+                if(scrollTopBtn) scrollTopBtn.classList.remove('visible');
+            }
+
             const elements = document.querySelectorAll('.handmade-card, .section-animate');
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
@@ -2713,6 +2661,14 @@
         });
         
         window.addEventListener('scroll', animateOnScroll);
+        
+        // Scroll To Top Function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
         
         // Confirm external actions for email, phone, and location links
         function confirmNavigation(event, message) {
