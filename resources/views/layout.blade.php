@@ -855,19 +855,20 @@
 
         @media (max-width: 768px) {
             .navbar-custom {
-                background: rgba(255,255,255,0.95) !important;
-                color: #111827;
                 border-bottom: 1px solid rgba(15,23,42,0.08);
+            }
+
+            body:not(.dark-mode) .navbar-custom {
+                background: rgba(255,255,255,0.95) !important;
+            }
+
+            body.dark-mode .navbar-custom {
+                background: rgba(15,23,42,0.95) !important;
+                border-bottom: 1px solid rgba(255,255,255,0.12);
             }
 
             .navbar-custom .container {
                 position: relative;
-            }
-
-            .navbar-custom .navbar-brand,
-            .navbar-custom .theme-toggle,
-            .navbar-custom .navbar-toggler {
-                color: #111827 !important;
             }
 
             .navbar-brand {
@@ -876,10 +877,28 @@
                 z-index: 2;
             }
 
+            body:not(.dark-mode) .navbar-custom .navbar-brand,
+            body:not(.dark-mode) .navbar-custom .theme-toggle,
+            body:not(.dark-mode) .navbar-custom .navbar-toggler {
+                color: #111827 !important;
+            }
+
+            body.dark-mode .navbar-custom .navbar-brand,
+            body.dark-mode .navbar-custom .theme-toggle,
+            body.dark-mode .navbar-custom .navbar-toggler {
+                color: #f8fafc !important;
+            }
+
             .navbar-custom .brand-initial,
             .navbar-custom .brand-name {
                 color: #111827 !important;
                 text-shadow: none;
+            }
+
+            body.dark-mode .navbar-custom .brand-initial,
+            body.dark-mode .navbar-custom .brand-name {
+                color: #ffffff !important;
+                text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
             }
 
             .theme-toggle {
@@ -887,14 +906,24 @@
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%, -50%);
-                background: #f8fafc;
+                background: rgba(255,255,255,0.95);
                 border-color: rgba(15,23,42,0.1);
+            }
+
+            body.dark-mode .theme-toggle {
+                background: rgba(255,255,255,0.08);
+                border-color: rgba(255,255,255,0.15);
             }
 
             .navbar-toggler {
                 background: #f8fafc;
                 border: 1px solid rgba(15,23,42,0.12);
                 margin-left: auto;
+            }
+
+            body.dark-mode .navbar-toggler {
+                background: rgba(255,255,255,0.12);
+                border-color: rgba(255,255,255,0.18);
             }
 
             .navbar-custom .navbar-collapse {
@@ -1982,11 +2011,17 @@
         .theme-icon-dark {
             font-size: 14px;
             transition: all 0.4s ease;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
             z-index: 2;
         }
 
         .theme-icon-light {
             color: #fbbf24;
+            opacity: 1;
         }
 
         .theme-icon-dark {
@@ -2013,10 +2048,12 @@
 
         .dark-mode .theme-icon-light {
             color: #6b7280;
+            opacity: 0;
         }
 
         .dark-mode .theme-icon-dark {
             color: #fbbf24;
+            opacity: 1;
         }
 
         /* Enhanced Button Styles - ATTRACTIVE & PROFESSIONAL */
