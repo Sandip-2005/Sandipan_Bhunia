@@ -16,8 +16,12 @@ fi
 echo "📊 Environment Check:"
 echo "APP_ENV: $APP_ENV"
 echo "DB_CONNECTION: $DB_CONNECTION"
-echo "DB_HOST: $DB_HOST"
-echo "DB_DATABASE: $DB_DATABASE"
+if [ -n "$DATABASE_URL" ]; then
+    echo "DATABASE_URL: Set (using full URL)"
+else
+    echo "DB_HOST: $DB_HOST"
+    echo "DB_DATABASE: $DB_DATABASE"
+fi
 
 # Test database connection with proper error handling
 echo "⏳ Testing database connection..."
