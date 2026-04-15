@@ -14,19 +14,21 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            // Get featured projects (max 4 for mobile) - ensure unique
+            // Get featured projects (max 4 for mobile) - PostgreSQL compatible
             $projects = Project::where('is_active', true)
                               ->where('is_featured', true)
                               ->orderBy('sort_order')
-                              ->distinct()
+                              ->orderBy('id') // Add secondary sort for consistency
                               ->take(4)
-                              ->get();
+                              ->get()
+                              ->unique('title'); // Remove duplicates in PHP instead of SQL
 
-            // Get all projects for modal - ensure unique
+            // Get all projects for modal - PostgreSQL compatible
             $allProjects = Project::where('is_active', true)
                                  ->orderBy('sort_order')
-                                 ->distinct()
-                                 ->get();
+                                 ->orderBy('id')
+                                 ->get()
+                                 ->unique('title'); // Remove duplicates in PHP
 
             // Get upcoming projects (max 4 for mobile)
             $upcomingProjects = UpcomingProject::where('is_active', true)
