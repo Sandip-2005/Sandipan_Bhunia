@@ -20,33 +20,134 @@ Route::get('/health', function () {
 // Database cleanup route (temporary)
 Route::get('/cleanup-duplicates', function () {
     try {
+        $results = [];
+        
+        // Clean up duplicate projects
         $projects = \App\Models\Project::all();
-        $duplicates = $projects->groupBy('title')->filter(function ($group) {
+        $projectDuplicates = $projects->groupBy('title')->filter(function ($group) {
             return $group->count() > 1;
         });
         
-        $removed = 0;
-        foreach ($duplicates as $title => $group) {
+        $projectsRemoved = 0;
+        foreach ($projectDuplicates as $title => $group) {
             // Keep the first one, remove the rest
             $keep = $group->first();
             $toRemove = $group->skip(1);
             
             foreach ($toRemove as $duplicate) {
                 $duplicate->delete();
-                $removed++;
+                $projectsRemoved++;
             }
         }
+        $results['projects'] = [
+            'duplicates_found' => $projectDuplicates->count(),
+            'duplicates_removed' => $projectsRemoved,
+            'remaining' => \App\Models\Project::count()
+        ];
+        
+        // Clean up duplicate skills
+        $skills = \App\Models\Skill::all();
+        $skillDuplicates = $skills->groupBy('name')->filter(function ($group) {
+            return $group->count() > 1;
+        });
+        
+        $skillsRemoved = 0;
+        foreach ($skillDuplicates as $name => $group) {
+            $keep = $group->first();
+            $toRemove = $group->skip(1);
+            
+            foreach ($toRemove as $duplicate) {
+                $duplicate->delete();
+                $skillsRemoved++;
+            }
+        }
+        $results['skills'] = [
+            'duplicates_found' => $skillDuplicates->count(),
+            'duplicates_removed' => $skillsRemoved,
+            'remaining' => \App\Models\Skill::count()
+        ];
+        
+        // Clean up duplicate QA achievements
+        $qaAchievements = \App\Models\QaAchievement::all();
+        $qaDuplicates = $qaAchievements->groupBy('title')->filter(function ($group) {
+            return $group->count() > 1;
+        });
+        
+        $qaRemoved = 0;
+        foreach ($qaDuplicates as $title => $group) {
+            $keep = $group->first();
+            $toRemove = $group->skip(1);
+            
+            foreach ($toRemove as $duplicate) {
+                $duplicate->delete();
+                $qaRemoved++;
+            }
+        }
+        $results['qa_achievements'] = [
+            'duplicates_found' => $qaDuplicates->count(),
+            'duplicates_removed' => $qaRemoved,
+            'remaining' => \App\Models\QaAchievement::count()
+        ];
+        
+        // Clean up duplicate upcoming projects
+        $upcomingProjects = \App\Models\UpcomingProject::all();
+        $upcomingDuplicates = $upcomingProjects->groupBy('title')->filter(function ($group) {
+            return $group->count() > 1;
+        });
+        
+        $upcomingRemoved = 0;
+        foreach ($upcomingDuplicates as $title => $group) {
+            $keep = $group->first();
+            $toRemove = $group->skip(1);
+            
+            foreach ($toRemove as $duplicate) {
+                $duplicate->delete();
+                $upcomingRemoved++;
+            }
+        }
+        $results['upcoming_projects'] = [
+            'duplicates_found' => $upcomingDuplicates->count(),
+            'duplicates_removed' => $upcomingRemoved,
+            'remaining' => \App\Models\UpcomingProject::count()
+        ];
+        
+        // Clean up duplicate settings
+        $settings = \App\Models\Setting::all();
+        $settingDuplicates = $settings->groupBy('key')->filter(function ($group) {
+            return $group->count() > 1;
+        });
+        
+        $settingsRemoved = 0;
+        foreach ($settingDuplicates as $key => $group) {
+            $keep = $group->first();
+            $toRemove = $group->skip(1);
+            
+            foreach ($toRemove as $duplicate) {
+                $duplicate->delete();
+                $settingsRemoved++;
+            }
+        }
+        $results['settings'] = [
+            'duplicates_found' => $settingDuplicates->count(),
+            'duplicates_removed' => $settingsRemoved,
+            'remaining' => \App\Models\Setting::count()
+        ];
+        
+        $totalRemoved = $projectsRemoved + $skillsRemoved + $qaRemoved + $upcomingRemoved + $settingsRemoved;
         
         return response()->json([
-            'status' => 'OK',
-            'duplicates_found' => $duplicates->count(),
-            'duplicates_removed' => $removed,
-            'remaining_projects' => \App\Models\Project::count()
+            'status' => 'SUCCESS',
+            'message' => "Cleanup completed! Removed {$totalRemoved} duplicate entries.",
+            'details' => $results,
+            'timestamp' => now()
         ]);
+        
     } catch (\Exception $e) {
         return response()->json([
             'status' => 'ERROR',
-            'message' => $e->getMessage()
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
         ], 500);
     }
 });
