@@ -13,50 +13,59 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Get featured projects (max 4 for mobile)
-        $projects = Project::where('is_active', true)
-                          ->where('is_featured', true)
+        try {
+            // Get featured projects (max 4 for mobile)
+            $projects = Project::where('is_active', true)
+                              ->where('is_featured', true)
+                              ->orderBy('sort_order')
+                              ->take(4)
+                              ->get();
+
+            // Get all projects for modal
+            $allProjects = Project::where('is_active', true)
+                                 ->orderBy('sort_order')
+                                 ->get();
+
+            // Get upcoming projects (max 4 for mobile)
+            $upcomingProjects = UpcomingProject::where('is_active', true)
+                                              ->orderBy('expected_completion')
+                                              ->take(4)
+                                              ->get();
+
+            // Get skills grouped by category
+            $skills = Skill::where('is_active', true)
                           ->orderBy('sort_order')
-                          ->take(4)
                           ->get();
+            
+            $skillsByCategory = $skills->groupBy('category');
 
-        // Get all projects for modal
-        $allProjects = Project::where('is_active', true)
-                             ->orderBy('sort_order')
-                             ->get();
+            // Get featured QA achievements (max 6 for mobile)
+            $qaAchievements = QaAchievement::where('is_active', true)
+                                         ->where('is_featured', true)
+                                         ->orderBy('sort_order')
+                                         ->take(6)
+                                         ->get();
 
-        // Get upcoming projects (max 4 for mobile)
-        $upcomingProjects = UpcomingProject::where('is_active', true)
-                                          ->orderBy('expected_completion')
-                                          ->take(4)
-                                          ->get();
+            // Get settings
+            $settings = $this->getSettings();
 
-        // Get skills grouped by category
-        $skills = Skill::where('is_active', true)
-                      ->orderBy('sort_order')
-                      ->get();
-        
-        $skillsByCategory = $skills->groupBy('category');
-
-        // Get featured QA achievements (max 6 for mobile)
-        $qaAchievements = QaAchievement::where('is_active', true)
-                                     ->where('is_featured', true)
-                                     ->orderBy('sort_order')
-                                     ->take(6)
-                                     ->get();
-
-        // Get settings
-        $settings = $this->getSettings();
-
-        return view('home', compact(
-            'projects', 
-            'allProjects', 
-            'upcomingProjects', 
-            'skills', 
-            'skillsByCategory', 
-            'qaAchievements', 
-            'settings'
-        ));
+            return view('home', compact(
+                'projects', 
+                'allProjects', 
+                'upcomingProjects', 
+                'skills', 
+                'skillsByCategory', 
+                'qaAchievements', 
+                'settings'
+            ));
+        } catch (\Exception $e) {
+            // If database fails, return a simple error page or fallback
+            return response()->json([
+                'error' => 'Database connection failed',
+                'message' => $e->getMessage(),
+                'suggestion' => 'Please check the deployment logs and database configuration'
+            ], 500);
+        }
     }
 
     public function contact(Request $request)
@@ -79,8 +88,13 @@ class HomeController extends Controller
 
     private function getSettings()
     {
-        // Get all settings from database
-        $dbSettings = Setting::all()->pluck('value', 'key')->toArray();
+        try {
+            // Get all settings from database
+            $dbSettings = Setting::all()->pluck('value', 'key')->toArray();
+        } catch (\Exception $e) {
+            // If database fails, use empty array
+            $dbSettings = [];
+        }
         
         // Default settings
         $defaults = [

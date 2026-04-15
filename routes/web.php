@@ -8,21 +8,52 @@ use App\Http\Controllers\Admin\UpcomingProjectController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\QaAchievementController;
 
-// Debug route for troubleshooting
-Route::get('/debug', function () {
+// Simple health check route
+Route::get('/health', function () {
     return response()->json([
         'status' => 'OK',
-        'app_key' => env('APP_KEY') ? 'SET' : 'NOT SET',
-        'db_connection' => env('DB_CONNECTION'),
-        'db_host' => env('DB_HOST'),
-        'app_env' => env('APP_ENV'),
-        'laravel_version' => app()->version(),
-        'php_version' => PHP_VERSION,
+        'timestamp' => now(),
+        'message' => 'Application is running'
     ]);
 });
 
-// Public Routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Debug route for troubleshooting
+Route::get('/debug', function () {
+    try {
+        return response()->json([
+            'status' => 'OK',
+            'app_key' => env('APP_KEY') ? 'SET' : 'NOT SET',
+            'db_connection' => env('DB_CONNECTION'),
+            'database_url' => env('DATABASE_URL') ? 'SET' : 'NOT SET',
+            'app_env' => env('APP_ENV'),
+            'laravel_version' => app()->version(),
+            'php_version' => PHP_VERSION,
+            'storage_writable' => is_writable(storage_path()),
+            'cache_writable' => is_writable(storage_path('framework/cache')),
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'ERROR',
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ], 500);
+    }
+});
+
+// Public Routes with error handling
+Route::get('/', function () {
+    try {
+        return app(HomeController::class)->index();
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Application Error',
+            'message' => $e->getMessage(),
+            'debug_url' => url('/debug')
+        ], 500);
+    }
+})->name('home');
+
 Route::post('/contact', [HomeController::class, 'contact'])->name('contact');
 
 // Secret Admin Routes (hidden path)
