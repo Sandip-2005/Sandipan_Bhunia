@@ -8,6 +8,19 @@ use App\Http\Controllers\Admin\UpcomingProjectController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\QaAchievementController;
 
+// Debug route for troubleshooting
+Route::get('/debug', function () {
+    return response()->json([
+        'status' => 'OK',
+        'app_key' => env('APP_KEY') ? 'SET' : 'NOT SET',
+        'db_connection' => env('DB_CONNECTION'),
+        'db_host' => env('DB_HOST'),
+        'app_env' => env('APP_ENV'),
+        'laravel_version' => app()->version(),
+        'php_version' => PHP_VERSION,
+    ]);
+});
+
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/contact', [HomeController::class, 'contact'])->name('contact');

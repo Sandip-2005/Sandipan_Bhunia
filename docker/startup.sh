@@ -7,7 +7,17 @@ echo "🚀 Starting Sandipan Bhunia Portfolio..."
 if [ -z "$APP_KEY" ]; then
     echo "🔑 Generating application key..."
     php artisan key:generate --force
+    echo "✅ Application key generated"
+else
+    echo "✅ Application key already set"
 fi
+
+# Show current environment for debugging
+echo "📊 Environment Check:"
+echo "APP_ENV: $APP_ENV"
+echo "DB_CONNECTION: $DB_CONNECTION"
+echo "DB_HOST: $DB_HOST"
+echo "DB_DATABASE: $DB_DATABASE"
 
 # Test database connection with proper error handling
 echo "⏳ Testing database connection..."
@@ -35,11 +45,22 @@ else
     echo "⚠️ Database seeding failed or already exists, continuing..."
 fi
 
-# Cache configurations (with error handling)
-echo "⚡ Caching configurations..."
+# Clear and cache configurations (with error handling)
+echo "⚡ Clearing and caching configurations..."
+php artisan config:clear || echo "⚠️ Config clear failed, continuing..."
+php artisan route:clear || echo "⚠️ Route clear failed, continuing..."
+php artisan view:clear || echo "⚠️ View clear failed, continuing..."
+
 php artisan config:cache || echo "⚠️ Config cache failed, continuing..."
 php artisan route:cache || echo "⚠️ Route cache failed, continuing..."
 php artisan view:cache || echo "⚠️ View cache failed, continuing..."
+
+# Set proper permissions
+echo "🔒 Setting permissions..."
+chown -R www-data:www-data /var/www/html/storage
+chown -R www-data:www-data /var/www/html/bootstrap/cache
+chmod -R 775 /var/www/html/storage
+chmod -R 775 /var/www/html/bootstrap/cache
 
 echo "✅ Setup complete! Starting Apache..."
 exec apache2-foreground
