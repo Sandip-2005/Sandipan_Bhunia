@@ -23,9 +23,9 @@
         <div class="row align-items-center g-5">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="animate-fadeInUp">
-                    <h1 class="display-3 fw-bold text-white mb-4 hero-title section-title">
+                    <h1 class="display-3 fw-bold text-white mb-4 hero-title">
                         {{ $settings['hero_title'] ?? "Hi, I'm Sandipan" }}
-                        <span class="d-block animate-pulse-custom" style="color: var(--primary-color);">Bhunia</span>
+                        <span class="d-block animate-pulse-custom hero-name-span">Bhunia</span>
                     </h1>
                     <h2 class="h3 text-white-50 mb-4 hero-subtitle">
                         {{ $settings['hero_subtitle'] ?? 'Full Stack Developer & QA Engineer' }}

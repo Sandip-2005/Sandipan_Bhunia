@@ -184,8 +184,29 @@
             margin-bottom: 1.5rem !important;
         }
 
+        /* The "Bhunia" name span - eye-catching gradient */
+        .hero-name-span {
+            font-weight: 900 !important;
+            background: linear-gradient(135deg, #f093fb 0%, #ec4899 50%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            animation: gradientShift 3s ease-in-out infinite;
+            text-shadow: none; /* text-shadow doesn't work with gradient text */
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.5));
+        }
+
+        /* Fallback for browsers that don't support gradient text */
+        @supports not (-webkit-background-clip: text) {
+            .hero-name-span {
+                color: #f093fb !important;
+                -webkit-text-fill-color: unset;
+            }
+        }
+
         .hero-title span {
-            color: var(--primary-color) !important;
+            color: var(--secondary-color) !important;
             text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8);
             font-weight: 900 !important;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -198,12 +219,12 @@
 
         @keyframes gradientShift {
             0%, 100% { 
-                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                background: linear-gradient(135deg, #f093fb 0%, #ec4899 50%, #f5576c 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
             }
             50% { 
-                background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+                background: linear-gradient(135deg, #a78bfa 0%, #6366f1 50%, #ec4899 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
             }
@@ -442,8 +463,8 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.2rem;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9); /* Extra strong shadow for visibility */
+            gap: 0;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
             letter-spacing: 0.8px;
             text-transform: none;
             white-space: nowrap;
@@ -456,36 +477,68 @@
             color: #ffffff !important;
         }
 
-        /* CRITICAL: Fixed scrolled navbar brand visibility */
+        /* Brand name span classes */
+        .navbar-brand .brand-initial {
+            color: #a78bfa !important; /* Light purple - visible on dark/gradient navbar */
+            font-weight: 900;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        .navbar-brand .brand-name {
+            color: #ffffff !important;
+            font-weight: 900;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Scrolled state brand spans - LIGHT MODE */
+        .navbar-scrolled .navbar-brand .brand-initial {
+            color: #6366f1 !important; /* Indigo - visible on white */
+            text-shadow: none !important;
+        }
+
+        .navbar-scrolled .navbar-brand .brand-name {
+            color: #312e81 !important; /* Deep indigo - visible on white */
+            text-shadow: none !important;
+        }
+
+        /* Scrolled state brand spans - DARK MODE */
+        .dark-mode .navbar-scrolled .navbar-brand .brand-initial {
+            color: #a78bfa !important;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
+        }
+
+        .dark-mode .navbar-scrolled .navbar-brand .brand-name {
+            color: #ffffff !important;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
+        }
+
+        /* CRITICAL: Fixed scrolled navbar brand visibility - LIGHT MODE */
         .navbar-scrolled .navbar-brand {
-            color: #1f2937 !important; /* Dark text on light background */
+            color: #312e81 !important; /* Deep indigo - visible on white bg */
             font-size: 1rem !important;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9), 
-                         -1px -1px 2px rgba(0, 0, 0, 0.3) !important; /* Multiple shadows for contrast */
+            text-shadow: none !important;
             font-weight: 900 !important;
             background: none !important;
         }
 
         .navbar-scrolled .navbar-brand span {
-            color: #1f2937 !important;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9), 
-                         -1px -1px 2px rgba(0, 0, 0, 0.3) !important;
+            color: #312e81 !important;
+            text-shadow: none !important;
         }
 
         .navbar-scrolled .navbar-brand span:first-child {
-            color: #6366f1 !important;
+            color: #6366f1 !important; /* Brighter indigo for the S */
         }
 
         /* CRITICAL: Dark mode scrolled navbar brand */
         .dark-mode .navbar-scrolled .navbar-brand {
-            color: #ffffff !important; /* White text on dark background */
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9),
-                         -1px -1px 2px rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
         }
 
         .dark-mode .navbar-scrolled .navbar-brand span {
             color: #ffffff !important;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9) !important;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
         }
 
         .dark-mode .navbar-scrolled .navbar-brand span:first-child {
@@ -497,20 +550,18 @@
             .navbar-brand {
                 font-size: 1rem !important;
                 letter-spacing: 0.5px;
-                text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9),
-                             -1px -1px 2px rgba(255, 255, 255, 0.2);
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
             }
             
             .navbar-scrolled .navbar-brand {
                 font-size: 0.95rem !important;
-                color: #1f2937 !important;
-                text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9),
-                             -1px -1px 2px rgba(0, 0, 0, 0.5);
+                color: #312e81 !important;
+                text-shadow: none !important;
             }
             
             .dark-mode .navbar-scrolled .navbar-brand {
                 color: #ffffff !important;
-                text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+                text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8) !important;
             }
         }
 
@@ -744,23 +795,35 @@
         /* Mobile Menu Enhancements */
         @media (max-width: 991.98px) {
             .navbar-collapse {
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(30, 20, 80, 0.97);
                 backdrop-filter: var(--blur-effect);
+                -webkit-backdrop-filter: var(--blur-effect);
                 border-radius: 16px;
-                margin-top: 1rem;
+                margin-top: 0.75rem;
                 padding: 1rem;
                 border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
                 animation: slideDown 0.3s ease-out;
             }
 
             .dark-mode .navbar-collapse {
-                background: rgba(0, 0, 0, 0.3);
+                background: rgba(10, 5, 40, 0.97);
+            }
+
+            .navbar-scrolled .navbar-collapse {
+                background: rgba(30, 20, 80, 0.97);
             }
 
             .navbar-nav .nav-link {
                 margin: 0.25rem 0;
                 text-align: center;
-                padding: 1rem !important;
+                padding: 0.85rem 1rem !important;
+                color: #ffffff !important;
+            }
+
+            .navbar-nav .nav-link:hover {
+                background: rgba(255, 255, 255, 0.15);
+                color: #ffffff !important;
             }
 
             @keyframes slideDown {
@@ -1608,8 +1671,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#home" style="color: #ffffff !important;">
-                <span style="color: #6366f1; font-weight: 900; text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);">S</span><span style="font-weight: 900; color: #ffffff !important; text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);">andipan Bhunia</span>
+            <a class="navbar-brand fw-bold" href="#home">
+                <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
             </a>
             
             <div class="d-flex align-items-center order-lg-3">
@@ -1808,24 +1871,33 @@
             }
         });
 
-        // Mobile menu toggle functionality - FIXED
+        // Mobile menu toggle functionality
         document.addEventListener('DOMContentLoaded', function() {
             const navbarToggler = document.querySelector('.navbar-toggler');
-            const navbarCollapse = document.querySelector('.navbar-collapse');
-            
+            const navbarCollapse = document.getElementById('navbarNav');
+
             if (navbarToggler && navbarCollapse) {
-                navbarToggler.addEventListener('click', function() {
-                    // Toggle Bootstrap collapse
-                    const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-                        toggle: true
+                // Bootstrap handles toggle via data-bs-toggle on the button.
+                // We only hook into Bootstrap's events to sync the hamburger animation.
+
+                navbarCollapse.addEventListener('show.bs.collapse', function() {
+                    navbarToggler.classList.remove('collapsed');
+                    navbarToggler.setAttribute('aria-expanded', 'true');
+                });
+
+                navbarCollapse.addEventListener('hide.bs.collapse', function() {
+                    navbarToggler.classList.add('collapsed');
+                    navbarToggler.setAttribute('aria-expanded', 'false');
+                });
+
+                // Auto-close menu when any nav link is clicked on mobile
+                navbarCollapse.querySelectorAll('.nav-link').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                            var bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                            if (bsCollapse) bsCollapse.hide();
+                        }
                     });
-                    
-                    // Toggle hamburger animation
-                    navbarToggler.classList.toggle('collapsed');
-                    
-                    // Update aria-expanded
-                    const isExpanded = navbarToggler.getAttribute('aria-expanded') === 'true';
-                    navbarToggler.setAttribute('aria-expanded', !isExpanded);
                 });
             }
         });
