@@ -41,7 +41,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod +x /var/www/html/docker/startup.sh
 
 # Configure Apache
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Create uploads directories
