@@ -17,6 +17,40 @@ Route::get('/health', function () {
     ]);
 });
 
+// Database cleanup route (temporary)
+Route::get('/cleanup-duplicates', function () {
+    try {
+        $projects = \App\Models\Project::all();
+        $duplicates = $projects->groupBy('title')->filter(function ($group) {
+            return $group->count() > 1;
+        });
+        
+        $removed = 0;
+        foreach ($duplicates as $title => $group) {
+            // Keep the first one, remove the rest
+            $keep = $group->first();
+            $toRemove = $group->skip(1);
+            
+            foreach ($toRemove as $duplicate) {
+                $duplicate->delete();
+                $removed++;
+            }
+        }
+        
+        return response()->json([
+            'status' => 'OK',
+            'duplicates_found' => $duplicates->count(),
+            'duplicates_removed' => $removed,
+            'remaining_projects' => \App\Models\Project::count()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'ERROR',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+});
+
 // Debug route for troubleshooting
 Route::get('/debug', function () {
     try {

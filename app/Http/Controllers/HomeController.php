@@ -14,16 +14,18 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            // Get featured projects (max 4 for mobile)
+            // Get featured projects (max 4 for mobile) - ensure unique
             $projects = Project::where('is_active', true)
                               ->where('is_featured', true)
                               ->orderBy('sort_order')
+                              ->distinct()
                               ->take(4)
                               ->get();
 
-            // Get all projects for modal
+            // Get all projects for modal - ensure unique
             $allProjects = Project::where('is_active', true)
                                  ->orderBy('sort_order')
+                                 ->distinct()
                                  ->get();
 
             // Get upcoming projects (max 4 for mobile)

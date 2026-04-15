@@ -19,34 +19,34 @@
     <!-- Custom Styles -->
     <style>
         :root {
-            /* Light Mode Colors */
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #06b6d4;
+            /* Light Mode Colors - Professional & Attractive */
+            --primary-color: #2563eb;
+            --secondary-color: #7c3aed;
+            --accent-color: #059669;
             --success-color: #10b981;
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
             
-            /* Light Mode Backgrounds */
-            --light-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --light-card-bg: rgba(255, 255, 255, 0.15);
-            --light-navbar-bg: rgba(255, 255, 255, 0.1);
-            --light-footer-bg: #1f2937;
+            /* Light Mode Backgrounds - Warmer & More Inviting */
+            --light-bg: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 25%, #7c3aed 75%, #a855f7 100%);
+            --light-card-bg: rgba(255, 255, 255, 0.25);
+            --light-navbar-bg: rgba(255, 255, 255, 0.15);
+            --light-footer-bg: #1e293b;
             
             /* Dark Mode Backgrounds */
-            --dark-bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            --dark-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #312e81 75%, #1e1b4b 100%);
             --dark-card-bg: rgba(255, 255, 255, 0.08);
             --dark-navbar-bg: rgba(0, 0, 0, 0.3);
-            --dark-footer-bg: #0f0f0f;
+            --dark-footer-bg: #0f172a;
             
             /* Text Colors */
             --text-light: #f8fafc;
-            --text-muted-light: rgba(255, 255, 255, 0.8);
-            --text-muted-dark: #9ca3af;
+            --text-muted-light: rgba(255, 255, 255, 0.85);
+            --text-muted-dark: #94a3b8;
             
             /* Effects */
-            --shadow-light: 0 10px 40px rgba(0, 0, 0, 0.1);
-            --shadow-dark: 0 10px 40px rgba(0, 0, 0, 0.3);
+            --shadow-light: 0 10px 40px rgba(0, 0, 0, 0.15);
+            --shadow-dark: 0 10px 40px rgba(0, 0, 0, 0.4);
             --blur-effect: blur(20px);
         }
 
@@ -209,7 +209,7 @@
         }
 
         .navbar-toggler:focus {
-            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
         }
 
         /* Hamburger Menu Animation */
@@ -506,7 +506,7 @@
 
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
             background: rgba(255, 255, 255, 0.15);
         }
 
@@ -600,7 +600,7 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
         }
 
         .btn-handmade::before {
@@ -620,7 +620,7 @@
 
         .btn-handmade:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
             color: white;
         }
 
