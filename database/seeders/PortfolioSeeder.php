@@ -29,7 +29,7 @@ class PortfolioSeeder extends Seeder
                 ],
                 'is_featured' => true,
                 'is_active' => true,
-                'sort_order' => 1
+                'sort_order' => 2
             ]
         );
 
@@ -48,40 +48,40 @@ class PortfolioSeeder extends Seeder
                 ],
                 'is_featured' => true,
                 'is_active' => true,
-                'sort_order' => 2
+                'sort_order' => 1
             ]
         );
 
         // Create Upcoming Projects - Use updateOrCreate to prevent duplicates
-        UpcomingProject::updateOrCreate(
-            ['title' => 'Advanced E-Commerce Platform'],
-            [
-                'description' => 'Building a comprehensive e-commerce solution with advanced features like AI-powered recommendations, real-time chat support, and integrated payment gateways.',
-                'tech_stack' => 'Laravel, Vue.js, MySQL, Redis, Stripe API',
-                'progress_percentage' => 65,
-                'expected_completion' => now()->addMonths(3),
-                'status' => 'in_progress',
-                'current_phase' => 'Implementing payment integration and order management',
-                'milestones' => [
-                    'User authentication - Completed',
-                    'Product catalog - Completed',
-                    'Shopping cart - Completed',
-                    'Payment integration - In Progress',
-                    'Order management - Pending'
-                ],
-                'is_active' => true
-            ]
-        );
+        // UpcomingProject::updateOrCreate(
+        //     ['title' => 'Advanced E-Commerce Platform'],
+        //     [
+        //         'description' => 'Building a comprehensive e-commerce solution with advanced features like AI-powered recommendations, real-time chat support, and integrated payment gateways.',
+        //         'tech_stack' => 'Laravel, Vue.js, MySQL, Redis, Stripe API',
+        //         'progress_percentage' => 65,
+        //         'expected_completion' => now()->addMonths(3),
+        //         'status' => 'in_progress',
+        //         'current_phase' => 'Implementing payment integration and order management',
+        //         'milestones' => [
+        //             'User authentication - Completed',
+        //             'Product catalog - Completed',
+        //             'Shopping cart - Completed',
+        //             'Payment integration - In Progress',
+        //             'Order management - Pending'
+        //         ],
+        //         'is_active' => true
+        //     ]
+        // );
 
         UpcomingProject::updateOrCreate(
-            ['title' => 'Portfolio Management Dashboard'],
+            ['title' => 'My Own Portfolio'],
             [
-                'description' => 'Creating an advanced admin dashboard for managing multiple client portfolios with analytics, reporting, and automated content generation.',
-                'tech_stack' => 'Laravel, Alpine.js, Chart.js, Tailwind CSS',
+                'description' => 'Creating my own portfolios.',
+                'tech_stack' => 'Laravel, Bootstrap, js, Tailwind CSS',
                 'progress_percentage' => 30,
                 'expected_completion' => now()->addMonths(4),
-                'status' => 'planning',
-                'current_phase' => 'Database design and API planning',
+                'status' => 'design',
+                'current_phase' => 'Database design',
                 'milestones' => [
                     'Requirements analysis - Completed',
                     'Database design - In Progress',
@@ -104,6 +104,8 @@ class PortfolioSeeder extends Seeder
             ['name' => 'CSS', 'category' => 'frontend', 'proficiency_level' => 5, 'icon' => '🎨', 'is_featured' => true],
             ['name' => 'JavaScript', 'category' => 'frontend', 'proficiency_level' => 4, 'icon' => '⚡', 'is_featured' => true],
             ['name' => 'Bootstrap', 'category' => 'frontend', 'proficiency_level' => 4, 'icon' => '🅱️', 'is_featured' => false],
+            ['name' => 'Tailwind CSS', 'category' => 'frontend', 'proficiency_level' => 1, 'icon' => '⚡', 'is_featured' => true],
+
             
             
             // Tools & Others
@@ -128,53 +130,53 @@ class PortfolioSeeder extends Seeder
         }
 
         // Create QA Achievements - Use updateOrCreate to prevent duplicates
-        QaAchievement::updateOrCreate(
-            ['title' => 'Critical Security Bug Discovery'],
-            [
-                'description' => 'Identified and reported a critical SQL injection vulnerability in the user authentication system that could have compromised user data.',
-                'tool_used' => 'Manual',
-                'achievement_type' => 'bug_found',
-                'bugs_found' => 1,
-                'project_name' => 'E-Commerce Platform',
-                'achievement_date' => now()->subMonths(2),
-                'impact' => 'Prevented potential data breach affecting 1000+ users',
-                'is_featured' => true,
-                'is_active' => true,
-                'sort_order' => 1
-            ]
-        );
+        // QaAchievement::updateOrCreate(
+        //     ['title' => 'Critical Security Bug Discovery'],
+        //     [
+        //         'description' => 'Identified and reported a critical SQL injection vulnerability in the user authentication system that could have compromised user data.',
+        //         'tool_used' => 'Manual',
+        //         'achievement_type' => 'bug_found',
+        //         'bugs_found' => 1,
+        //         'project_name' => 'E-Commerce Platform',
+        //         'achievement_date' => now()->subMonths(2),
+        //         'impact' => 'Prevented potential data breach affecting 1000+ users',
+        //         'is_featured' => true,
+        //         'is_active' => true,
+        //         'sort_order' => 1
+        //     ]
+        // );
 
-        QaAchievement::updateOrCreate(
-            ['title' => 'Payment Gateway Testing'],
-            [
-                'description' => 'Conducted comprehensive testing of payment integration including edge cases, error handling, and security validation.',
-                'tool_used' => 'Postman',
-                'achievement_type' => 'automation_created',
-                'bugs_found' => 5,
-                'project_name' => 'Online Voting System',
-                'achievement_date' => now()->subMonths(1),
-                'impact' => 'Improved payment success rate by 15%',
-                'is_featured' => true,
-                'is_active' => true,
-                'sort_order' => 2
-            ]
-        );
+        // QaAchievement::updateOrCreate(
+        //     ['title' => 'Payment Gateway Testing'],
+        //     [
+        //         'description' => 'Conducted comprehensive testing of payment integration including edge cases, error handling, and security validation.',
+        //         'tool_used' => 'Postman',
+        //         'achievement_type' => 'automation_created',
+        //         'bugs_found' => 5,
+        //         'project_name' => 'Online Voting System',
+        //         'achievement_date' => now()->subMonths(1),
+        //         'impact' => 'Improved payment success rate by 15%',
+        //         'is_featured' => true,
+        //         'is_active' => true,
+        //         'sort_order' => 2
+        //     ]
+        // );
 
-        QaAchievement::updateOrCreate(
-            ['title' => 'Performance Optimization'],
-            [
-                'description' => 'Identified performance bottlenecks in database queries and implemented optimization strategies.',
-                'tool_used' => 'Manual',
-                'achievement_type' => 'performance_improved',
-                'bugs_found' => 3,
-                'project_name' => 'E-Billing System',
-                'achievement_date' => now()->subWeeks(2),
-                'impact' => 'Reduced page load time by 40%',
-                'is_featured' => true,
-                'is_active' => true,
-                'sort_order' => 3
-            ]
-        );
+        // QaAchievement::updateOrCreate(
+        //     ['title' => 'Performance Optimization'],
+        //     [
+        //         'description' => 'Identified performance bottlenecks in database queries and implemented optimization strategies.',
+        //         'tool_used' => 'Manual',
+        //         'achievement_type' => 'performance_improved',
+        //         'bugs_found' => 3,
+        //         'project_name' => 'E-Billing System',
+        //         'achievement_date' => now()->subWeeks(2),
+        //         'impact' => 'Reduced page load time by 40%',
+        //         'is_featured' => true,
+        //         'is_active' => true,
+        //         'sort_order' => 3
+        //     ]
+        // );
 
         // Create Settings - Use updateOrCreate to prevent duplicates
         $settings = [

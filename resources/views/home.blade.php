@@ -7,7 +7,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="animate-fadeInUp">
-                    <h1 class="display-3 fw-bold text-white mb-4 hero-title">
+                    <h1 class="display-3 fw-bold text-white mb-4 hero-title section-title">
                         {{ $settings['hero_title'] ?? "Hi, I'm Sandipan" }}
                         <span class="d-block animate-pulse-custom" style="color: var(--primary-color);">Bhunia</span>
                     </h1>
@@ -32,23 +32,26 @@
             <div class="col-lg-6 text-center">
                 <div class="animate-float">
                     <div class="position-relative d-inline-block">
-                        @if(isset($settings['profile_photo']))
+                        @if(isset($settings['profile_photo']) && $settings['profile_photo'])
                         <!-- Profile Photo -->
                         <div class="position-relative">
                             <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}" 
                                  alt="Sandipan Bhunia" 
-                                 class="rounded-circle border border-primary shadow-lg"
+                                 class="rounded-circle border border-primary shadow-lg profile-image"
                                  style="width: 300px; height: 300px; object-fit: cover; border-width: 4px !important;">
-                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow">
+                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
                                 <i class="fas fa-code text-white fa-2x"></i>
                             </div>
                         </div>
                         @else
-                        <!-- Default Code Icon -->
-                        <div class="position-relative d-inline-block">
-                            <div class="bg-primary rounded-circle opacity-25" style="width: 300px; height: 300px;"></div>
-                            <div class="position-absolute top-50 start-50 translate-middle">
-                                <i class="fas fa-code text-white" style="font-size: 6rem;"></i>
+                        <!-- Default Professional Avatar -->
+                        <div class="position-relative">
+                            <img src="{{ asset('images/default-avatar.svg') }}" 
+                                 alt="Sandipan Bhunia - Full Stack Developer" 
+                                 class="rounded-circle border border-primary shadow-lg profile-image"
+                                 style="width: 300px; height: 300px; object-fit: cover; border-width: 4px !important;">
+                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
+                                <i class="fas fa-code text-white fa-2x"></i>
                             </div>
                         </div>
                         @endif
@@ -60,18 +63,18 @@
 </section>
 
 <!-- About Section -->
-<section id="about" class="py-5">
+<section id="about" class="py-5 section-animate">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold text-white mb-4">About Me</h2>
+            <h2 class="display-5 fw-bold text-white mb-4 section-title">About Me</h2>
             <p class="lead text-white-50">A passionate full-stack developer with expertise in modern web technologies</p>
         </div>
         
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="handmade-card p-4 h-100 text-center">
+                <div class="handmade-card p-4 h-100 text-center section-animate">
                     <div class="mb-4">
-                        <i class="fas fa-graduation-cap fa-3x" style="color: var(--primary-color);"></i>
+                        <i class="fas fa-graduation-cap fa-3x animate-bounce-in" style="color: var(--primary-color);"></i>
                     </div>
                     <h5 class="fw-bold text-white mb-3">Education</h5>
                     <p class="text-white-50 mb-3">Bachelor of Computer Application</p>
@@ -83,9 +86,9 @@
             </div>
             
             <div class="col-md-4">
-                <div class="handmade-card p-4 h-100 text-center">
+                <div class="handmade-card p-4 h-100 text-center section-animate">
                     <div class="mb-4">
-                        <i class="fas fa-code fa-3x text-success"></i>
+                        <i class="fas fa-code fa-3x text-success animate-bounce-in"></i>
                     </div>
                     <h5 class="fw-bold text-white mb-3">Experience</h5>
                     <p class="text-white-50 mb-3">Full Stack Development</p>
@@ -94,9 +97,9 @@
             </div>
             
             <div class="col-md-4">
-                <div class="handmade-card p-4 h-100 text-center">
+                <div class="handmade-card p-4 h-100 text-center section-animate">
                     <div class="mb-4">
-                        <i class="fas fa-map-marker-alt fa-3x text-warning"></i>
+                        <i class="fas fa-map-marker-alt fa-3x text-warning animate-bounce-in"></i>
                     </div>
                     <h5 class="fw-bold text-white mb-3">Location</h5>
                     <p class="text-white-50 mb-3">{{ $settings['location'] ?? 'Chaltatalya, Khejuri' }}</p>
@@ -108,17 +111,17 @@
 </section>
 
 <!-- Projects Section -->
-<section id="projects" class="py-5">
+<section id="projects" class="py-5 section-animate">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold text-white mb-4">Featured Projects</h2>
+            <h2 class="display-5 fw-bold text-white mb-4 section-title">Featured Projects</h2>
             <p class="lead text-white-50">Some of my recent work and achievements</p>
         </div>
         
         <div class="row g-4">
             @foreach($projects as $project)
             <div class="col-lg-6">
-                <div class="handmade-card p-4 h-100">
+                <div class="handmade-card p-4 h-100 section-animate">
                     @if($project->image)
                     <div class="mb-4">
                         <img src="{{ $project->image_url }}" alt="{{ $project->title }}" 
@@ -137,12 +140,12 @@
                     
                     <div class="d-flex gap-3">
                         @if($project->github_link)
-                        <a href="{{ $project->github_link }}" target="_blank" class="text-white-50">
+                        <a href="{{ $project->github_link }}" target="_blank" class="text-white-50 hover-primary">
                             <i class="fab fa-github fa-lg"></i>
                         </a>
                         @endif
                         @if($project->live_link)
-                        <a href="{{ $project->live_link }}" target="_blank" class="text-white-50">
+                        <a href="{{ $project->live_link }}" target="_blank" class="text-white-50 hover-primary">
                             <i class="fas fa-external-link-alt fa-lg"></i>
                         </a>
                         @endif
