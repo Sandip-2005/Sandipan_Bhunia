@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\UpcomingProjectController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\QaAchievementController;
+use App\Http\Controllers\Admin\CvController;
 
 // Simple health check route
 Route::get('/health', function () {
@@ -252,6 +253,20 @@ Route::get('/', function () {
 
 Route::post('/contact', [HomeController::class, 'contact'])->name('contact');
 
+// Public CV download routes
+Route::get('/cv/download', function () {
+    $cv = \App\Models\Cv::where('is_public', true)->orderBy('sort_order')->orderBy('id', 'desc')->first();
+    if (!$cv) { abort(404, 'CV not available.'); }
+    return redirect()->route('cv.download.multi', $cv->id);
+})->name('cv.download');
+
+Route::get('/cv/download/{cv}', function (\App\Models\Cv $cv) {
+    if (!$cv->is_public) { abort(403, 'This CV is private.'); }
+    $filePath = public_path('uploads/cv/' . $cv->filename);
+    if (!file_exists($filePath)) { abort(404, 'CV file not found.'); }
+    return response()->download($filePath, $cv->original_name);
+})->name('cv.download.multi');
+
 // Secret Admin Routes (hidden path)
 Route::prefix('secret-gateway')->group(function () {
     Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
@@ -272,5 +287,6 @@ Route::prefix('secret-gateway')->group(function () {
         Route::resource('upcoming-projects', UpcomingProjectController::class, ['as' => 'admin']);
         Route::resource('skills', SkillController::class, ['as' => 'admin']);
         Route::resource('qa-achievements', QaAchievementController::class, ['as' => 'admin']);
+        Route::resource('cvs', CvController::class, ['as' => 'admin'])->except(['create', 'show', 'edit']);
     });
 });

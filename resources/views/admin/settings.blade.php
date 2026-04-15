@@ -49,7 +49,7 @@
                     400x400px, max 2MB
                 </small>
             </div>
-        </div>
+    <!-- (CV upload moved to dedicated CVs management page) -->
     </div>
     
     <!-- General Settings - COMPACT -->
@@ -201,7 +201,6 @@ function uploadPhoto() {
     
     if (!photoInput.files[0]) return;
     
-    // Show loading state
     const currentPhoto = document.getElementById('currentPhoto');
     const originalSrc = currentPhoto.src;
     
@@ -216,39 +215,17 @@ function uploadPhoto() {
     .then(data => {
         if (data.success) {
             currentPhoto.src = data.photo_url;
-            
-            // Show success notification
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: data.message,
-                timer: 3000,
-                showConfirmButton: false,
-                background: '#1f2937',
-                color: '#ffffff'
-            });
+            Swal.fire({ icon: 'success', title: 'Success!', text: data.message, timer: 3000, showConfirmButton: false, background: '#1f2937', color: '#ffffff' });
         } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: data.message,
-                background: '#1f2937',
-                color: '#ffffff'
-            });
+            Swal.fire({ icon: 'error', title: 'Error!', text: data.message, background: '#1f2937', color: '#ffffff' });
             currentPhoto.src = originalSrc;
         }
     })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'An error occurred while uploading the photo.',
-            background: '#1f2937',
-            color: '#ffffff'
-        });
+    .catch(() => {
+        Swal.fire({ icon: 'error', title: 'Error!', text: 'An error occurred.', background: '#1f2937', color: '#ffffff' });
         currentPhoto.src = originalSrc;
     });
 }
+
 </script>
 @endsection

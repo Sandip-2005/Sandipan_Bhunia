@@ -213,6 +213,12 @@
                         </div>
                         <span class="font-medium">QA Achievements</span>
                     </a>
+                    <a href="{{ route('admin.cvs.index') }}" class="menu-item flex items-center px-4 py-3 text-gray-300 hover:text-white rounded-xl transition-all {{ request()->routeIs('admin.cvs.*') ? 'active text-white' : '' }}">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center mr-3">
+                            <i class="fas fa-file-pdf text-emerald-400"></i>
+                        </div>
+                        <span class="font-medium">CVs / Resumes</span>
+                    </a>
                 </div>
                 
                 <!-- Settings Section -->

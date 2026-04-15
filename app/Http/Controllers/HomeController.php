@@ -57,6 +57,12 @@ class HomeController extends Controller
             // Get settings
             $settings = $this->getSettings();
 
+            // Get public CVs
+            $publicCvs = \App\Models\Cv::where('is_public', true)
+                                      ->orderBy('sort_order')
+                                      ->orderBy('id', 'desc')
+                                      ->get();
+
             return view('home', compact(
                 'projects', 
                 'allProjects', 
@@ -64,7 +70,8 @@ class HomeController extends Controller
                 'skills', 
                 'skillsByCategory', 
                 'qaAchievements', 
-                'settings'
+                'settings',
+                'publicCvs'
             ));
         } catch (\Exception $e) {
             // If database fails, return a simple error page or fallback

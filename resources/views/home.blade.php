@@ -23,10 +23,23 @@
         <div class="row align-items-center g-5">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="animate-fadeInUp">
-                    <h1 class="display-3 fw-bold text-white mb-4 hero-title">
-                        {{ $settings['hero_title'] ?? "Hi, I'm Sandipan" }}
-                        <span class="d-block animate-pulse-custom hero-name-span">Bhunia</span>
-                    </h1>
+
+                    <!-- Unique Name Hero Block -->
+                    <div class="hero-name-block mb-4">
+                        <div class="hero-greeting">
+                            <span class="hero-greeting-line"></span>
+                            <span class="hero-greeting-text">Hello, World! 👋</span>
+                        </div>
+                        <h1 class="hero-identity">
+                            <span class="hero-im">I'm</span>
+                            <span class="hero-firstname">Sandipan</span>
+                            <span class="hero-lastname-wrapper">
+                                <span class="hero-lastname">Bhunia</span>
+                                <span class="hero-lastname-glow">Bhunia</span>
+                            </span>
+                        </h1>
+                    </div>
+
                     <h2 class="h3 text-white-50 mb-4 hero-subtitle">
                         {{ $settings['hero_subtitle'] ?? 'Full Stack Developer & QA Engineer' }}
                     </h2>
@@ -34,13 +47,20 @@
                         {{ $settings['hero_description'] ?? 'Passionate about building dynamic web applications, real-time billing systems, and secure dashboards.' }}
                     </p>
                     
-                    <div class="d-flex flex-column flex-sm-row gap-3">
+                    <div class="d-flex flex-column flex-sm-row gap-3 flex-wrap">
                         <a href="#projects" class="btn-handmade">
                             <i class="fas fa-eye me-2"></i>View My Work
                         </a>
                         <a href="#contact" class="btn btn-outline-light rounded-pill px-4 py-2">
                             <i class="fas fa-envelope me-2"></i>Get In Touch
                         </a>
+                        @if(isset($publicCvs) && $publicCvs->count() > 0)
+                            @foreach($publicCvs as $cv)
+                            <a href="{{ $cv->download_url }}" class="btn-cv-download" target="_blank" title="{{ $cv->label }}">
+                                <i class="fas fa-download me-2"></i>{{ $cv->label }}
+                            </a>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

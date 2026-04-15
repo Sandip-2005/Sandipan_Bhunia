@@ -174,61 +174,164 @@
             font-size: 2.2rem !important; /* Larger section titles */
         }
 
-        /* Hero title visibility improvements - PROFESSIONAL & ATTRACTIVE */
-        .hero-title {
-            color: #ffffff !important;
-            font-weight: 900 !important;
-            text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8);
-            font-size: 3.5rem !important; /* Much larger and more impressive */
-            line-height: 1.1;
-            margin-bottom: 1.5rem !important;
+        /* ============================================
+           UNIQUE HERO NAME BLOCK
+        ============================================ */
+        .hero-name-block {
+            position: relative;
         }
 
-        /* The "Bhunia" name span - eye-catching gradient */
-        .hero-name-span {
-            font-weight: 900 !important;
-            background: linear-gradient(135deg, #f093fb 0%, #ec4899 50%, #f5576c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            animation: gradientShift 3s ease-in-out infinite;
-            text-shadow: none; /* text-shadow doesn't work with gradient text */
-            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.5));
+        /* "Hello, World!" greeting row */
+        .hero-greeting {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.6rem;
+            opacity: 0;
+            animation: fadeInUp 0.7s ease-out 0.2s forwards;
         }
 
-        /* Fallback for browsers that don't support gradient text */
-        @supports not (-webkit-background-clip: text) {
-            .hero-name-span {
-                color: #f093fb !important;
-                -webkit-text-fill-color: unset;
-            }
-        }
-
-        .hero-title span {
-            color: var(--secondary-color) !important;
-            text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8);
-            font-weight: 900 !important;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .hero-greeting-line {
             display: inline-block;
-            animation: gradientShift 3s ease-in-out infinite;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #a78bfa, #ec4899);
+            border-radius: 2px;
+            flex-shrink: 0;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { 
-                background: linear-gradient(135deg, #f093fb 0%, #ec4899 50%, #f5576c 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-            50% { 
-                background: linear-gradient(135deg, #a78bfa 0%, #6366f1 50%, #ec4899 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
+        .hero-greeting-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
+
+        /* Main identity h1 */
+        .hero-identity {
+            margin: 0;
+            padding: 0;
+            line-height: 1.05;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+
+        /* "I'm" */
+        .hero-im {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.08em;
+            margin-bottom: 0.1rem;
+        }
+
+        /* "Sandipan" — large white bold */
+        .hero-firstname {
+            display: block;
+            font-size: clamp(2.8rem, 8vw, 4.5rem);
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            text-shadow: 0 4px 30px rgba(167, 139, 250, 0.3);
+            line-height: 1;
+        }
+
+        /* "Bhunia" wrapper — position relative for glow layer */
+        .hero-lastname-wrapper {
+            display: block;
+            position: relative;
+            line-height: 1.1;
+            margin-top: 0.05rem;
+        }
+
+        /* "Bhunia" — vivid gradient text */
+        .hero-lastname {
+            display: block;
+            font-size: clamp(3rem, 9vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #f093fb 0%, #ec4899 40%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Blurred glow copy behind the name */
+        .hero-lastname-glow {
+            display: block;
+            font-size: clamp(3rem, 9vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #f093fb 0%, #ec4899 40%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 1;
+            filter: blur(20px);
+            opacity: 0.65;
+            animation: nameGlowPulse 3s ease-in-out infinite;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        @keyframes nameGlowPulse {
+            0%, 100% { filter: blur(20px); opacity: 0.65; }
+            50%       { filter: blur(28px); opacity: 0.9; }
+        }
+
+        /* Mobile adjust */
+        @media (max-width: 576px) {
+            .hero-firstname { font-size: 2.6rem; }
+            .hero-lastname, .hero-lastname-glow { font-size: 2.8rem; }
+            .hero-im { font-size: 1.1rem; }
+            .hero-greeting-text { font-size: 0.8rem; }
+        }
+
+        /* ============================================
+           CV DOWNLOAD BUTTON
+        ============================================ */
+        .btn-cv-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            border-radius: 16px;
+            padding: 14px 28px;
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .btn-cv-download:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
+            color: #ffffff;
+        }
+
+        .btn-cv-download::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-cv-download:hover::before { left: 100%; }
 
         .hero-subtitle {
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
@@ -726,57 +829,35 @@
             background: #ffffff;
         }
 
-        /* Hamburger Animation States - FIXED */
-        .navbar-toggler.collapsed .hamburger-menu span:nth-child(1) {
-            transform: rotate(0deg) translate(0px, 0px);
-            background: #ffffff;
-        }
-
-        .navbar-toggler.collapsed .hamburger-menu span:nth-child(2) {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-            background: #ffffff;
-        }
-
-        .navbar-toggler.collapsed .hamburger-menu span:nth-child(3) {
-            transform: rotate(0deg) translate(0px, 0px);
-            background: #ffffff;
-        }
-
-        .navbar-toggler:not(.collapsed) .hamburger-menu span:nth-child(1) {
-            transform: rotate(45deg) translate(7px, 7px);
-            background: #ef4444;
-        }
-
-        .navbar-toggler:not(.collapsed) .hamburger-menu span:nth-child(2) {
-            opacity: 0;
-            transform: scale(0) rotate(180deg);
-        }
-
-        .navbar-toggler:not(.collapsed) .hamburger-menu span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-            background: #ef4444;
-        }
-
-        /* Fix hamburger color on scroll - LIGHT MODE */
-        .navbar-scrolled .hamburger-menu span {
-            background: #1f2937 !important; /* Dark hamburger on light background */
-        }
-
-        /* Fix hamburger color on scroll - DARK MODE */
-        .dark-mode .navbar-scrolled .hamburger-menu span {
-            background: #ffffff !important; /* White hamburger on dark background */
-        }
-
-        /* Ensure hamburger is visible in all states */
+        /* Hamburger animation — driven by aria-expanded CSS attribute (no JS needed) */
         .navbar-toggler .hamburger-menu span {
             display: block;
             height: 3px;
             width: 100%;
             background: #ffffff;
             border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center;
+        }
+
+        /* OPEN state — toggler has aria-expanded="true" */
+        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: #ef4444;
+        }
+        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .navbar-toggler[aria-expanded="true"] .hamburger-menu span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: #ef4444;
+        }
+
+        /* CLOSED state — default */
+        .navbar-toggler[aria-expanded="false"] .hamburger-menu span,
+        .navbar-toggler.collapsed .hamburger-menu span {
+            background: #ffffff;
         }
 
         .navbar-nav .nav-link {
@@ -794,47 +875,37 @@
 
         /* Mobile Menu Enhancements */
         @media (max-width: 991.98px) {
+            /* IMPORTANT: Do NOT add animation here — Bootstrap controls the
+               collapse transition via max-height/height internally.
+               Adding a CSS animation conflicts with Bootstrap's transition
+               and causes the menu to flash open then immediately hide. */
             .navbar-collapse {
                 background: rgba(30, 20, 80, 0.97);
-                backdrop-filter: var(--blur-effect);
-                -webkit-backdrop-filter: var(--blur-effect);
-                border-radius: 16px;
-                margin-top: 0.75rem;
-                padding: 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-                animation: slideDown 0.3s ease-out;
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-radius: 0 0 16px 16px;
+                padding: 0.5rem 0.5rem 1rem;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-top: none;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+                width: 100%;
             }
 
             .dark-mode .navbar-collapse {
                 background: rgba(10, 5, 40, 0.97);
             }
 
-            .navbar-scrolled .navbar-collapse {
-                background: rgba(30, 20, 80, 0.97);
-            }
-
             .navbar-nav .nav-link {
-                margin: 0.25rem 0;
+                margin: 0.2rem 0;
                 text-align: center;
                 padding: 0.85rem 1rem !important;
                 color: #ffffff !important;
+                border-radius: 10px;
             }
 
             .navbar-nav .nav-link:hover {
                 background: rgba(255, 255, 255, 0.15);
                 color: #ffffff !important;
-            }
-
-            @keyframes slideDown {
-                from {
-                    opacity: 0;
-                    transform: translateY(-20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
             }
         }
 
@@ -1833,27 +1904,21 @@
     
     <!-- Simple Custom JavaScript -->
     <script>
-        // Theme Toggle - Default to LIGHT mode
-        let isDarkMode = localStorage.getItem('darkMode') === 'true' || false; // Default to false (light mode)
+        // Theme Toggle - Default to DARK mode for first-time visitors
+        let isDarkMode = localStorage.getItem('darkMode') !== null 
+            ? localStorage.getItem('darkMode') === 'true' 
+            : true; // Default: dark mode
         
         function toggleTheme() {
             isDarkMode = !isDarkMode;
             localStorage.setItem('darkMode', isDarkMode);
             document.body.classList.toggle('dark-mode', isDarkMode);
-            
-            // Force refresh of footer styles
-            const footer = document.querySelector('footer');
-            if (footer) {
-                footer.style.display = 'none';
-                footer.offsetHeight; // Trigger reflow
-                footer.style.display = '';
-            }
         }
         
-        // Initialize theme - Start with LIGHT mode by default
+        // Initialize theme
         if (localStorage.getItem('darkMode') === null) {
-            localStorage.setItem('darkMode', 'false');
-            isDarkMode = false;
+            localStorage.setItem('darkMode', 'true');
+            isDarkMode = true;
         }
         document.body.classList.toggle('dark-mode', isDarkMode);
         
@@ -1871,35 +1936,19 @@
             }
         });
 
-        // Mobile menu toggle functionality
+        // Mobile menu: auto-close when a nav link is clicked on mobile
         document.addEventListener('DOMContentLoaded', function() {
-            const navbarToggler = document.querySelector('.navbar-toggler');
-            const navbarCollapse = document.getElementById('navbarNav');
+            var navbarCollapse = document.getElementById('navbarNav');
+            if (!navbarCollapse) return;
 
-            if (navbarToggler && navbarCollapse) {
-                // Bootstrap handles toggle via data-bs-toggle on the button.
-                // We only hook into Bootstrap's events to sync the hamburger animation.
-
-                navbarCollapse.addEventListener('show.bs.collapse', function() {
-                    navbarToggler.classList.remove('collapsed');
-                    navbarToggler.setAttribute('aria-expanded', 'true');
+            navbarCollapse.querySelectorAll('.nav-link').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                        var bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                        if (bsCollapse) bsCollapse.hide();
+                    }
                 });
-
-                navbarCollapse.addEventListener('hide.bs.collapse', function() {
-                    navbarToggler.classList.add('collapsed');
-                    navbarToggler.setAttribute('aria-expanded', 'false');
-                });
-
-                // Auto-close menu when any nav link is clicked on mobile
-                navbarCollapse.querySelectorAll('.nav-link').forEach(function(link) {
-                    link.addEventListener('click', function() {
-                        if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
-                            var bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                            if (bsCollapse) bsCollapse.hide();
-                        }
-                    });
-                });
-            }
+            });
         });
         
         // Smooth scrolling with proper offset - COMPACT
