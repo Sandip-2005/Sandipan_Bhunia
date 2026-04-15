@@ -461,16 +461,35 @@
             color: #1f2937 !important; /* Dark text on light background */
             font-size: 1rem !important;
             text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9), 
-                         -1px -1px 2px rgba(0, 0, 0, 0.3); /* Multiple shadows for contrast */
+                         -1px -1px 2px rgba(0, 0, 0, 0.3) !important; /* Multiple shadows for contrast */
             font-weight: 900 !important;
             background: none !important;
+        }
+
+        .navbar-scrolled .navbar-brand span {
+            color: #1f2937 !important;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9), 
+                         -1px -1px 2px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .navbar-scrolled .navbar-brand span:first-child {
+            color: #6366f1 !important;
         }
 
         /* CRITICAL: Dark mode scrolled navbar brand */
         .dark-mode .navbar-scrolled .navbar-brand {
             color: #ffffff !important; /* White text on dark background */
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9),
-                         -1px -1px 2px rgba(255, 255, 255, 0.1);
+                         -1px -1px 2px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .dark-mode .navbar-scrolled .navbar-brand span {
+            color: #ffffff !important;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9) !important;
+        }
+
+        .dark-mode .navbar-scrolled .navbar-brand span:first-child {
+            color: #a78bfa !important;
         }
 
         /* Mobile navbar brand - ENSURE VISIBILITY */
@@ -506,6 +525,8 @@
                 font-size: 0.9rem !important;
             }
         }
+
+        /* Navigation Links Enhancement */
 
         /* Navigation Links Enhancement */
         .navbar-nav .nav-link {
@@ -557,26 +578,6 @@
 
         .dark-mode .navbar-scrolled .nav-link:hover {
             color: #a78bfa !important;
-        }
-
-        @media (max-width: 576px) {
-            .navbar-brand {
-                font-size: 1.4rem !important;
-            }
-            
-            body {
-                padding-top: 80px; /* Adjusted for mobile */
-            }
-            
-            .navbar-custom {
-                height: 80px; /* Consistent mobile navbar */
-                padding: 1rem 0;
-            }
-            
-            #home {
-                min-height: calc(100vh - 80px);
-                padding-top: 1rem;
-            }
         }
 
         /* Animated Menu Button - STYLISH & PROFESSIONAL */
@@ -1087,11 +1088,11 @@
             }
             
             .hero-subtitle {
-                font-size: 1.3rem !important;
+                font-size: 1.1rem !important;
             }
 
             .display-5 {
-                font-size: 2rem !important;
+                font-size: 1.8rem !important;
             }
 
             .btn-handmade {
@@ -1129,9 +1130,9 @@
                 margin-bottom: 1rem;
             }
 
-            /* Navbar brand mobile fix */
+            /* Mobile navbar brand fix */
             .navbar-brand {
-                font-size: 1.4rem !important;
+                font-size: 1rem !important;
                 white-space: nowrap;
                 overflow: visible;
             }
@@ -1143,70 +1144,11 @@
             }
 
             .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-title {
-                font-size: 2rem !important;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
             }
 
-            .hero-subtitle {
-                font-size: 1.1rem !important;
-            }
-
-            .handmade-card {
-                padding: 1.5rem !important;
-            }
-
-            .btn-handmade {
-                width: 100%;
-                margin-bottom: 0.75rem;
-            }
-
-            .d-flex.flex-column.flex-sm-row {
-                flex-direction: column !important;
-            }
-
-            /* Mobile navbar brand fix */
-            .navbar-brand {
-                font-size: 1.2rem !important;
-                max-width: none !important;
-                flex: 1;
-            }
-
-            .navbar .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
-            /* Ensure navbar content doesn't overflow */
-            .navbar-nav {
-                width: 100%;
-            }
-
-            .d-flex.align-items-center.order-lg-3 {
-                flex-shrink: 0;
-            }
-
-            /* Mobile section spacing */
-            section {
-                padding-top: 2rem !important;
-                padding-bottom: 2rem !important;
-            }
-
-            /* Mobile hero adjustments */
-            #home .col-lg-6:first-child {
-                margin-bottom: 2rem;
-            }
-
-            #home .col-lg-6:last-child {
-                margin-top: 1rem;
-            }
-
-            /* Mobile profile image - ATTRACTIVE SIZE */
+            /* Mobile profile image */
             #home img,
             #home .bg-primary.rounded-circle {
                 width: 240px !important;
@@ -1222,20 +1164,29 @@
             }
         }
 
-        /* Extra small devices */
-        @media (max-width: 375px) {
+        @media (max-width: 576px) {
             .hero-title {
-                font-size: 1.8rem !important;
+                font-size: 2.2rem !important;
             }
 
-            .display-5 {
-                font-size: 1.5rem !important;
+            .hero-subtitle {
+                font-size: 1rem !important;
             }
 
-            .navbar-brand {
-                font-size: 1.1rem !important;
+            .handmade-card {
+                padding: 1.5rem !important;
             }
 
+            .btn-handmade {
+                width: 100%;
+                margin-bottom: 0.75rem;
+            }
+
+            .d-flex.flex-column.flex-sm-row {
+                flex-direction: column !important;
+            }
+
+            /* Mobile profile image */
             #home img,
             #home .bg-primary.rounded-circle {
                 width: 200px !important;
@@ -1657,8 +1608,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container">
-            <a class="navbar-brand fw-bold text-white" href="#home">
-                <span style="color: var(--primary-color); font-weight: 900;">S</span><span style="font-weight: 900;">andipan Bhunia</span>
+            <a class="navbar-brand fw-bold" href="#home" style="color: #ffffff !important;">
+                <span style="color: #6366f1; font-weight: 900; text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);">S</span><span style="font-weight: 900; color: #ffffff !important; text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);">andipan Bhunia</span>
             </a>
             
             <div class="d-flex align-items-center order-lg-3">
