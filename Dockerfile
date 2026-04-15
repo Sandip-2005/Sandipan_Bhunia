@@ -4,7 +4,7 @@ FROM php:8.2-apache
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# Install system dependencies in one layer
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -15,40 +15,38 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libzip-dev \
     libpq-dev \
-    && docker-php-ext-install pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-install pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy application files
-COPY . /var/www/html
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
-# Create a temporary .env file for key generation
-RUN cp .env.example .env || echo "APP_KEY=" > .env
+# Copy application files
+COPY . .
 
-# Generate application key
-RUN php artisan key:generate --force
+# Create basic .env for build
+RUN echo "APP_KEY=" > .env
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+    && chmod -R 755 /var/www/html/bootstrap/cache \
+    && chmod +x /var/www/html/docker/startup.sh
 
 # Configure Apache
 RUN a2enmod rewrite
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Create uploads directories
-RUN mkdir -p /var/www/html/public/uploads/projects \
-    && mkdir -p /var/www/html/public/uploads/skills \
-    && mkdir -p /var/www/html/public/uploads/profile \
+RUN mkdir -p /var/www/html/public/uploads/{projects,skills,profile} \
     && chown -R www-data:www-data /var/www/html/public/uploads
-
-# Make startup script executable
-RUN chmod +x /var/www/html/docker/startup.sh
 
 # Expose port 80
 EXPOSE 80

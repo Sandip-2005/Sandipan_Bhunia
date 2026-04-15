@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 echo "🚀 Starting Sandipan Bhunia Portfolio..."
 
@@ -8,31 +9,33 @@ if [ -z "$APP_KEY" ]; then
     php artisan key:generate --force
 fi
 
-# Wait for database to be ready
+# Wait for database (with timeout)
 echo "⏳ Waiting for database connection..."
+timeout=60
+counter=0
 until php artisan migrate:status > /dev/null 2>&1; do
-    echo "Database not ready, waiting..."
+    if [ $counter -ge $timeout ]; then
+        echo "❌ Database connection timeout after ${timeout}s"
+        exit 1
+    fi
+    echo "Database not ready, waiting... ($counter/${timeout}s)"
     sleep 2
+    counter=$((counter + 2))
 done
 
 # Run database migrations
 echo "🗄️ Running database migrations..."
 php artisan migrate --force
 
-# Seed database with sample data (only if tables are empty)
-echo "🌱 Checking if database needs seeding..."
-if [ $(php artisan tinker --execute="echo App\Models\User::count();") -eq 0 ]; then
-    echo "🌱 Seeding database..."
-    php artisan db:seed --class=PortfolioSeeder --force
-else
-    echo "✅ Database already seeded, skipping..."
-fi
+# Seed database (simplified check)
+echo "🌱 Seeding database..."
+php artisan db:seed --class=PortfolioSeeder --force || echo "⚠️ Seeding skipped (may already exist)"
 
-# Cache configurations for production
+# Cache configurations
 echo "⚡ Caching configurations..."
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-echo "🚀 Starting Apache server..."
+echo "✅ Setup complete! Starting Apache..."
 exec apache2-foreground
