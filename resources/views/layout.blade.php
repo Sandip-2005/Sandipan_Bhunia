@@ -63,7 +63,7 @@
             overflow-x: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.6;
-            padding-top: 90px; /* Increased padding for better spacing */
+            padding-top: 75px; /* Reduced padding for better spacing */
         }
 
         body.dark-mode {
@@ -77,18 +77,34 @@
             z-index: 1;
         }
 
-        /* Ensure sections don't overlap with navbar */
+        /* Ensure sections don't overlap with navbar - REDUCED GAPS */
         section {
-            scroll-margin-top: 120px; /* Increased offset for smooth scrolling */
-            padding: 4rem 0; /* Better section spacing */
+            scroll-margin-top: 90px; /* Reduced offset */
+            padding: 2rem 0; /* Reduced section padding */
         }
 
-        /* Fix hero section height calculation */
+        /* Fix hero section height calculation - BETTER SPACING */
         #home {
-            min-height: calc(100vh - 90px);
-            padding-top: 2rem;
+            min-height: calc(100vh - 75px);
+            padding-top: 1rem; /* Reduced top padding */
             display: flex;
             align-items: center;
+        }
+
+        /* Mobile spacing adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px; /* Smaller padding on mobile */
+            }
+            
+            section {
+                padding: 1.5rem 0; /* Even smaller padding on mobile */
+            }
+            
+            #home {
+                min-height: calc(100vh - 70px);
+                padding-top: 0.5rem;
+            }
         }
 
         /* Enhanced Typography with Better Visibility */
@@ -102,20 +118,22 @@
             letter-spacing: -0.05em;
         }
 
-        /* Hero title visibility improvements - ENHANCED */
+        /* Hero title visibility improvements - FIXED */
         .hero-title {
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
             color: #ffffff !important;
             font-weight: 900 !important;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+            /* Remove gradient text that causes visibility issues */
+        }
+
+        .hero-title span {
+            color: var(--primary-color) !important;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+            font-weight: 900 !important;
         }
 
         .hero-subtitle {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
             color: rgba(255, 255, 255, 0.95) !important;
             font-weight: 600 !important;
         }
@@ -123,35 +141,43 @@
         /* Enhanced text visibility for all elements */
         body:not(.dark-mode) .text-white {
             color: #ffffff !important;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
             font-weight: 600;
         }
 
         body:not(.dark-mode) .text-white-50 {
-            color: rgba(255, 255, 255, 0.9) !important;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.95) !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         body:not(.dark-mode) .display-5 {
             color: #ffffff !important;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
             font-weight: 800 !important;
         }
 
         body:not(.dark-mode) .lead {
             color: rgba(255, 255, 255, 0.95) !important;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
             font-weight: 500;
         }
 
-        /* Section headings enhancement */
+        /* Section headings enhancement - FIXED */
         .section-title {
-            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+            color: #ffffff !important;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
+            /* Remove gradient text that causes visibility issues */
+        }
+
+        /* Dark mode text improvements */
+        .dark-mode .hero-title {
+            color: #ffffff !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-mode .hero-title span {
+            color: var(--primary-color) !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         /* Dark mode improvements */
@@ -229,15 +255,15 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Enhanced Navigation - PROFESSIONAL & ANIMATED */
+        /* Enhanced Navigation - COMPACT & PROFESSIONAL */
         .navbar-custom {
             background: var(--light-navbar-bg) !important;
             backdrop-filter: var(--blur-effect);
             -webkit-backdrop-filter: var(--blur-effect);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 1.2rem 0;
-            height: 90px; /* Increased navbar height */
+            padding: 0.8rem 0; /* Reduced padding */
+            height: 75px; /* Reduced navbar height */
             position: fixed;
             top: 0;
             left: 0;
@@ -253,8 +279,8 @@
         .navbar-scrolled {
             background: rgba(255, 255, 255, 0.98) !important;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            padding: 0.8rem 0;
-            height: 75px; /* Smaller when scrolled */
+            padding: 0.6rem 0; /* Reduced scrolled padding */
+            height: 65px; /* Smaller when scrolled */
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
 
@@ -263,9 +289,9 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Enhanced navbar brand */
+        /* Enhanced navbar brand - BETTER VISIBILITY */
         .navbar-brand {
-            font-size: 1.8rem !important;
+            font-size: 1.6rem !important; /* Slightly smaller */
             font-weight: 900 !important;
             color: #ffffff !important;
             transition: all 0.3s ease;
@@ -273,6 +299,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Added shadow for visibility */
         }
 
         .navbar-brand:hover {
@@ -282,11 +309,13 @@
 
         .navbar-scrolled .navbar-brand {
             color: #1f2937 !important;
-            font-size: 1.6rem !important;
+            font-size: 1.4rem !important;
+            text-shadow: none; /* Remove shadow on light background */
         }
 
         .dark-mode .navbar-scrolled .navbar-brand {
             color: #ffffff !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         /* Navigation Links Enhancement */
@@ -1495,28 +1524,28 @@
         }
         document.body.classList.toggle('dark-mode', isDarkMode);
         
-        // Navbar scroll effect with proper height handling - ENHANCED
+        // Navbar scroll effect with proper height handling - COMPACT
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('mainNavbar');
             if (window.scrollY > 50) {
                 navbar.classList.add('navbar-scrolled');
                 // Adjust body padding when navbar height changes
-                document.body.style.paddingTop = window.innerWidth <= 576 ? '70px' : '75px';
+                document.body.style.paddingTop = window.innerWidth <= 576 ? '60px' : '65px';
             } else {
                 navbar.classList.remove('navbar-scrolled');
                 // Reset body padding to original navbar height
-                document.body.style.paddingTop = window.innerWidth <= 576 ? '80px' : '90px';
+                document.body.style.paddingTop = window.innerWidth <= 576 ? '70px' : '75px';
             }
         });
         
-        // Smooth scrolling with proper offset - ENHANCED
+        // Smooth scrolling with proper offset - COMPACT
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const navbarHeight = window.innerWidth <= 576 ? 80 : 90;
-                    const targetPosition = target.offsetTop - navbarHeight - 30; // Extra 30px spacing
+                    const navbarHeight = window.innerWidth <= 576 ? 70 : 75;
+                    const targetPosition = target.offsetTop - navbarHeight - 20; // Reduced spacing
                     
                     window.scrollTo({
                         top: targetPosition,
