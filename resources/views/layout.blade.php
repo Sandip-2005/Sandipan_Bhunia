@@ -63,12 +63,33 @@
             overflow-x: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.6;
-            padding-top: 75px; /* Reduced padding for better spacing */
+            padding-top: 75px;
         }
 
         body.dark-mode {
             background: var(--dark-bg);
             color: var(--text-light);
+        }
+
+        /* Container improvements for better spacing */
+        .container {
+            max-width: 1200px;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
 
         /* Fix main content positioning */
@@ -77,18 +98,40 @@
             z-index: 1;
         }
 
-        /* Ensure sections don't overlap with navbar - ULTRA COMPACT GAPS */
+        /* Ensure sections don't overlap with navbar - PROFESSIONAL SPACING */
         section {
-            scroll-margin-top: 90px; /* Reduced offset */
-            padding: 1.5rem 0; /* Much smaller section padding */
+            scroll-margin-top: 90px;
+            padding: 4rem 0; /* More generous section padding */
         }
 
         /* Fix hero section height calculation - BETTER SPACING */
         #home {
             min-height: calc(100vh - 75px);
-            padding-top: 1rem; /* Reduced top padding */
+            padding: 4rem 0; /* More generous padding for better spacing */
             display: flex;
             align-items: center;
+            position: relative;
+        }
+
+        /* Add attractive background elements */
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #home .container {
+            position: relative;
+            z-index: 1;
         }
 
         /* Mobile spacing adjustments */
@@ -98,16 +141,20 @@
             }
             
             section {
-                padding: 1rem 0; /* Much smaller padding on mobile */
+                padding: 2.5rem 0; /* Good mobile spacing */
             }
             
             #home {
                 min-height: calc(100vh - 70px);
-                padding-top: 0.5rem;
+                padding: 3rem 0; /* Better mobile spacing */
+            }
+            
+            section {
+                padding: 3rem 0; /* Better mobile section spacing */
             }
         }
 
-        /* Enhanced Typography with Better Visibility - ULTRA COMPACT SIZES */
+        /* Enhanced Typography with Better Visibility - PROFESSIONAL & ATTRACTIVE SIZES */
         h1, h2, h3, h4, h5, h6 {
             font-weight: 700;
             letter-spacing: -0.025em;
@@ -116,35 +163,74 @@
         .display-3 {
             font-weight: 800;
             letter-spacing: -0.05em;
-            font-size: 2rem !important; /* Much smaller hero title */
+            font-size: 3.5rem !important; /* Larger, more impressive hero title */
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .display-5 {
-            font-size: 1.4rem !important; /* Much smaller section titles */
+            font-size: 2.2rem !important; /* Larger section titles */
         }
 
-        /* Hero title visibility improvements - ULTRA COMPACT */
+        /* Hero title visibility improvements - PROFESSIONAL & ATTRACTIVE */
         .hero-title {
             color: #ffffff !important;
             font-weight: 900 !important;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
-            font-size: 2rem !important; /* Much smaller hero title */
+            text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8);
+            font-size: 3.5rem !important; /* Much larger and more impressive */
+            line-height: 1.1;
+            margin-bottom: 1.5rem !important;
         }
 
         .hero-title span {
             color: var(--primary-color) !important;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+            text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.8);
             font-weight: 900 !important;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { 
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            50% { 
+                background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
         }
 
         .hero-subtitle {
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
             color: rgba(255, 255, 255, 0.95) !important;
             font-weight: 600 !important;
-            font-size: 0.95rem !important; /* Much smaller subtitle */
+            font-size: 1.4rem !important; /* Larger subtitle */
+            margin-bottom: 1.5rem !important;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
         }
 
-        /* Enhanced text visibility for all elements - ULTRA COMPACT */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced text visibility for all elements - PROFESSIONAL & READABLE */
         body:not(.dark-mode) .text-white {
             color: #ffffff !important;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
@@ -160,28 +246,44 @@
             color: #ffffff !important;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
             font-weight: 800 !important;
-            font-size: 1.4rem !important; /* Much smaller section titles */
+            font-size: 2.2rem !important; /* Larger section titles */
         }
 
         body:not(.dark-mode) .lead {
             color: rgba(255, 255, 255, 0.95) !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
             font-weight: 500;
-            font-size: 0.9rem !important; /* Much smaller lead text */
+            font-size: 1.2rem !important; /* Larger lead text */
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
         }
 
-        /* Section headings enhancement - ULTRA COMPACT */
+        /* Section headings enhancement - PROFESSIONAL */
         .section-title {
             color: #ffffff !important;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
-            font-size: 1.4rem !important; /* Much smaller section titles */
+            font-size: 2.2rem !important; /* Larger section titles */
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
         }
 
         /* Dark mode text improvements */
         .dark-mode .hero-title {
             color: #ffffff !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            font-size: 2rem !important; /* Much smaller */
+            font-size: 3.5rem !important; /* Larger for dark mode too */
         }
 
         .dark-mode .hero-title span {
@@ -189,36 +291,36 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Mobile typography adjustments - ULTRA COMPACT */
+        /* Mobile typography adjustments - BALANCED & PROFESSIONAL */
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 1.6rem !important; /* Much smaller on mobile */
+                font-size: 2.5rem !important; /* Larger on mobile */
             }
             
             .hero-subtitle {
-                font-size: 0.85rem !important; /* Much smaller on mobile */
+                font-size: 1.1rem !important; /* Larger on mobile */
             }
 
             .display-5, .section-title {
-                font-size: 1.2rem !important; /* Much smaller on mobile */
+                font-size: 1.8rem !important; /* Larger on mobile */
             }
 
             .lead {
-                font-size: 0.8rem !important; /* Much smaller on mobile */
+                font-size: 1rem !important; /* Larger on mobile */
             }
         }
 
         @media (max-width: 576px) {
             .hero-title {
-                font-size: 1.4rem !important; /* Even smaller on small mobile */
+                font-size: 2.2rem !important; /* Still readable on small mobile */
             }
 
             .hero-subtitle {
-                font-size: 0.8rem !important; /* Even smaller on small mobile */
+                font-size: 1rem !important; /* Still readable on small mobile */
             }
 
             .display-5, .section-title {
-                font-size: 1.1rem !important; /* Even smaller on small mobile */
+                font-size: 1.6rem !important; /* Still readable on small mobile */
             }
         }
 
@@ -753,10 +855,13 @@
             animation: bounceIn 0.6s ease-out;
         }
 
-        /* Profile Image Enhancements */
+        /* Profile Image Enhancements - ATTRACTIVE & ANIMATED */
         .profile-image {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+            border: 4px solid transparent;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) border-box;
+            border-radius: 50%;
         }
 
         .profile-image:hover {
@@ -767,11 +872,50 @@
         .profile-badge {
             animation: bounceIn 1s ease-out 0.5s both;
             transition: all 0.3s ease;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
         }
 
         .profile-badge:hover {
             transform: scale(1.1) rotate(10deg);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Floating Elements for Visual Appeal */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            animation: floatUpDown 6s ease-in-out infinite;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+            }
+            25% { 
+                transform: translateY(-20px) rotate(5deg); 
+            }
+            50% { 
+                transform: translateY(-40px) rotate(0deg); 
+            }
+            75% { 
+                transform: translateY(-20px) rotate(-5deg); 
+            }
+        }
+
+        /* Hide floating elements on mobile for cleaner look */
+        @media (max-width: 768px) {
+            .floating-elements {
+                display: none;
+            }
         }
 
         /* Section Animations */
@@ -786,18 +930,18 @@
             transform: translateY(0);
         }
 
-        /* Enhanced Card Styles - ULTRA COMPACT SIZE */
+        /* Enhanced Card Styles - ATTRACTIVE & PROFESSIONAL */
         .handmade-card {
             background: var(--light-card-bg);
             backdrop-filter: var(--blur-effect);
             -webkit-backdrop-filter: var(--blur-effect);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px; /* Much smaller border radius */
+            border-radius: 20px; /* More rounded for modern look */
             box-shadow: var(--shadow-light);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            padding: 1rem !important; /* Much smaller padding */
+            padding: 2rem !important; /* More generous padding */
         }
 
         .dark-mode .handmade-card {
@@ -812,7 +956,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 2px; /* Thinner accent line */
+            height: 4px; /* Thicker accent line */
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
             transform: scaleX(0);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -823,8 +967,8 @@
         }
 
         .handmade-card:hover {
-            transform: translateY(-4px) scale(1.005); /* Much smaller hover effect */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            transform: translateY(-8px) scale(1.02); /* More pronounced hover effect */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
             border-color: rgba(255, 255, 255, 0.3);
         }
 
@@ -843,54 +987,57 @@
             left: 100%;
         }
 
-        /* Ultra compact card content */
+        /* Professional card content */
         .handmade-card h5 {
-            font-size: 0.95rem !important; /* Much smaller headings */
-            margin-bottom: 0.5rem !important;
+            font-size: 1.25rem !important; /* Good readable size */
+            margin-bottom: 1rem !important;
+            font-weight: 700;
         }
 
         .handmade-card h6 {
-            font-size: 0.85rem !important; /* Much smaller subheadings */
-            margin-bottom: 0.5rem !important;
+            font-size: 1.1rem !important; /* Good readable size */
+            margin-bottom: 0.75rem !important;
+            font-weight: 600;
         }
 
         .handmade-card p {
-            font-size: 0.8rem !important; /* Much smaller text */
-            margin-bottom: 0.5rem !important;
-            line-height: 1.4;
+            font-size: 1rem !important; /* Good readable size */
+            margin-bottom: 1rem !important;
+            line-height: 1.6;
         }
 
         .handmade-card .badge {
-            font-size: 0.65rem !important; /* Much smaller badges */
-            padding: 0.2rem 0.4rem !important;
+            font-size: 0.8rem !important; /* Good readable size */
+            padding: 0.4rem 0.8rem !important;
+            font-weight: 500;
         }
 
         .handmade-card small {
-            font-size: 0.7rem !important; /* Much smaller small text */
+            font-size: 0.85rem !important; /* Good readable size */
         }
 
-        /* Mobile card adjustments - ULTRA COMPACT */
+        /* Mobile card adjustments - PROFESSIONAL */
         @media (max-width: 768px) {
             .handmade-card {
-                padding: 0.8rem !important; /* Even smaller padding on mobile */
-                border-radius: 10px;
+                padding: 1.5rem !important; /* Good mobile padding */
+                border-radius: 16px;
             }
             
             .handmade-card h5 {
-                font-size: 0.9rem !important;
+                font-size: 1.1rem !important;
             }
             
             .handmade-card h6 {
-                font-size: 0.8rem !important;
+                font-size: 1rem !important;
             }
             
             .handmade-card p {
-                font-size: 0.75rem !important;
+                font-size: 0.9rem !important;
             }
             
             .handmade-card .badge {
-                font-size: 0.6rem !important;
-                padding: 0.15rem 0.3rem !important;
+                font-size: 0.75rem !important;
+                padding: 0.3rem 0.6rem !important;
             }
         }
 
@@ -930,13 +1077,13 @@
             }
 
             .btn-handmade {
-                padding: 8px 16px; /* Much smaller on mobile */
-                font-size: 0.8rem;
+                padding: 12px 24px; /* Good mobile size */
+                font-size: 0.9rem;
             }
 
             .btn-outline-light {
-                padding: 6px 14px; /* Much smaller on mobile */
-                font-size: 0.8rem;
+                padding: 10px 20px; /* Good mobile size */
+                font-size: 0.9rem;
             }
 
             .theme-toggle {
@@ -1041,19 +1188,19 @@
                 margin-top: 1rem;
             }
 
-            /* Mobile profile image - ULTRA COMPACT */
+            /* Mobile profile image - ATTRACTIVE SIZE */
             #home img,
             #home .bg-primary.rounded-circle {
-                width: 160px !important;
-                height: 160px !important;
+                width: 240px !important;
+                height: 240px !important;
             }
 
             #home .profile-badge {
-                padding: 0.5rem !important;
+                padding: 0.75rem !important;
             }
 
             #home .fa-code {
-                font-size: 1rem !important;
+                font-size: 1.5rem !important;
             }
         }
 
@@ -1073,8 +1220,8 @@
 
             #home img,
             #home .bg-primary.rounded-circle {
-                width: 140px !important;
-                height: 140px !important;
+                width: 200px !important;
+                height: 200px !important;
             }
         }
 
@@ -1271,12 +1418,12 @@
             color: #fbbf24;
         }
 
-        /* Enhanced Button Styles - ULTRA COMPACT */
+        /* Enhanced Button Styles - ATTRACTIVE & PROFESSIONAL */
         .btn-handmade {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border: none;
-            border-radius: 12px; /* Smaller border radius */
-            padding: 10px 24px; /* Smaller padding */
+            border-radius: 16px;
+            padding: 16px 32px; /* More generous padding */
             color: white;
             font-weight: 600;
             text-decoration: none;
@@ -1286,8 +1433,10 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 3px 15px rgba(99, 102, 241, 0.3); /* Smaller shadow */
-            font-size: 0.85rem; /* Smaller font size */
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            font-size: 1rem; /* Good readable size */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-handmade::before {
@@ -1306,24 +1455,27 @@
         }
 
         .btn-handmade:hover {
-            transform: translateY(-2px) scale(1.03); /* Smaller hover effect */
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
             color: white;
         }
 
         .btn-outline-light {
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px; /* Smaller border radius */
-            padding: 8px 20px; /* Smaller padding */
+            border-radius: 16px;
+            padding: 14px 28px; /* Good padding */
             font-weight: 500;
             transition: all 0.3s ease;
-            font-size: 0.85rem; /* Smaller font size */
+            font-size: 1rem; /* Good readable size */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-outline-light:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-1px); /* Smaller hover effect */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
         }
 
         /* Footer hover effects */

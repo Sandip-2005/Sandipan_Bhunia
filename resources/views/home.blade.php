@@ -3,8 +3,24 @@
 @section('content')
 <!-- Hero Section -->
 <section id="home" class="min-vh-100 d-flex align-items-center">
+    <!-- Floating Elements for Visual Appeal -->
+    <div class="floating-elements">
+        <div class="floating-element" style="top: 10%; left: 10%; animation-delay: 0s;">
+            <i class="fas fa-code" style="color: var(--primary-color); font-size: 2rem; opacity: 0.3;"></i>
+        </div>
+        <div class="floating-element" style="top: 20%; right: 15%; animation-delay: 2s;">
+            <i class="fas fa-laptop-code" style="color: var(--secondary-color); font-size: 1.5rem; opacity: 0.3;"></i>
+        </div>
+        <div class="floating-element" style="bottom: 30%; left: 5%; animation-delay: 4s;">
+            <i class="fas fa-database" style="color: var(--accent-color); font-size: 1.8rem; opacity: 0.3;"></i>
+        </div>
+        <div class="floating-element" style="bottom: 15%; right: 10%; animation-delay: 1s;">
+            <i class="fas fa-bug" style="color: var(--warning-color); font-size: 1.6rem; opacity: 0.3;"></i>
+        </div>
+    </div>
+
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center g-5">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="animate-fadeInUp">
                     <h1 class="display-3 fw-bold text-white mb-4 hero-title section-title">
@@ -38,9 +54,9 @@
                             <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}" 
                                  alt="Sandipan Bhunia" 
                                  class="rounded-circle border border-primary shadow-lg profile-image"
-                                 style="width: 220px; height: 220px; object-fit: cover; border-width: 3px !important;">
-                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2 shadow profile-badge">
-                                <i class="fas fa-code text-white fa-lg"></i>
+                                 style="width: 320px; height: 320px; object-fit: cover; border-width: 4px !important;">
+                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
+                                <i class="fas fa-code text-white fa-2x"></i>
                             </div>
                         </div>
                         @else
@@ -49,9 +65,9 @@
                             <img src="{{ asset('images/default-avatar.svg') }}" 
                                  alt="Sandipan Bhunia - Full Stack Developer" 
                                  class="rounded-circle border border-primary shadow-lg profile-image"
-                                 style="width: 220px; height: 220px; object-fit: cover; border-width: 3px !important;">
-                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2 shadow profile-badge">
-                                <i class="fas fa-code text-white fa-lg"></i>
+                                 style="width: 320px; height: 320px; object-fit: cover; border-width: 4px !important;">
+                            <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
+                                <i class="fas fa-code text-white fa-2x"></i>
                             </div>
                         </div>
                         @endif
