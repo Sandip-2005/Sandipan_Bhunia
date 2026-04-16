@@ -76,7 +76,7 @@
                 <div class="col-lg-6 text-center">
                     <div class="animate-float">
                         <div class="position-relative d-inline-block">
-                            @if(isset($settings['profile_photo']) && $settings['profile_photo'])
+                            @if(isset($settings['profile_photo']) && $settings['profile_photo'] && file_exists(public_path('uploads/profile/' . $settings['profile_photo'])))
                                 <!-- Profile Photo -->
                                 <div class="position-relative">
                                     <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}"

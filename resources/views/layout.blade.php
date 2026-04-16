@@ -1254,10 +1254,10 @@
             /* Mobile menu close button - ENHANCED */
             .mobile-menu-close {
                 position: absolute;
-                top: 2rem;
-                right: 2rem;
-                width: 55px;
-                height: 55px;
+                top: 1.5rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
                 background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.3));
                 border: 2px solid rgba(239, 68, 68, 0.4);
                 border-radius: 50%;
@@ -1286,11 +1286,13 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 1rem;
-                padding: 3rem 2rem 2rem;
+                padding: 5rem 1rem 2rem;
                 max-width: 350px;
                 width: 100%;
                 position: relative;
                 z-index: 999998;
+                max-height: 100vh;
+                overflow-y: auto;
             }
             
             /* Menu title */
@@ -1409,9 +1411,9 @@
             /* Mobile menu brand - ENHANCED */
             .mobile-menu-brand {
                 position: absolute;
-                top: 2rem;
-                left: 2rem;
-                font-size: 1.3rem;
+                top: 1.8rem;
+                left: 1rem;
+                font-size: 1.1rem;
                 font-weight: 900;
                 color: #ffffff;
                 text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);

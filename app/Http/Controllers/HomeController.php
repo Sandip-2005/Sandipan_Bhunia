@@ -93,12 +93,32 @@ class HomeController extends Controller
             'message' => 'required|string|max:1000'
         ]);
 
-        // In a real application, you would send an email here
-        // For now, just return success
-        return response()->json([
-            'success' => true,
-            'message' => 'Thank you for your message! I will get back to you soon.'
-        ]);
+        $settings = $this->getSettings();
+        // Use the configured email, fallback to a default if not found
+        $adminEmail = $settings['email'] ?? 'sandipanbhunia18@gmail.com';
+
+        try {
+            // Send the email to the admin
+            \Illuminate\Support\Facades\Mail::raw(
+                "New message from your portfolio website:\n\nName: {$request->name}\nEmail: {$request->email}\n\nMessage:\n{$request->message}",
+                function ($message) use ($request, $adminEmail) {
+                    $message->to($adminEmail)
+                            ->subject('Portfolio Contact: ' . $request->subject)
+                            ->replyTo($request->email, $request->name);
+                }
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Thank you for your message! It has been sent successfully.'
+            ]);
+        } catch (\Exception $e) {
+            // Log the error in a real app, here we return a friendly error message
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, we could not send your message right now. Please try again later or email me directly at ' . $adminEmail . '.'
+            ], 500);
+        }
     }
 
     private function getSettings()
