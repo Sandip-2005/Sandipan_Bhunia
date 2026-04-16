@@ -27,6 +27,8 @@ class SkillController extends Controller
             'proficiency_level' => 'required|integer|min:1|max:5',
             'icon' => 'nullable|string|max:10',
             'description' => 'nullable|string',
+            'experience_text' => 'nullable|string|max:255',
+            'projects_text' => 'nullable|string|max:255',
             'sort_order' => 'nullable|integer',
             'is_featured' => 'boolean',
             'is_active' => 'boolean'
@@ -55,6 +57,8 @@ class SkillController extends Controller
             'proficiency_level' => 'required|integer|min:1|max:5',
             'icon' => 'nullable|string|max:10',
             'description' => 'nullable|string',
+            'experience_text' => 'nullable|string|max:255',
+            'projects_text' => 'nullable|string|max:255',
             'sort_order' => 'nullable|integer',
             'is_featured' => 'boolean',
             'is_active' => 'boolean'

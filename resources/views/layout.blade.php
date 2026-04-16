@@ -3492,7 +3492,7 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
             submitBtn.disabled = true;
             
-            fetch('{{ route("contact") }}', {
+            fetch('/contact', {
                 method: 'POST',
                 body: formData,
                 headers: {

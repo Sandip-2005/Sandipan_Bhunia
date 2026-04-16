@@ -339,7 +339,6 @@
                                                style="animation-delay: {{ $i * 0.1 }}s"></i>
                                         @endfor
                                     </div>
-                                    <span class="skill-percentage">{{ $skill->proficiency_level * 20 }}%</span>
                                 </div>
                                 
                                 <div class="skill-progress-wrapper">
@@ -379,7 +378,9 @@
                                         <div class="experience-item">
                                             <i class="fas fa-clock"></i>
                                             <span>
-                                                @if($skill->proficiency_level >= 4)
+                                                @if($skill->experience_text)
+                                                    {{ $skill->experience_text }}
+                                                @elseif($skill->proficiency_level >= 4)
                                                     3+ Years Experience
                                                 @elseif($skill->proficiency_level >= 3)
                                                     2+ Years Experience
@@ -391,7 +392,9 @@
                                         <div class="experience-item">
                                             <i class="fas fa-project-diagram"></i>
                                             <span>
-                                                @if($skill->proficiency_level >= 4)
+                                                @if($skill->projects_text)
+                                                    {{ $skill->projects_text }}
+                                                @elseif($skill->proficiency_level >= 4)
                                                     10+ Projects
                                                 @elseif($skill->proficiency_level >= 3)
                                                     5+ Projects

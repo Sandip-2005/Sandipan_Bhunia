@@ -83,6 +83,24 @@
                 @enderror
             </div>
 
+            <!-- Experience and Projects Overrides -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Experience Override Text</label>
+                    <input type="text" name="experience_text" value="{{ old('experience_text') }}"
+                           class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-white placeholder-gray-400"
+                           placeholder="e.g., '3+ Years Experience' (Optional)">
+                    <p class="mt-1 text-sm text-gray-400">Leaves default based on proficiency if left blank.</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Projects Override Text</label>
+                    <input type="text" name="projects_text" value="{{ old('projects_text') }}"
+                           class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-white placeholder-gray-400"
+                           placeholder="e.g., '10+ Projects' (Optional)">
+                    <p class="mt-1 text-sm text-gray-400">Leaves default based on proficiency if left blank.</p>
+                </div>
+            </div>
+
             <!-- Sort Order -->
             <div>
                 <label class="block text-sm font-medium text-gray-300 mb-2">Sort Order</label>

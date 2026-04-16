@@ -12,6 +12,8 @@ class Skill extends Model
         'proficiency_level',
         'icon',
         'description',
+        'experience_text',
+        'projects_text',
         'sort_order',
         'is_featured',
         'is_active'
