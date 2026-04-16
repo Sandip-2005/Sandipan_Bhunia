@@ -82,8 +82,8 @@
                                     <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}"
                                         onerror="this.onerror=null; this.src='{{ asset('images/default-avatar.svg') }}';"
                                         alt="Sandipan Bhunia"
-                                        class="rounded-circle border border-primary shadow-lg profile-image"
-                                        style="width: 320px; height: 320px; object-fit: cover; border-width: 4px !important;">
+                                        class="shadow-lg profile-image"
+                                        style="width: 320px; height: 320px; object-fit: cover; border-radius: 50%;">
                                     <div
                                         class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
                                         <i class="fas fa-code text-white fa-2x"></i>
@@ -94,8 +94,8 @@
                                 <div class="position-relative">
                                     <img src="{{ asset('images/default-avatar.svg') }}"
                                         alt="Sandipan Bhunia - Full Stack Developer"
-                                        class="rounded-circle border border-primary shadow-lg profile-image"
-                                        style="width: 320px; height: 320px; object-fit: cover; border-width: 4px !important;">
+                                        class="shadow-lg profile-image"
+                                        style="width: 320px; height: 320px; object-fit: cover; border-radius: 50%;">
                                     <div
                                         class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
                                         <i class="fas fa-code text-white fa-2x"></i>

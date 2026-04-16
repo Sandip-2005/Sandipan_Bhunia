@@ -1662,13 +1662,14 @@
             animation: bounceIn 0.6s ease-out;
         }
 
-        /* Profile Image Enhancements - ATTRACTIVE & ANIMATED */
+        /* Profile Image Enhancements */
         .profile-image {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-            border: 4px solid transparent;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) border-box;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
             border-radius: 50%;
+            /* Clean border using box-shadow instead of gradient border-box to avoid overlay issue */
+            box-shadow: 0 0 0 4px #6366f1, 0 0 0 8px rgba(99, 102, 241, 0.3), 0 20px 40px rgba(0,0,0,0.3);
+            background: transparent;
         }
 
         .profile-image:hover {
@@ -1902,7 +1903,9 @@
             transform-style: preserve-3d;
         }
         
-        .skill-card:hover .skill-card-inner {
+        /* Skill card FLIP on hover (desktop) and .flipped class (mobile toggle) */
+        .skill-card:hover .skill-card-inner,
+        .skill-card.flipped .skill-card-inner {
             transform: rotateY(180deg);
         }
         
@@ -3416,7 +3419,7 @@
         });
 
         // CV Viewer Functions
-        let currentCVUrl = '';
+        let currentCVUrl = '';       // raw direct URL for open-in-tab
         let currentDownloadUrl = '';
         
         function viewCV(cvId, cvLabel, cvViewRoute, cvDownloadRoute) {
@@ -3429,23 +3432,21 @@
 
             // Build absolute URL from relative route
             const absoluteViewUrl = window.location.origin + cvViewRoute;
-            currentCVUrl     = absoluteViewUrl;
+            currentCVUrl       = absoluteViewUrl;          // raw PDF URL
             currentDownloadUrl = cvDownloadRoute || `/cv/download/${cvId}`;
 
             title.textContent     = cvLabel;
             downloadBtn.href      = currentDownloadUrl;
+            // Fallback open-in-new-tab also uses the raw PDF URL
             fallbackBtn.href      = absoluteViewUrl;
 
-            // Reset state: show fallback while loading
+            // Reset state: show fallback while iframe loads
             fallback.style.display = 'flex';
             viewer.style.display   = 'none';
             viewer.src = '';
 
             // Use Google Docs Viewer to bypass X-Frame-Options & CSP issues
-            // This is reliable for PDFs served from any URL
             const googleDocsUrl = 'https://docs.google.com/gviewer?embedded=true&url=' + encodeURIComponent(absoluteViewUrl);
-            
-            // Set a load timeout — if iframe doesn't signal success within 5s, keep fallback visible  
             viewer.src = googleDocsUrl;
             viewer.style.display = 'block';
 
@@ -3454,14 +3455,12 @@
         }
 
         function handleCVLoad(iframe) {
-            // Once loaded, hide the fallback message
             const fallback = document.getElementById('cvFallback');
-            // Can't reliably detect 404 inside cross-origin iframe, so just hide spinner text
             if (fallback) {
                 const h5 = fallback.querySelector('h5');
                 const p  = fallback.querySelector('p');
                 if (h5) h5.textContent = 'Having trouble viewing?';
-                if (p) p.textContent = 'Use the button below if the preview doesn\'t load.';
+                if (p)  p.textContent  = 'Use the button below if the preview doesn\'t load.';
             }
         }
 
@@ -3479,12 +3478,12 @@
         function closeCVModal() {
             const modal  = document.getElementById('cvModal');
             const viewer = document.getElementById('cvViewer');
-            
             modal.classList.remove('active');
             viewer.src = '';
             document.body.style.overflow = '';
         }
         
+        // openCVFullscreen opens the REAL CV URL, not the Google Docs wrapper
         function openCVFullscreen() {
             if (currentCVUrl) {
                 window.open(currentCVUrl, '_blank');
@@ -3714,6 +3713,34 @@
             // Add staggered animation delays for skill cards
             document.querySelectorAll('.skill-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Mobile touch toggle for skill card flip
+            // On touch devices :hover doesn't persist, so we use a .flipped class
+            const isTouchDevice = () => window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!isTouchDevice()) return; // desktop uses CSS :hover
+                    
+                    const isFlipped = this.classList.contains('flipped');
+                    
+                    // Un-flip all other cards first
+                    document.querySelectorAll('.skill-card.flipped').forEach(c => {
+                        if (c !== this) c.classList.remove('flipped');
+                    });
+                    
+                    // Toggle this card
+                    this.classList.toggle('flipped', !isFlipped);
+                });
+            });
+
+            // Tap outside to unflip all cards
+            document.addEventListener('click', function(e) {
+                if (!isTouchDevice()) return;
+                if (!e.target.closest('.skill-card')) {
+                    document.querySelectorAll('.skill-card.flipped').forEach(c => c.classList.remove('flipped'));
+                }
             });
         });
     </script>
