@@ -1137,6 +1137,13 @@
             transform: translateY(-2px);
         }
 
+        /* Hide mobile overlay by default on desktop and only show it on mobile when active */
+        .mobile-menu-overlay {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+
         /* Enhanced Mobile Menu - FIXED FLASH ISSUE */
         @media (max-width: 991.98px) {
             /* Hide navbar links in mobile, only show menu button */
