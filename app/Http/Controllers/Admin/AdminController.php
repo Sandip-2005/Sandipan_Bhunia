@@ -96,6 +96,12 @@ class AdminController extends Controller
 
     public function uploadProfilePhoto(Request $request)
     {
+        \Log::info('Profile photo upload started', [
+            'has_file' => $request->hasFile('profile_photo'),
+            'files' => $request->allFiles(),
+            'session_authenticated' => session('admin_authenticated')
+        ]);
+        
         try {
             // Enhanced validation with better error messages
             $request->validate([
@@ -110,8 +116,16 @@ class AdminController extends Controller
             if ($request->hasFile('profile_photo')) {
                 $file = $request->file('profile_photo');
                 
+                \Log::info('File details', [
+                    'original_name' => $file->getClientOriginalName(),
+                    'size' => $file->getSize(),
+                    'mime_type' => $file->getMimeType(),
+                    'is_valid' => $file->isValid()
+                ]);
+                
                 // Check if file is valid
                 if (!$file->isValid()) {
+                    \Log::error('Invalid file uploaded');
                     return response()->json([
                         'success' => false,
                         'message' => 'The uploaded file is corrupted or invalid.'
@@ -124,6 +138,7 @@ class AdminController extends Controller
                 $uploadPath = public_path('uploads/profile');
                 if (!file_exists($uploadPath)) {
                     if (!mkdir($uploadPath, 0755, true)) {
+                        \Log::error('Failed to create upload directory');
                         return response()->json([
                             'success' => false,
                             'message' => 'Failed to create upload directory. Please check permissions.'
@@ -133,6 +148,7 @@ class AdminController extends Controller
                 
                 // Check if directory is writable
                 if (!is_writable($uploadPath)) {
+                    \Log::error('Upload directory not writable');
                     return response()->json([
                         'success' => false,
                         'message' => 'Upload directory is not writable. Please check permissions.'
@@ -145,13 +161,16 @@ class AdminController extends Controller
                     $oldPath = public_path('uploads/profile/' . $oldPhoto->value);
                     if (file_exists($oldPath)) {
                         @unlink($oldPath);
+                        \Log::info('Deleted old profile photo: ' . $oldPhoto->value);
                     }
                 }
                 
                 // Move the new file
                 if ($file->move($uploadPath, $filename)) {
+                    \Log::info('File moved successfully: ' . $filename);
+                    
                     // Save to settings
-                    Setting::updateOrCreate(
+                    $setting = Setting::updateOrCreate(
                         ['key' => 'profile_photo'],
                         [
                             'value' => $filename, 
@@ -159,6 +178,8 @@ class AdminController extends Controller
                             'group' => 'profile'
                         ]
                     );
+                    
+                    \Log::info('Setting saved', ['setting' => $setting->toArray()]);
 
                     return response()->json([
                         'success' => true,
@@ -166,6 +187,7 @@ class AdminController extends Controller
                         'photo_url' => asset('uploads/profile/' . $filename)
                     ]);
                 } else {
+                    \Log::error('Failed to move uploaded file');
                     return response()->json([
                         'success' => false, 
                         'message' => 'Failed to save the uploaded file. Please try again.'
@@ -173,12 +195,14 @@ class AdminController extends Controller
                 }
             }
 
+            \Log::warning('No file in request');
             return response()->json([
                 'success' => false, 
                 'message' => 'No file was uploaded. Please select a photo.'
             ], 400);
             
         } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation failed', ['errors' => $e->errors()]);
             return response()->json([
                 'success' => false,
                 'message' => 'Validation failed: ' . implode(' ', array_map(function($errors) {

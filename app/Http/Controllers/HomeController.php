@@ -143,6 +143,7 @@ class HomeController extends Controller
             'location' => 'Chaltatalya, Khejuri, Purba Medinipur, 721431',
             'github' => 'https://github.com/Sandip-2005',
             'linkedin' => 'https://linkedin.com/in/sandipan-bhunia/',
+            'profile_photo' => null, // Add profile_photo to defaults
         ];
 
         return array_merge($defaults, $dbSettings);

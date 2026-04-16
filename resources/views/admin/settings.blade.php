@@ -19,8 +19,15 @@
             <!-- Current Photo Display - COMPACT -->
             <div class="text-center mb-4">
                 <div class="relative inline-block">
+                    @php
+                        $profilePhoto = null;
+                        if (isset($settings['profile'])) {
+                            $profilePhotoSetting = $settings['profile']->where('key', 'profile_photo')->first();
+                            $profilePhoto = $profilePhotoSetting ? $profilePhotoSetting->value : null;
+                        }
+                    @endphp
                     <img id="currentPhoto" 
-                         src="{{ isset($settings['profile']) && $settings['profile']->where('key', 'profile_photo')->first() ? asset('uploads/profile/' . $settings['profile']->where('key', 'profile_photo')->first()->value) : asset('images/default-avatar.svg') }}" 
+                         src="{{ $profilePhoto ? asset('uploads/profile/' . $profilePhoto) : asset('images/default-avatar.svg') }}" 
                          onerror="this.onerror=null; this.src='{{ asset('images/default-avatar.svg') }}';"
                          alt="Profile Photo" 
                          class="w-24 h-24 rounded-xl object-cover border-2 border-white/20 shadow-lg">
@@ -197,14 +204,25 @@
 
 <script>
 function uploadPhoto() {
+    console.log('uploadPhoto function called');
+    
     const form = document.getElementById('photoUploadForm');
     const formData = new FormData(form);
     const photoInput = document.getElementById('photoInput');
     
-    if (!photoInput.files[0]) return;
+    console.log('Photo input files:', photoInput.files);
+    
+    if (!photoInput.files[0]) {
+        console.log('No file selected');
+        return;
+    }
+    
+    console.log('File selected:', photoInput.files[0]);
     
     const currentPhoto = document.getElementById('currentPhoto');
     const originalSrc = currentPhoto.src;
+    
+    console.log('Sending request to:', '{{ route("admin.upload.profile") }}');
     
     fetch('{{ route("admin.upload.profile") }}', {
         method: 'POST',
@@ -213,21 +231,46 @@ function uploadPhoto() {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        return response.json();
+    })
     .then(data => {
+        console.log('Response data:', data);
         if (data.success) {
             currentPhoto.src = data.photo_url;
-            Swal.fire({ icon: 'success', title: 'Success!', text: data.message, timer: 3000, showConfirmButton: false, background: '#1f2937', color: '#ffffff' });
+            Swal.fire({ 
+                icon: 'success', 
+                title: 'Success!', 
+                text: data.message, 
+                timer: 3000, 
+                showConfirmButton: false, 
+                background: '#1f2937', 
+                color: '#ffffff' 
+            });
         } else {
-            Swal.fire({ icon: 'error', title: 'Error!', text: data.message, background: '#1f2937', color: '#ffffff' });
+            Swal.fire({ 
+                icon: 'error', 
+                title: 'Error!', 
+                text: data.message, 
+                background: '#1f2937', 
+                color: '#ffffff' 
+            });
             currentPhoto.src = originalSrc;
         }
     })
-    .catch(() => {
-        Swal.fire({ icon: 'error', title: 'Error!', text: 'An error occurred.', background: '#1f2937', color: '#ffffff' });
+    .catch(error => {
+        console.error('Upload error:', error);
+        Swal.fire({ 
+            icon: 'error', 
+            title: 'Error!', 
+            text: 'An error occurred: ' + error.message, 
+            background: '#1f2937', 
+            color: '#ffffff' 
+        });
         currentPhoto.src = originalSrc;
     });
 }
-
 </script>
 @endsection
