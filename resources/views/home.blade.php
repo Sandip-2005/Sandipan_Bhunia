@@ -77,13 +77,21 @@
                     <div class="animate-float">
                         <div class="position-relative d-inline-block">
                             @if(isset($settings['profile_photo']) && $settings['profile_photo'])
-                                <!-- Profile Photo -->
+                                <!-- Profile Photo with Professional Loading -->
                                 <div class="position-relative">
                                     <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}"
-                                        onerror="this.onerror=null; this.src='{{ asset('images/default-avatar.svg') }}';"
+                                        onerror="handleProfilePhotoError(this)"
+                                        onload="handleProfilePhotoLoad(this)"
                                         alt="Sandipan Bhunia"
                                         class="shadow-lg profile-image"
-                                        style="width: 320px; height: 320px; object-fit: cover; border-radius: 50%;">
+                                        style="width: 320px; height: 320px; object-fit: cover; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease;"
+                                        id="profilePhoto">
+                                    <!-- Loading placeholder -->
+                                    <div id="profilePhotoLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-light rounded-circle" style="width: 320px; height: 320px;">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
                                     <div
                                         class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
                                         <i class="fas fa-code text-white fa-2x"></i>

@@ -370,6 +370,24 @@
             left: 100%; 
         }
 
+        /* Profile Photo Loading Improvements */
+        .profile-image {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+        
+        #profilePhotoLoader {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark-mode #profilePhotoLoader {
+            background: linear-gradient(135deg, #1f2937, #374151);
+        }
+
         /* CV Modal Styles */
         .cv-modal {
             position: fixed;
@@ -3447,11 +3465,48 @@
 
             // Use Google Docs Viewer to bypass X-Frame-Options & CSP issues
             const googleDocsUrl = 'https://docs.google.com/gviewer?embedded=true&url=' + encodeURIComponent(absoluteViewUrl);
+            
+            // Professional loading with timeout
+            const loadingTimeout = setTimeout(() => {
+                // If iframe doesn't load within 10 seconds, show fallback
+                if (fallback.style.display !== 'none') {
+                    console.warn('CV viewer timed out, showing fallback');
+                }
+            }, 10000);
+            
+            viewer.onload = function() {
+                clearTimeout(loadingTimeout);
+                // Check if the iframe actually loaded content
+                try {
+                    // Hide fallback and show viewer
+                    fallback.style.display = 'none';
+                    viewer.style.display   = 'block';
+                } catch (e) {
+                    // If there's an error accessing iframe content, keep fallback visible
+                    console.warn('CV viewer iframe access restricted, keeping fallback visible');
+                }
+            };
+            
+            viewer.onerror = function() {
+                clearTimeout(loadingTimeout);
+                console.warn('CV viewer failed to load, showing fallback');
+                // Keep fallback visible on error
+            };
+            
             viewer.src = googleDocsUrl;
-            viewer.style.display = 'block';
-
+            
+            // Show the modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Debug logging for professional troubleshooting
+            console.log('CV Viewer initialized:', {
+                cvId: cvId,
+                cvLabel: cvLabel,
+                absoluteViewUrl: absoluteViewUrl,
+                googleDocsUrl: googleDocsUrl,
+                currentCVUrl: currentCVUrl
+            });
         }
 
         function handleCVLoad(iframe) {
@@ -3485,8 +3540,32 @@
         
         // openCVFullscreen opens the REAL CV URL, not the Google Docs wrapper
         function openCVFullscreen() {
+            console.log('openCVFullscreen called, currentCVUrl:', currentCVUrl);
+            
             if (currentCVUrl) {
+                console.log('Opening CV in new tab:', currentCVUrl);
                 window.open(currentCVUrl, '_blank');
+            } else {
+                console.warn('currentCVUrl is not set, trying fallback method');
+                // Fallback: try to get CV URL from the download button or construct it
+                const downloadBtn = document.getElementById('cvDownloadBtn');
+                if (downloadBtn && downloadBtn.href) {
+                    // Convert download URL to view URL
+                    const viewUrl = downloadBtn.href.replace('/download/', '/view/');
+                    console.log('Using fallback URL:', viewUrl);
+                    window.open(viewUrl, '_blank');
+                } else {
+                    console.error('No CV URL available for opening in new tab');
+                    // Show professional error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'CV Not Available',
+                        text: 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.',
+                        background: '#1f2937',
+                        color: '#ffffff',
+                        confirmButtonColor: '#3b82f6'
+                    });
+                }
             }
         }
         
@@ -3743,6 +3822,32 @@
                 }
             });
         });
+        
+        // Professional Profile Photo Loading Handlers
+        function handleProfilePhotoLoad(img) {
+            // Hide loader and show image with smooth transition
+            const loader = document.getElementById('profilePhotoLoader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
+            img.style.opacity = '1';
+        }
+        
+        function handleProfilePhotoError(img) {
+            // Hide loader
+            const loader = document.getElementById('profilePhotoLoader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
+            
+            // Set fallback image and show with transition
+            img.onerror = null; // Prevent infinite loop
+            img.src = '{{ asset('images/default-avatar.svg') }}';
+            img.style.opacity = '1';
+            
+            // Log error for debugging (only in development)
+            console.warn('Profile photo failed to load, using default avatar');
+        }
     </script>
 
     <style>
