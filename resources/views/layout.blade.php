@@ -67,7 +67,7 @@
             min-height: 100vh;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.6;
-            padding-top: 70px;
+            padding-top: 0;
         }
 
         body.dark-mode {
@@ -100,18 +100,19 @@
         main {
             position: relative;
             z-index: 1;
+            padding-top: 70px; /* Keep content below fixed navbar */
         }
 
         /* Ensure sections don't overlap with navbar - PROFESSIONAL SPACING */
         section {
             scroll-margin-top: 90px;
-            padding: 4rem 0; /* More generous section padding */
+            padding: 3rem 0; /* Tightened spacing for a cleaner layout */
         }
 
         /* Fix hero section height calculation - BETTER SPACING */
         #home {
             min-height: calc(100vh - 75px);
-            padding: 4rem 0; /* More generous padding for better spacing */
+            padding: 3rem 0; /* Reduced hero top spacing */
             display: flex;
             align-items: center;
             position: relative;
@@ -782,24 +783,55 @@
         }
 
         .navbar-brand {
-            font-size: 1.1rem !important;
+            font-size: 1rem !important;
             font-weight: 900 !important;
             color: #ffffff !important;
             text-decoration: none;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            letter-spacing: 0.8px;
+            gap: 0.75rem;
+            letter-spacing: 0.08em;
             white-space: nowrap;
             overflow: hidden;
             max-width: 100%;
-            border-radius: 0;
-            margin: 0;
-            padding: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1rem;
+            transition: all 0.3s ease;
         }
 
         .navbar-brand:hover {
             color: #ffffff !important;
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.12);
+        }
+
+        .brand-initial {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 1rem;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.25);
+        }
+
+        .brand-name {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.25rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .brand-lastname {
+            color: #c4b5fd;
         }
 
         .navbar-actions {
@@ -1688,12 +1720,22 @@
                 font-size: 1rem !important;
                 white-space: nowrap;
                 overflow: visible;
+                padding: 0.55rem 0.9rem !important;
+            }
+
+            .navbar-actions {
+                align-items: center !important;
+                margin-top: 6px !important;
+            }
+
+            .navbar-toggler {
+                margin-top: 8px !important;
             }
 
             /* Mobile content spacing */
             section {
-                padding-top: 3rem !important;
-                padding-bottom: 3rem !important;
+                padding-top: 2.5rem !important;
+                padding-bottom: 2.5rem !important;
             }
 
             .container {
@@ -2340,11 +2382,10 @@
         }
 
         body {
-            padding-top: 70px !important;
+            padding-top: 0 !important;
         }
 
-        main,
-        section:first-of-type {
+        main {
             padding-top: 70px !important;
         }
     </style>
@@ -2355,7 +2396,8 @@
     <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
         <div class="navbar-inner d-flex justify-content-between align-items-center w-100">
             <a class="navbar-brand fw-bold mb-0 text-truncate" href="#home">
-                <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
+                <span class="brand-initial">S</span>
+                <span class="brand-name">andipan <span class="brand-lastname">Bhunia</span></span>
             </a>
             
             <div class="navbar-actions d-flex align-items-center gap-2 flex-nowrap">
