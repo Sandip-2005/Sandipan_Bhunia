@@ -380,7 +380,7 @@
             background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            z-index: 10000;
+            z-index: 999998;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1183,7 +1183,7 @@
                 display: none;
             }
             
-            /* Mobile menu overlay - ENHANCED ATTRACTIVE DESIGN */
+            /* Mobile menu overlay - FIXED OVERLAP ISSUES */
             .mobile-menu-overlay {
                 position: fixed;
                 top: 0;
@@ -1198,7 +1198,7 @@
                     rgba(15, 23, 42, 0.98) 100%);
                 backdrop-filter: blur(25px);
                 -webkit-backdrop-filter: blur(25px);
-                z-index: 9999;
+                z-index: 999999; /* Increased z-index to ensure it's above everything */
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -1208,6 +1208,9 @@
                 transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
                 transform: scale(0.95);
                 overflow: hidden;
+                /* Ensure it covers everything including dev tools */
+                min-height: 100vh;
+                min-width: 100vw;
             }
             
             /* Animated background particles */
@@ -1224,6 +1227,7 @@
                     radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
                 animation: particleFloat 8s ease-in-out infinite;
                 pointer-events: none;
+                z-index: 1;
             }
             
             @keyframes particleFloat {
@@ -1264,7 +1268,7 @@
                 font-size: 1.3rem;
                 cursor: pointer;
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 10000;
+                z-index: 1000000;
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
             }
@@ -1286,7 +1290,7 @@
                 max-width: 350px;
                 width: 100%;
                 position: relative;
-                z-index: 2;
+                z-index: 999998;
             }
             
             /* Menu title */
@@ -1411,7 +1415,7 @@
                 font-weight: 900;
                 color: #ffffff;
                 text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-                z-index: 10000;
+                z-index: 1000000;
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
@@ -2655,8 +2659,42 @@
         }
 
         /* ============================================
-           NOTIFICATION SYSTEM
+           MOBILE MENU OVERLAP FIX
         ============================================ */
+        
+        /* Ensure mobile menu is always on top of everything */
+        .mobile-menu-overlay {
+            /* Use the highest possible z-index */
+            z-index: 2147483647 !important;
+            /* Create new stacking context */
+            isolation: isolate;
+            /* Ensure it covers everything */
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+        
+        /* Prevent body scroll when menu is open */
+        body.menu-open {
+            overflow: hidden !important;
+            position: fixed !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        /* Ensure menu elements are properly layered */
+        .mobile-menu-overlay .mobile-menu-close,
+        .mobile-menu-overlay .mobile-menu-brand {
+            z-index: 2147483647 !important;
+        }
+        
+        .mobile-menu-overlay .mobile-nav-menu {
+            z-index: 2147483646 !important;
+        }
         .notification {
             position: fixed;
             top: 2rem;
@@ -3219,7 +3257,7 @@
             }
         });
 
-        // Mobile Menu Functions - SMOOTH & PROFESSIONAL
+        // Mobile Menu Functions - FIXED OVERLAP ISSUES
         let mobileMenuOpen = false;
         
         function toggleMobileMenu() {
@@ -3231,11 +3269,21 @@
             if (mobileMenuOpen) {
                 overlay.classList.add('active');
                 toggler.classList.add('menu-open');
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
+                document.body.classList.add('menu-open');
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+                document.body.style.height = '100%';
+                // Force highest z-index
+                overlay.style.zIndex = '2147483647';
             } else {
                 overlay.classList.remove('active');
                 toggler.classList.remove('menu-open');
-                document.body.style.overflow = ''; // Restore scroll
+                document.body.classList.remove('menu-open');
+                document.body.style.overflow = '';
+                document.body.style.position = '';
+                document.body.style.width = '';
+                document.body.style.height = '';
             }
         }
         
@@ -3246,7 +3294,11 @@
             mobileMenuOpen = false;
             overlay.classList.remove('active');
             toggler.classList.remove('menu-open');
+            document.body.classList.remove('menu-open');
             document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.height = '';
         }
         
         // Close mobile menu on escape key
