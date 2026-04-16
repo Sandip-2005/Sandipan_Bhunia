@@ -764,16 +764,18 @@
         }
 
         .navbar-scrolled {
-            background: rgba(255, 255, 255, 0.98) !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            padding: 0.6rem 0; /* Reduced scrolled padding */
-            height: 65px; /* Smaller when scrolled */
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 1rem 0; /* Original padding */
+            border-bottom: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
         }
 
         .dark-mode .navbar-scrolled {
-            background: rgba(15, 15, 35, 0.98) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
         }
 
         /* Enhanced navbar brand - SUPER VISIBLE & CONTRAST FIXED */
@@ -792,6 +794,22 @@
             white-space: nowrap;
             overflow: visible;
             max-width: none;
+            border-radius: 20px;
+        }
+        
+        /* Glassmorphism badge for scrolled brand name to ensure visibility */
+        .navbar-scrolled .navbar-brand {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+        }
+
+        .dark-mode .navbar-scrolled .navbar-brand {
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .navbar-brand:hover {
@@ -855,72 +873,69 @@
 
         @media (max-width: 768px) {
             .navbar-custom {
-                border-bottom: 1px solid rgba(15,23,42,0.08);
+                background: transparent !important;
+                border-bottom: none !important;
+                box-shadow: none !important;
             }
 
-            body:not(.dark-mode) .navbar-custom {
-                background: rgba(255,255,255,0.95) !important;
+            .navbar-custom.navbar-scrolled {
+                background: rgba(15, 23, 42, 0.82) !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+                box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18) !important;
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                transition: all 0.35s ease-in-out;
             }
 
-            body.dark-mode .navbar-custom {
-                background: rgba(15,23,42,0.95) !important;
-                border-bottom: 1px solid rgba(255,255,255,0.12);
+            body.dark-mode .navbar-custom.navbar-scrolled {
+                background: rgba(8, 12, 25, 0.88) !important;
             }
 
             .navbar-custom .container {
                 position: relative;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0 1rem;
             }
 
             .navbar-brand {
                 font-size: 1rem !important;
                 letter-spacing: 0.2px;
                 z-index: 2;
+                max-width: calc(100% - 150px);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
             body:not(.dark-mode) .navbar-custom .navbar-brand,
             body:not(.dark-mode) .navbar-custom .theme-toggle,
-            body:not(.dark-mode) .navbar-custom .navbar-toggler {
-                color: #111827 !important;
-            }
-
+            body:not(.dark-mode) .navbar-custom .navbar-toggler,
             body.dark-mode .navbar-custom .navbar-brand,
             body.dark-mode .navbar-custom .theme-toggle,
             body.dark-mode .navbar-custom .navbar-toggler {
-                color: #f8fafc !important;
+                color: #ffffff !important;
             }
 
             .navbar-custom .brand-initial,
             .navbar-custom .brand-name {
-                color: #111827 !important;
-                text-shadow: none;
-            }
-
-            body.dark-mode .navbar-custom .brand-initial,
-            body.dark-mode .navbar-custom .brand-name {
                 color: #ffffff !important;
-                text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+                text-shadow: none;
             }
 
             .theme-toggle {
                 margin-right: 0.5rem;
-                background: rgba(255,255,255,0.95);
-                border-color: rgba(15,23,42,0.1);
-            }
-
-            body.dark-mode .theme-toggle {
-                background: rgba(255,255,255,0.08);
-                border-color: rgba(255,255,255,0.15);
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(255, 255, 255, 0.18);
+                flex-shrink: 0;
             }
 
             .navbar-toggler {
-                background: #f8fafc;
-                border: 1px solid rgba(15,23,42,0.12);
+                background: rgba(255, 255, 255, 0.14);
+                border: 1px solid rgba(255, 255, 255, 0.18);
                 margin-left: auto;
-            }
-
-            body.dark-mode .navbar-toggler {
-                background: rgba(255,255,255,0.12);
-                border-color: rgba(255,255,255,0.18);
+                flex-shrink: 0;
             }
 
             .navbar-custom .navbar-collapse {
@@ -2194,18 +2209,64 @@
         footer h6 {
             color: #ffffff !important;
         }
+        /* Scroll to Top Button */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffffff;
+            color: #ef4444; /* red icon matching screenshot */
+            border: 2px solid transparent;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Light drop shadow */
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .scroll-top-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            color: #dc2626;
+        }
+
+        @media (max-width: 768px) {
+            .scroll-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#home">
+        <div class="container d-flex flex-row justify-content-between align-items-center flex-nowrap">
+            <a class="navbar-brand fw-bold mb-0 text-truncate" href="#home" style="max-width: 60%;">
                 <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
             </a>
             
-            <div class="d-flex align-items-center order-lg-3 gap-2">
+            <div class="d-flex flex-row align-items-center order-lg-3 gap-2 flex-nowrap flex-shrink-0">
                 <!-- Theme Toggle -->
                 <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
                     <i class="fas fa-sun theme-icon-light"></i>
@@ -2338,9 +2399,8 @@
 
     <!-- Scroll to Top Button -->
     <button id="scrollTopBtn" onclick="scrollToTop()" class="scroll-top-btn" title="Go to top">
-        <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-chevron-up"></i>
     </button>
-
 
     <!-- Main Content -->
     <main>
@@ -2618,7 +2678,7 @@
             }
             
             // Handle Scroll Top Button visibility
-            if (scrollPosition > 300) {
+            if (scrollPosition > 200) {
                 if(scrollTopBtn) scrollTopBtn.classList.add('visible');
             } else {
                 if(scrollTopBtn) scrollTopBtn.classList.remove('visible');
