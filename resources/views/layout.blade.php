@@ -1806,22 +1806,22 @@
         /* Category Headers */
         .category-header {
             position: relative;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem; /* Reduced from 2rem */
         }
         
         .category-title {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            font-size: 1.8rem;
+            gap: 0.75rem; /* Reduced from 1rem */
+            font-size: 1.6rem; /* Slightly reduced */
             font-weight: 800;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem; /* Reduced from 0.5rem */
         }
         
         .category-icon {
-            font-size: 2rem;
+            font-size: 1.8rem; /* Slightly reduced */
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1830,17 +1830,17 @@
         }
         
         .category-line {
-            height: 4px;
+            height: 3px; /* Slightly reduced */
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), transparent);
             border-radius: 2px;
             width: 100%;
-            max-width: 200px;
+            max-width: 150px; /* Reduced from 200px */
         }
         
-        /* Skill Cards - 3D Flip Design */
+        /* Skill Cards - 3D Flip Design - REDUCED HEIGHT */
         .skill-card {
             perspective: 1000px;
-            height: 280px;
+            height: 240px; /* Reduced from 280px */
             cursor: pointer;
         }
         
@@ -1863,13 +1863,13 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 24px;
-            padding: 2rem 1.5rem;
+            border-radius: 20px; /* Slightly reduced */
+            padding: 1.5rem 1rem; /* Reduced padding */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Reduced shadow */
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
@@ -1890,18 +1890,21 @@
             transform: rotateY(180deg);
         }
         
-        /* Skill Icon */
+        /* Skill Icon - ENHANCED VISIBILITY */
         .skill-icon-wrapper {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem; /* Reduced from 1.5rem */
         }
         
         .skill-icon {
-            font-size: 3.5rem;
+            font-size: 4rem; /* Increased size */
             margin-bottom: 0.5rem;
             position: relative;
             z-index: 2;
             animation: skillIconFloat 3s ease-in-out infinite;
+            /* Enhanced visibility */
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         .skill-icon-default {
@@ -1909,17 +1912,20 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+            /* Fallback for browsers that don't support background-clip */
+            color: var(--primary-color);
         }
         
+        /* Enhanced glow effect */
         .skill-glow {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+            width: 100px; /* Increased size */
+            height: 100px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
             border-radius: 50%;
             animation: skillGlow 2s ease-in-out infinite alternate;
             z-index: 1;
@@ -1935,23 +1941,23 @@
             100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
         }
         
-        /* Skill Name */
+        /* Skill Name - REDUCED SPACING */
         .skill-name,
         .skill-name-back {
-            font-size: 1.2rem;
+            font-size: 1.1rem; /* Slightly reduced */
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem; /* Reduced from 1rem */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        /* Skill Level */
+        /* Skill Level - REDUCED SPACING */
         .skill-level {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 0.25rem; /* Reduced from 0.5rem */
+            margin-bottom: 0.75rem; /* Reduced from 1rem */
         }
         
         .skill-stars {
@@ -1983,10 +1989,10 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         
-        /* Skill Progress */
+        /* Skill Progress - REDUCED SPACING */
         .skill-progress-wrapper {
             width: 100%;
-            margin-top: 1rem;
+            margin-top: 0.5rem; /* Reduced from 1rem */
         }
         
         .skill-progress-track {
@@ -2071,45 +2077,54 @@
             animation-duration: 1s;
         }
         
-        /* Mobile Responsive */
+        /* Mobile Responsive - COMPACT SPACING */
         @media (max-width: 768px) {
             .skill-card {
-                height: 250px;
+                height: 200px; /* Further reduced for mobile */
             }
             
             .skill-card-front,
             .skill-card-back {
-                padding: 1.5rem 1rem;
+                padding: 1rem 0.75rem; /* Reduced mobile padding */
             }
             
             .skill-icon {
-                font-size: 2.5rem;
+                font-size: 3rem; /* Reduced mobile icon size */
             }
             
             .category-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem; /* Reduced mobile title */
             }
             
             .skill-name,
             .skill-name-back {
-                font-size: 1rem;
+                font-size: 1rem; /* Reduced mobile name size */
+            }
+            
+            .skill-icon-wrapper {
+                margin-bottom: 0.75rem; /* Reduced mobile margin */
             }
         }
         
         @media (max-width: 576px) {
             .skill-card {
-                height: 220px;
+                height: 180px; /* Further reduced for small mobile */
             }
             
             .skill-icon {
-                font-size: 2rem;
+                font-size: 2.5rem; /* Further reduced */
             }
             
             .category-title {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.25rem; /* Reduced gap */
                 text-align: center;
+            }
+            
+            .skill-card-front,
+            .skill-card-back {
+                padding: 0.75rem 0.5rem; /* Minimal padding for small screens */
             }
         }
 
@@ -3318,19 +3333,18 @@
         // CV Viewer Functions
         let currentCVUrl = '';
         
-        function viewCV(cvId, cvLabel, cvUrl) {
+        function viewCV(cvId, cvLabel, cvViewRoute, cvDownloadRoute) {
             const modal = document.getElementById('cvModal');
             const title = document.getElementById('cvModalTitle');
             const viewer = document.getElementById('cvViewer');
             const downloadBtn = document.getElementById('cvDownloadBtn');
             
-            // Use the view route for inline viewing
-            const viewUrl = `/cv/view/${cvId}`;
-            currentCVUrl = viewUrl;
+            // Use the passed routes instead of hardcoding absolute paths
+            currentCVUrl = cvViewRoute;
             
             title.textContent = cvLabel;
-            viewer.src = viewUrl;
-            downloadBtn.href = `/cv/download/${cvId}`;
+            viewer.src = cvViewRoute;
+            downloadBtn.href = cvDownloadRoute || `/cv/download/${cvId}`;
             
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -3578,6 +3592,52 @@
         });
     </script>
 
+    <style>
+        /* Custom Notifications */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 350px;
+        }
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+        .notification-success {
+            background-color: var(--success-color, #10b981);
+            color: #fff;
+        }
+        .notification-error {
+            background-color: var(--danger-color, #ef4444);
+            color: #fff;
+        }
+        .notification-info {
+            background-color: var(--primary-color, #6366f1);
+            color: #fff;
+        }
+        .notification-close {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            opacity: 0.8;
+            margin-left: auto;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
     @stack('scripts')
 </body>
 </html>

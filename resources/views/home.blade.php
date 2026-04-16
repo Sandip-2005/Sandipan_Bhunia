@@ -60,7 +60,7 @@
                                 <a href="{{ $cv->download_url }}" class="btn-cv-download" target="_blank" title="Download {{ $cv->label }}">
                                     <i class="fas fa-download me-2"></i>{{ $cv->label }}
                                 </a>
-                                <button onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ route('cv.view', $cv->id) }}')" class="btn-cv-view" title="View {{ $cv->label }}">
+                                <button onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ route('cv.view', $cv->id) }}', '{{ $cv->download_url }}')" class="btn-cv-view" title="View {{ $cv->label }}">
                                     <i class="fas fa-eye me-2"></i>View
                                 </button>
                             </div>
@@ -268,8 +268,8 @@
         </div>
         
         @foreach($skillsByCategory as $category => $categorySkills)
-        <div class="mb-5">
-            <div class="category-header mb-4">
+        <div class="mb-4"> <!-- Reduced from mb-5 -->
+            <div class="category-header mb-3"> <!-- Reduced from mb-4 -->
                 <h3 class="category-title">
                     @if($category == 'backend')
                         <i class="fas fa-server category-icon"></i>
@@ -294,7 +294,7 @@
                 <div class="category-line"></div>
             </div>
             
-            <div class="row g-4">
+            <div class="row g-3"> <!-- Reduced gap from g-4 -->
                 @foreach($categorySkills as $skill)
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="skill-card" data-skill="{{ strtolower($skill->name) }}">

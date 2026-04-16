@@ -97,18 +97,46 @@ class AdminController extends Controller
     public function uploadProfilePhoto(Request $request)
     {
         try {
+            // Enhanced validation with better error messages
             $request->validate([
-                'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // Increased to 5MB and added more formats
+                'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // 5MB max
+            ], [
+                'profile_photo.required' => 'Please select a photo to upload.',
+                'profile_photo.image' => 'The file must be an image.',
+                'profile_photo.mimes' => 'Only JPEG, PNG, JPG, GIF, and WebP images are allowed.',
+                'profile_photo.max' => 'The image size must not exceed 5MB.'
             ]);
 
             if ($request->hasFile('profile_photo')) {
                 $file = $request->file('profile_photo');
+                
+                // Check if file is valid
+                if (!$file->isValid()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'The uploaded file is corrupted or invalid.'
+                    ], 400);
+                }
+                
                 $filename = 'profile_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 
-                // Create uploads directory if it doesn't exist
+                // Create uploads directory if it doesn't exist with proper permissions
                 $uploadPath = public_path('uploads/profile');
                 if (!file_exists($uploadPath)) {
-                    mkdir($uploadPath, 0755, true);
+                    if (!mkdir($uploadPath, 0755, true)) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Failed to create upload directory. Please check permissions.'
+                        ], 500);
+                    }
+                }
+                
+                // Check if directory is writable
+                if (!is_writable($uploadPath)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Upload directory is not writable. Please check permissions.'
+                    ], 500);
                 }
                 
                 // Delete old profile photo if exists
@@ -140,24 +168,30 @@ class AdminController extends Controller
                 } else {
                     return response()->json([
                         'success' => false, 
-                        'message' => 'Failed to move uploaded file'
+                        'message' => 'Failed to save the uploaded file. Please try again.'
                     ], 500);
                 }
             }
 
             return response()->json([
                 'success' => false, 
-                'message' => 'No file uploaded'
+                'message' => 'No file was uploaded. Please select a photo.'
             ], 400);
             
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $e->errors()
+                'message' => 'Validation failed: ' . implode(' ', array_map(function($errors) {
+                    return implode(' ', $errors);
+                }, $e->errors()))
             ], 422);
         } catch (\Exception $e) {
-            \Log::error('Profile photo upload error: ' . $e->getMessage());
+            \Log::error('Profile photo upload error: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Upload failed: ' . $e->getMessage()

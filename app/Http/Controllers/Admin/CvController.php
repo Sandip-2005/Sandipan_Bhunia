@@ -20,7 +20,7 @@ class CvController extends Controller
     {
         $request->validate([
             'label' => 'required|string|max:255',
-            'cv_file' => 'required|file|mimes:pdf,doc,docx|max:5120',
+            'cv_file' => 'required|file|max:5120',
             'is_public' => 'boolean',
             'sort_order' => 'integer'
         ]);
@@ -59,7 +59,7 @@ class CvController extends Controller
     {
         $request->validate([
             'label' => 'required|string|max:255',
-            'cv_file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'cv_file' => 'nullable|file|max:5120',
             'is_public' => 'boolean',
             'sort_order' => 'integer'
         ]);
