@@ -1,8 +1,8 @@
 @extends('admin.layout')
 
-@section('title', 'Create QA Achievement')
-@section('page-title', 'Create QA Achievement')
-@section('page-description', 'Add a new quality assurance achievement or testing milestone')
+@section('title', 'Create Achievement')
+@section('page-title', 'Create Achievement')
+@section('page-description', 'Add a new achievement, certification, award, or milestone')
 
 @section('content')
 <div class="max-w-4xl mx-auto">

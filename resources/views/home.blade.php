@@ -258,34 +258,152 @@
 </section>
 @endif
 
-<!-- Skills Section -->
+<!-- Skills Section - ENHANCED ATTRACTIVE DESIGN -->
 @if($skills->count() > 0)
 <section id="skills" class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold text-white mb-4">Skills & Technologies</h2>
-            <p class="lead text-white-50">Technologies I work with</p>
+            <h2 class="display-5 fw-bold text-white mb-4">💻 Skills & Technologies</h2>
+            <p class="lead text-white-50">Technologies I work with and my expertise levels</p>
         </div>
         
         @foreach($skillsByCategory as $category => $categorySkills)
         <div class="mb-5">
-            <h4 class="fw-bold text-white mb-4 text-capitalize">{{ str_replace('_', ' ', $category) }}</h4>
+            <div class="category-header mb-4">
+                <h3 class="category-title">
+                    @if($category == 'backend')
+                        <i class="fas fa-server category-icon"></i>
+                        <span>Backend Development</span>
+                    @elseif($category == 'frontend')
+                        <i class="fas fa-palette category-icon"></i>
+                        <span>Frontend Development</span>
+                    @elseif($category == 'database')
+                        <i class="fas fa-database category-icon"></i>
+                        <span>Database Technologies</span>
+                    @elseif($category == 'tools')
+                        <i class="fas fa-tools category-icon"></i>
+                        <span>Development Tools</span>
+                    @elseif($category == 'framework')
+                        <i class="fas fa-layer-group category-icon"></i>
+                        <span>Frameworks & Libraries</span>
+                    @else
+                        <i class="fas fa-code category-icon"></i>
+                        <span>{{ ucfirst(str_replace('_', ' ', $category)) }}</span>
+                    @endif
+                </h3>
+                <div class="category-line"></div>
+            </div>
+            
             <div class="row g-4">
                 @foreach($categorySkills as $skill)
-                <div class="col-md-6 col-lg-3">
-                    <div class="handmade-card p-4 text-center h-100">
-                        @if($skill->icon)
-                        <div class="mb-2" style="font-size: 1.8rem;">{{ $skill->icon }}</div>
-                        @endif
-                        <h6 class="fw-bold text-white mb-2">{{ $skill->name }}</h6>
-                        <div class="mb-2">
-                            @for($i = 1; $i <= 5; $i++)
-                                <i class="fas fa-star {{ $i <= $skill->proficiency_level ? 'text-warning' : 'text-muted' }}" style="font-size: 0.7rem;"></i>
-                            @endfor
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="skill-card" data-skill="{{ strtolower($skill->name) }}">
+                        <div class="skill-card-inner">
+                            <!-- Front of card -->
+                            <div class="skill-card-front">
+                                <div class="skill-icon-wrapper">
+                                    @if($skill->icon)
+                                        <div class="skill-icon">{{ $skill->icon }}</div>
+                                    @else
+                                        <div class="skill-icon skill-icon-default">
+                                            @if(stripos($skill->name, 'php') !== false)
+                                                🐘
+                                            @elseif(stripos($skill->name, 'javascript') !== false)
+                                                ⚡
+                                            @elseif(stripos($skill->name, 'html') !== false)
+                                                🌐
+                                            @elseif(stripos($skill->name, 'css') !== false)
+                                                🎨
+                                            @elseif(stripos($skill->name, 'mysql') !== false)
+                                                🗄️
+                                            @elseif(stripos($skill->name, 'laravel') !== false)
+                                                🔥
+                                            @elseif(stripos($skill->name, 'bootstrap') !== false)
+                                                🅱️
+                                            @elseif(stripos($skill->name, 'git') !== false)
+                                                📚
+                                            @else
+                                                💻
+                                            @endif
+                                        </div>
+                                    @endif
+                                    <div class="skill-glow"></div>
+                                </div>
+                                
+                                <h4 class="skill-name">{{ $skill->name }}</h4>
+                                
+                                <div class="skill-level">
+                                    <div class="skill-stars">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <i class="fas fa-star {{ $i <= $skill->proficiency_level ? 'active' : '' }}" 
+                                               style="animation-delay: {{ $i * 0.1 }}s"></i>
+                                        @endfor
+                                    </div>
+                                    <span class="skill-percentage">{{ $skill->proficiency_level * 20 }}%</span>
+                                </div>
+                                
+                                <div class="skill-progress-wrapper">
+                                    <div class="skill-progress-track">
+                                        <div class="skill-progress-fill" data-width="{{ $skill->proficiency_level * 20 }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Back of card -->
+                            <div class="skill-card-back">
+                                <div class="skill-details">
+                                    <h4 class="skill-name-back">{{ $skill->name }}</h4>
+                                    @if($skill->description)
+                                        <p class="skill-description">{{ $skill->description }}</p>
+                                    @else
+                                        <p class="skill-description">
+                                            @if(stripos($skill->name, 'php') !== false)
+                                                Server-side scripting language for web development
+                                            @elseif(stripos($skill->name, 'javascript') !== false)
+                                                Dynamic programming language for interactive web experiences
+                                            @elseif(stripos($skill->name, 'html') !== false)
+                                                Markup language for structuring web content
+                                            @elseif(stripos($skill->name, 'css') !== false)
+                                                Styling language for beautiful web interfaces
+                                            @elseif(stripos($skill->name, 'mysql') !== false)
+                                                Relational database management system
+                                            @elseif(stripos($skill->name, 'laravel') !== false)
+                                                PHP framework for elegant web applications
+                                            @else
+                                                Professional expertise in {{ $skill->name }}
+                                            @endif
+                                        </p>
+                                    @endif
+                                    
+                                    <div class="skill-experience">
+                                        <div class="experience-item">
+                                            <i class="fas fa-clock"></i>
+                                            <span>
+                                                @if($skill->proficiency_level >= 4)
+                                                    3+ Years Experience
+                                                @elseif($skill->proficiency_level >= 3)
+                                                    2+ Years Experience
+                                                @else
+                                                    1+ Year Experience
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div class="experience-item">
+                                            <i class="fas fa-project-diagram"></i>
+                                            <span>
+                                                @if($skill->proficiency_level >= 4)
+                                                    10+ Projects
+                                                @elseif($skill->proficiency_level >= 3)
+                                                    5+ Projects
+                                                @else
+                                                    Multiple Projects
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        @if($skill->description)
-                        <small class="text-white-50">{{ $skill->description }}</small>
-                        @endif
                     </div>
                 </div>
                 @endforeach
@@ -296,13 +414,13 @@
 </section>
 @endif
 
-<!-- QA Toolkit Section -->
+<!-- Achievements Section -->
 @if($qaAchievements->count() > 0)
-<section id="qa-toolkit" class="py-5">
+<section id="achievements" class="py-5">
     <div class="container">
         <div class="text-center mb-5">
-            <h2 class="display-5 fw-bold text-white mb-4">🔍 QA Toolkit</h2>
-            <p class="lead text-white-50">Quality Assurance achievements and expertise</p>
+            <h2 class="display-5 fw-bold text-white mb-4">🏆 Achievements</h2>
+            <p class="lead text-white-50">My accomplishments, certifications, and milestones</p>
         </div>
         
         <div class="row g-4">

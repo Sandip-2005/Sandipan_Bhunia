@@ -1,13 +1,13 @@
 @extends('admin.layout')
 
-@section('title', 'QA Achievements')
-@section('page-title', 'QA Achievements')
-@section('page-description', 'Manage your quality assurance achievements and testing milestones')
+@section('title', 'Achievements')
+@section('page-title', 'Achievements')
+@section('page-description', 'Manage your achievements, certifications, awards, and milestones')
 
 @section('content')
 <div class="flex justify-between items-center mb-6">
     <div>
-        <h3 class="text-xl font-semibold text-white">All QA Achievements</h3>
+        <h3 class="text-xl font-semibold text-white">All Achievements</h3>
         <p class="text-gray-400">{{ $achievements->total() }} total achievements</p>
     </div>
     <a href="{{ route('admin.qa-achievements.create') }}" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors">

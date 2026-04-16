@@ -1183,16 +1183,21 @@
                 display: none;
             }
             
-            /* Mobile menu overlay - FULL SCREEN ATTRACTIVE MENU */
+            /* Mobile menu overlay - ENHANCED ATTRACTIVE DESIGN */
             .mobile-menu-overlay {
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100vw;
                 height: 100vh;
-                background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 50%, rgba(51, 65, 85, 0.98) 100%);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
+                background: linear-gradient(135deg, 
+                    rgba(15, 23, 42, 0.98) 0%, 
+                    rgba(30, 41, 59, 0.98) 25%, 
+                    rgba(51, 65, 85, 0.98) 50%,
+                    rgba(30, 41, 59, 0.98) 75%,
+                    rgba(15, 23, 42, 0.98) 100%);
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
                 z-index: 9999;
                 display: flex;
                 flex-direction: column;
@@ -1200,8 +1205,31 @@
                 align-items: center;
                 opacity: 0;
                 visibility: hidden;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                transform: scale(0.9);
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: scale(0.95);
+                overflow: hidden;
+            }
+            
+            /* Animated background particles */
+            .mobile-menu-overlay::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: 
+                    radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+                animation: particleFloat 8s ease-in-out infinite;
+                pointer-events: none;
+            }
+            
+            @keyframes particleFloat {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                33% { transform: translateY(-20px) rotate(1deg); }
+                66% { transform: translateY(-10px) rotate(-1deg); }
             }
             
             .mobile-menu-overlay.active {
@@ -1211,65 +1239,110 @@
             }
             
             .dark-mode .mobile-menu-overlay {
-                background: linear-gradient(135deg, rgba(5, 5, 20, 0.98) 0%, rgba(15, 15, 35, 0.98) 50%, rgba(25, 25, 45, 0.98) 100%);
+                background: linear-gradient(135deg, 
+                    rgba(5, 5, 20, 0.98) 0%, 
+                    rgba(15, 15, 35, 0.98) 25%, 
+                    rgba(25, 25, 45, 0.98) 50%,
+                    rgba(15, 15, 35, 0.98) 75%,
+                    rgba(5, 5, 20, 0.98) 100%);
             }
             
-            /* Mobile menu close button */
+            /* Mobile menu close button - ENHANCED */
             .mobile-menu-close {
                 position: absolute;
                 top: 2rem;
                 right: 2rem;
-                width: 50px;
-                height: 50px;
-                background: rgba(255, 255, 255, 0.1);
-                border: 2px solid rgba(255, 255, 255, 0.2);
+                width: 55px;
+                height: 55px;
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.3));
+                border: 2px solid rgba(239, 68, 68, 0.4);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 color: #ffffff;
-                font-size: 1.2rem;
+                font-size: 1.3rem;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 10000;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
             }
             
             .mobile-menu-close:hover {
-                background: rgba(255, 255, 255, 0.2);
-                border-color: rgba(255, 255, 255, 0.4);
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(220, 38, 38, 0.5));
+                border-color: rgba(239, 68, 68, 0.6);
                 transform: rotate(90deg) scale(1.1);
+                box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
             }
             
-            /* Mobile menu navigation */
+            /* Mobile menu navigation - ENHANCED ATTRACTIVE DESIGN */
             .mobile-nav-menu {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 1.5rem;
-                padding: 2rem;
-                max-width: 300px;
+                gap: 1rem;
+                padding: 3rem 2rem 2rem;
+                max-width: 350px;
                 width: 100%;
+                position: relative;
+                z-index: 2;
+            }
+            
+            /* Menu title */
+            .mobile-menu-title {
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: #ffffff;
+                text-align: center;
+                margin-bottom: 1rem;
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeInUp 0.6s ease-out 0.2s forwards;
             }
             
             .mobile-nav-link {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
                 width: 100%;
                 padding: 1.2rem 2rem;
                 color: #ffffff !important;
                 text-decoration: none;
-                text-align: center;
+                text-align: left;
                 font-size: 1.1rem;
                 font-weight: 600;
-                background: rgba(255, 255, 255, 0.08);
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12));
                 border: 2px solid rgba(255, 255, 255, 0.15);
-                border-radius: 16px;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                border-radius: 20px;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
                 position: relative;
                 overflow: hidden;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 transform: translateY(30px);
                 opacity: 0;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                gap: 1rem;
+            }
+            
+            .mobile-nav-link i {
+                font-size: 1.2rem;
+                width: 24px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-nav-link .nav-text {
+                flex: 1;
+            }
+            
+            .mobile-nav-link .nav-arrow {
+                font-size: 0.9rem;
+                opacity: 0.7;
+                transition: all 0.3s ease;
             }
             
             .mobile-menu-overlay.active .mobile-nav-link {
@@ -1277,7 +1350,7 @@
                 opacity: 1;
             }
             
-            /* Staggered animation for menu items */
+            /* Enhanced staggered animation for menu items */
             .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
             .mobile-nav-link:nth-child(2) { transition-delay: 0.15s; }
             .mobile-nav-link:nth-child(3) { transition-delay: 0.2s; }
@@ -1285,6 +1358,7 @@
             .mobile-nav-link:nth-child(5) { transition-delay: 0.3s; }
             .mobile-nav-link:nth-child(6) { transition-delay: 0.35s; }
             .mobile-nav-link:nth-child(7) { transition-delay: 0.4s; }
+            .mobile-nav-link:nth-child(8) { transition-delay: 0.45s; }
             
             .mobile-nav-link::before {
                 content: '';
@@ -1293,8 +1367,8 @@
                 left: -100%;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-                transition: left 0.6s ease;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+                transition: left 0.8s ease;
             }
             
             .mobile-nav-link:hover::before {
@@ -1302,56 +1376,132 @@
             }
             
             .mobile-nav-link:hover {
-                background: rgba(255, 255, 255, 0.15);
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.2));
                 border-color: rgba(255, 255, 255, 0.3);
                 transform: translateY(-4px) scale(1.02);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
                 color: #ffffff !important;
             }
             
-            /* Mobile menu brand */
+            .mobile-nav-link:hover i {
+                transform: scale(1.2);
+                color: #a78bfa;
+            }
+            
+            .mobile-nav-link:hover .nav-arrow {
+                transform: translateX(5px);
+                opacity: 1;
+            }
+            
+            /* Special styling for different menu items */
+            .mobile-nav-link[href="#home"] i { color: #10b981; }
+            .mobile-nav-link[href="#about"] i { color: #3b82f6; }
+            .mobile-nav-link[href="#projects"] i { color: #8b5cf6; }
+            .mobile-nav-link[href="#upcoming"] i { color: #f59e0b; }
+            .mobile-nav-link[href="#skills"] i { color: #ef4444; }
+            .mobile-nav-link[href="#achievements"] i { color: #06b6d4; }
+            .mobile-nav-link[href="#contact"] i { color: #ec4899; }
+            
+            /* Mobile menu brand - ENHANCED */
             .mobile-menu-brand {
                 position: absolute;
                 top: 2rem;
                 left: 2rem;
-                font-size: 1.2rem;
+                font-size: 1.3rem;
                 font-weight: 900;
                 color: #ffffff;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .mobile-menu-brand::before {
+                content: '💻';
+                font-size: 1.5rem;
+                animation: brandPulse 2s ease-in-out infinite;
+            }
+            
+            @keyframes brandPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.1); }
             }
             
             .mobile-menu-brand .brand-initial {
                 color: #a78bfa;
+                text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
             }
             
-            /* CV Download button in mobile menu */
+            /* CV Download button in mobile menu - ENHANCED */
             .mobile-cv-download {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
                 margin-top: 2rem;
-                padding: 1rem 2rem;
+                padding: 1.2rem 2rem;
                 background: linear-gradient(135deg, #10b981, #059669);
-                border: none;
-                border-radius: 16px;
+                border: 2px solid rgba(16, 185, 129, 0.3);
+                border-radius: 20px;
                 color: #ffffff;
-                font-weight: 600;
+                font-weight: 700;
                 text-decoration: none;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                transition: all 0.3s ease;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
                 transform: translateY(30px);
                 opacity: 0;
+                position: relative;
+                overflow: hidden;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                gap: 1rem;
+            }
+            
+            .mobile-cv-download::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.8s ease;
+            }
+            
+            .mobile-cv-download:hover::before {
+                left: 100%;
             }
             
             .mobile-menu-overlay.active .mobile-cv-download {
                 transform: translateY(0);
                 opacity: 1;
-                transition-delay: 0.5s;
+                transition-delay: 0.6s;
             }
             
             .mobile-cv-download:hover {
-                transform: translateY(-4px) scale(1.05);
-                box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+                transform: translateY(-6px) scale(1.03);
+                box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
                 color: #ffffff;
+                border-color: rgba(16, 185, 129, 0.5);
+                background: linear-gradient(135deg, #059669, #047857);
+            }
+            
+            .mobile-cv-download i:first-child {
+                font-size: 1.2rem;
+            }
+            
+            .mobile-cv-download i:last-child {
+                font-size: 1rem;
+                opacity: 0.8;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-cv-download:hover i:last-child {
+                transform: translateX(3px);
+                opacity: 1;
             }
             
             /* Hide desktop navbar collapse in mobile */
@@ -1645,19 +1795,318 @@
             }
         }
 
-        /* Skills Progress - COMPACT */
-        .skill-progress {
-            height: 6px; /* Thinner progress bar */
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            overflow: hidden;
+        /* ============================================
+           ENHANCED SKILLS SECTION - ATTRACTIVE DESIGN
+        ============================================ */
+        
+        /* Category Headers */
+        .category-header {
+            position: relative;
+            margin-bottom: 2rem;
         }
-
-        .skill-progress-bar {
+        
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-icon {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .category-line {
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), transparent);
+            border-radius: 2px;
+            width: 100%;
+            max-width: 200px;
+        }
+        
+        /* Skill Cards - 3D Flip Design */
+        .skill-card {
+            perspective: 1000px;
+            height: 280px;
+            cursor: pointer;
+        }
+        
+        .skill-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .skill-card:hover .skill-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .skill-card-front,
+        .skill-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .skill-card-front {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .skill-card-back {
+            background: linear-gradient(135deg, 
+                rgba(99, 102, 241, 0.15) 0%, 
+                rgba(236, 72, 153, 0.15) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            transform: rotateY(180deg);
+        }
+        
+        /* Skill Icon */
+        .skill-icon-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .skill-icon {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+            animation: skillIconFloat 3s ease-in-out infinite;
+        }
+        
+        .skill-icon-default {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .skill-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: skillGlow 2s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+        
+        @keyframes skillIconFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes skillGlow {
+            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
+        }
+        
+        /* Skill Name */
+        .skill-name,
+        .skill-name-back {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Skill Level */
+        .skill-level {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-stars {
+            display: flex;
+            gap: 0.25rem;
+        }
+        
+        .skill-stars i {
+            font-size: 1rem;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            animation: starPulse 2s ease-in-out infinite;
+        }
+        
+        .skill-stars i.active {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .skill-percentage {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Skill Progress */
+        .skill-progress-wrapper {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .skill-progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .skill-progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 8px;
-            transition: width 1s ease-in-out;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+        
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        /* Back Card Content */
+        .skill-details {
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .skill-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .skill-experience {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .experience-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .experience-item i {
+            color: var(--accent-color);
+            font-size: 1rem;
+        }
+        
+        /* Hover Effects */
+        .skill-card:hover .skill-card-front {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .skill-card:hover .skill-glow {
+            animation-duration: 1s;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .skill-card {
+                height: 250px;
+            }
+            
+            .skill-card-front,
+            .skill-card-back {
+                padding: 1.5rem 1rem;
+            }
+            
+            .skill-icon {
+                font-size: 2.5rem;
+            }
+            
+            .category-title {
+                font-size: 1.5rem;
+            }
+            
+            .skill-name,
+            .skill-name-back {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .skill-card {
+                height: 220px;
+            }
+            
+            .skill-icon {
+                font-size: 2rem;
+            }
+            
+            .category-title {
+                font-size: 1.3rem;
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
         }
 
         /* Mobile Responsive Improvements */
@@ -2204,6 +2653,84 @@
         footer h6 {
             color: #ffffff !important;
         }
+
+        /* ============================================
+           NOTIFICATION SYSTEM
+        ============================================ */
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 10001;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .notification-success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9));
+        }
+
+        .notification-error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9));
+        }
+
+        .notification-info {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.9));
+        }
+
+        .notification-content {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 0.25rem;
+            margin-left: auto;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Mobile notification adjustments */
+        @media (max-width: 768px) {
+            .notification {
+                top: 1rem;
+                right: 1rem;
+                left: 1rem;
+                max-width: none;
+            }
+
+            .notification-content {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
         /* Scroll to Top Button */
         .scroll-top-btn {
             position: fixed;
@@ -2441,7 +2968,7 @@
                     @endif
                     @if($qaAchievements->count() > 0)
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#qa-toolkit">QA Toolkit</a>
+                        <a class="nav-link text-white" href="#achievements">Achievements</a>
                     </li>
                     @endif
                     <li class="nav-item">
@@ -2461,46 +2988,64 @@
             <i class="fas fa-times"></i>
         </button>
         
-        <div class="mobile-nav-menu">
+        <nav class="mobile-nav-menu">
+            <div class="mobile-menu-title">Navigation Menu</div>
+            
             <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-home me-2"></i>Home
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Home</span>
+                <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-user me-2"></i>About
+                <i class="fas fa-user"></i>
+                <span class="nav-text">About Me</span>
+                <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             @if($projects->count() > 0)
             <a href="#projects" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-code me-2"></i>Projects
+                <i class="fas fa-code"></i>
+                <span class="nav-text">Projects</span>
+                <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             @endif
             @if($upcomingProjects->count() > 0)
             <a href="#upcoming" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-flask me-2"></i>In the Lab
+                <i class="fas fa-flask"></i>
+                <span class="nav-text">In the Lab</span>
+                <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             @endif
             @if($skills->count() > 0)
             <a href="#skills" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-cogs me-2"></i>Skills
+                <i class="fas fa-cogs"></i>
+                <span class="nav-text">Skills</span>
+                <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             @endif
             @if($qaAchievements->count() > 0)
-            <a href="#qa-toolkit" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-bug me-2"></i>QA Toolkit
+            <a href="#achievements" class="mobile-nav-link" onclick="closeMobileMenu()">
+                <i class="fas fa-trophy"></i>
+                <span class="nav-text">Achievements</span>
+                <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             @endif
             <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-envelope me-2"></i>Contact
+                <i class="fas fa-envelope"></i>
+                <span class="nav-text">Contact</span>
+                <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             
-            <!-- CV Download in Mobile Menu -->
+            <!-- CV Download in Mobile Menu - ENHANCED -->
             @if(isset($publicCvs) && $publicCvs->count() > 0)
                 @foreach($publicCvs as $cv)
                 <a href="{{ $cv->download_url }}" class="mobile-cv-download" target="_blank" onclick="closeMobileMenu()">
-                    <i class="fas fa-download me-2"></i>{{ $cv->label }}
+                    <i class="fas fa-download"></i>
+                    <span>{{ $cv->label }}</span>
+                    <i class="fas fa-external-link-alt"></i>
                 </a>
                 @endforeach
             @endif
-        </div>
+        </nav>
     </div>
 
     <!-- CV Viewer Modal -->
@@ -2574,7 +3119,7 @@
                         <li class="mb-2"><a href="#about" class="footer-link text-decoration-none hover-primary">About</a></li>
                         <li class="mb-2"><a href="#projects" class="footer-link text-decoration-none hover-primary">Projects</a></li>
                         <li class="mb-2"><a href="#skills" class="footer-link text-decoration-none hover-primary">Skills</a></li>
-                        <li class="mb-2"><a href="#qa-toolkit" class="footer-link text-decoration-none hover-primary">QA Toolkit</a></li>
+                        <li class="mb-2"><a href="#achievements" class="footer-link text-decoration-none hover-primary">Achievements</a></li>
                         <li class="mb-2"><a href="#contact" class="footer-link text-decoration-none hover-primary">Contact</a></li>
                     </ul>
                 </div>
@@ -2868,12 +3413,19 @@
             return true;
         }
 
-        // Contact form handler
+        // Contact form handler - FIXED ERROR HANDLING
         function handleContact(event) {
             event.preventDefault();
+            
             const form = event.target;
             const formData = new FormData(form);
-
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+            submitBtn.disabled = true;
+            
             fetch('{{ route("contact") }}', {
                 method: 'POST',
                 body: formData,
@@ -2886,6 +3438,11 @@
             .then(async response => {
                 const data = await response.json();
                 if (!response.ok) {
+                    if (data.errors) {
+                        // Validation errors
+                        const errorMessages = Object.values(data.errors).flat().join('\n');
+                        throw new Error('Please fix the following errors:\n' + errorMessages);
+                    }
                     const message = data.message || 'Please check your form and try again.';
                     throw new Error(message);
                 }
@@ -2893,28 +3450,79 @@
             })
             .then(data => {
                 if (data.success) {
-                    alert('Message sent successfully! Thank you for reaching out.');
+                    showNotification('Message sent successfully! Thank you for reaching out.', 'success');
                     form.reset();
                 } else {
                     throw new Error(data.message || 'Unable to send message.');
                 }
             })
             .catch(error => {
-                alert(error.message || 'Something went wrong! Please try again.');
+                console.error('Contact form error:', error);
+                showNotification(error.message || 'Failed to send message. Please try again or contact directly via email.', 'error');
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             });
+        }
+        
+        // Notification system
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'} me-2"></i>
+                    <span>${message.replace(/\n/g, '<br>')}</span>
+                    <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 8 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 8000);
         }
         
         // Initialize animations
         document.addEventListener('DOMContentLoaded', function() {
             animateOnScroll();
             
-            // Animate skill progress bars
-            setTimeout(() => {
-                document.querySelectorAll('.skill-progress-bar').forEach(bar => {
-                    const width = bar.getAttribute('data-width');
-                    bar.style.width = width + '%';
+            // Animate skill progress bars with intersection observer
+            const skillProgressObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressFill = entry.target.querySelector('.skill-progress-fill');
+                        if (progressFill) {
+                            const width = progressFill.getAttribute('data-width');
+                            setTimeout(() => {
+                                progressFill.style.width = width + '%';
+                            }, 200);
+                        }
+                    }
                 });
-            }, 500);
+            }, { threshold: 0.5 });
+            
+            // Observe all skill cards
+            document.querySelectorAll('.skill-card').forEach(card => {
+                skillProgressObserver.observe(card);
+            });
+            
+            // Add staggered animation delays for skill cards
+            document.querySelectorAll('.skill-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
         });
     </script>
 

@@ -1,8 +1,8 @@
 @extends('admin.layout')
 
-@section('title', 'Edit QA Achievement')
-@section('page-title', 'Edit QA Achievement')
-@section('page-description', 'Update QA achievement information')
+@section('title', 'Edit Achievement')
+@section('page-title', 'Edit Achievement')
+@section('page-description', 'Update achievement information')
 
 @section('content')
 <div class="max-w-4xl mx-auto">

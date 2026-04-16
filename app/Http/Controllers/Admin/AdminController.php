@@ -96,35 +96,72 @@ class AdminController extends Controller
 
     public function uploadProfilePhoto(Request $request)
     {
-        $request->validate([
-            'profile_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
+        try {
+            $request->validate([
+                'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120' // Increased to 5MB and added more formats
+            ]);
 
-        if ($request->hasFile('profile_photo')) {
-            $file = $request->file('profile_photo');
-            $filename = 'profile_' . time() . '.' . $file->getClientOriginalExtension();
-            
-            // Create uploads directory if it doesn't exist
-            $uploadPath = public_path('uploads/profile');
-            if (!file_exists($uploadPath)) {
-                mkdir($uploadPath, 0755, true);
+            if ($request->hasFile('profile_photo')) {
+                $file = $request->file('profile_photo');
+                $filename = 'profile_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                // Create uploads directory if it doesn't exist
+                $uploadPath = public_path('uploads/profile');
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                // Delete old profile photo if exists
+                $oldPhoto = Setting::where('key', 'profile_photo')->first();
+                if ($oldPhoto && $oldPhoto->value) {
+                    $oldPath = public_path('uploads/profile/' . $oldPhoto->value);
+                    if (file_exists($oldPath)) {
+                        @unlink($oldPath);
+                    }
+                }
+                
+                // Move the new file
+                if ($file->move($uploadPath, $filename)) {
+                    // Save to settings
+                    Setting::updateOrCreate(
+                        ['key' => 'profile_photo'],
+                        [
+                            'value' => $filename, 
+                            'type' => 'image', 
+                            'group' => 'profile'
+                        ]
+                    );
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Profile photo updated successfully!',
+                        'photo_url' => asset('uploads/profile/' . $filename)
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => false, 
+                        'message' => 'Failed to move uploaded file'
+                    ], 500);
+                }
             }
-            
-            $file->move($uploadPath, $filename);
-            
-            // Save to settings
-            Setting::updateOrCreate(
-                ['key' => 'profile_photo'],
-                ['value' => $filename, 'type' => 'image', 'group' => 'profile']
-            );
 
             return response()->json([
-                'success' => true,
-                'message' => 'Profile photo updated successfully!',
-                'photo_url' => asset('uploads/profile/' . $filename)
-            ]);
+                'success' => false, 
+                'message' => 'No file uploaded'
+            ], 400);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            \Log::error('Profile photo upload error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Upload failed: ' . $e->getMessage()
+            ], 500);
         }
-
-        return response()->json(['success' => false, 'message' => 'No file uploaded']);
     }
 }
