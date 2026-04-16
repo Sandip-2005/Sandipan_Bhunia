@@ -1897,24 +1897,24 @@
         }
         
         .skill-icon {
-            font-size: 4rem; /* Increased size */
+            font-size: 3.5rem; /* Better balance */
             margin-bottom: 0.5rem;
             position: relative;
             z-index: 2;
             animation: skillIconFloat 3s ease-in-out infinite;
-            /* Enhanced visibility */
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            /* Subtler shadow for cleaner look */
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
         }
         
         .skill-icon-default {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-            /* Fallback for browsers that don't support background-clip */
-            color: var(--primary-color);
+            /* Keep it simple so that emojis retain their native colors */
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background-clip: unset;
+            /* Provide a clean fallback color if it's text instead of an emoji */
+            color: #ffffff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
         
         /* Enhanced glow effect */
@@ -2787,45 +2787,65 @@
         /* Scroll to Top Button */
         .scroll-top-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 52px;
-            height: 52px;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.32);
-            font-size: 1.15rem;
+            border: none;
+            font-size: 1.4rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 18px 30px rgba(139, 92, 246, 0.24);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4), 0 0 0 0 rgba(245, 87, 108, 0.4);
             z-index: 1100;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(24px) scale(0.92);
-            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease, box-shadow 0.3s ease;
+            transform: translateY(30px) scale(0.5) rotate(-180deg);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: hidden;
+        }
+        
+        .scroll-top-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.7s ease;
         }
 
         .scroll-top-btn.visible {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0) scale(1);
-            animation: floatButton 4s ease-in-out infinite;
+            transform: translateY(0) scale(1) rotate(0deg);
+            animation: pulseGlow 2.5s infinite alternate;
         }
 
         .scroll-top-btn:hover {
-            transform: translateY(-2px) scale(1.08);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.35);
+            transform: translateY(-5px) scale(1.15);
+            box-shadow: 0 15px 35px rgba(245, 87, 108, 0.6);
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+        
+        .scroll-top-btn:hover::before {
+            left: 100%;
         }
 
-        @keyframes floatButton {
-            0%, 100% {
-                transform: translateY(0) scale(1);
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(245, 87, 108, 0.6), 0 10px 20px rgba(245, 87, 108, 0.4);
             }
-            50% {
-                transform: translateY(-4px) scale(1.02);
+            70% {
+                box-shadow: 0 0 0 15px rgba(245, 87, 108, 0), 0 15px 30px rgba(245, 87, 108, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 87, 108, 0), 0 10px 20px rgba(245, 87, 108, 0.4);
             }
         }
 

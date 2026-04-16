@@ -265,9 +265,11 @@ Route::get('/cv/view/{cv}', function (\App\Models\Cv $cv) {
     $filePath = public_path('uploads/cv/' . $cv->filename);
     if (!file_exists($filePath)) { abort(404, 'CV file not found.'); }
     
+    $extension = strtolower(pathinfo($cv->filename, PATHINFO_EXTENSION));
+    
     // Return the file for inline viewing
     return response()->file($filePath, [
-        'Content-Type' => $cv->extension === 'pdf' ? 'application/pdf' : 'application/octet-stream',
+        'Content-Type' => $extension === 'pdf' ? 'application/pdf' : mime_content_type($filePath),
         'Content-Disposition' => 'inline; filename="' . $cv->original_name . '"'
     ]);
 })->name('cv.view');
