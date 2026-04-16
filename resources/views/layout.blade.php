@@ -398,13 +398,16 @@
             background: #ffffff;
             border-radius: 20px;
             padding: 2rem;
-            max-width: 90vw;
-            max-height: 90vh;
-            width: 800px;
+            max-width: 92vw;
+            max-height: 92vh;
+            width: 860px;
             position: relative;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .cv-modal.active .cv-modal-content {
@@ -462,15 +465,55 @@
 
         .cv-viewer {
             width: 100%;
-            height: 500px;
+            flex: 1;
+            min-height: 400px;
+            height: 60vh;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             margin-bottom: 1.5rem;
+            background: #f9fafb;
         }
 
         .dark-mode .cv-viewer {
             border-color: #374151;
+            background: #111827;
         }
+
+        /* CV error/loading state */
+        .cv-viewer-wrapper {
+            position: relative;
+            flex: 1;
+            min-height: 400px;
+            margin-bottom: 1.5rem;
+        }
+
+        .cv-fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            color: #6b7280;
+            text-align: center;
+            padding: 2rem;
+            z-index: 1;
+        }
+
+        .cv-fallback i { font-size: 3rem; color: #d1d5db; }
+        .cv-fallback h5 { color: #374151; margin: 0; font-weight: 700; }
+        .cv-fallback p  { font-size: 0.9rem; margin: 0; }
+        .cv-fallback a  {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: #3b82f6; color: #fff; border-radius: 10px;
+            padding: 10px 22px; font-weight: 600; text-decoration: none;
+            transition: background 0.2s;
+        }
+        .cv-fallback a:hover { background: #2563eb; color: #fff; }
 
         .cv-modal-actions {
             display: flex;
@@ -1198,11 +1241,11 @@
                     rgba(15, 23, 42, 0.98) 100%);
                 backdrop-filter: blur(25px);
                 -webkit-backdrop-filter: blur(25px);
-                z-index: 999999; /* Increased z-index to ensure it's above everything */
+                z-index: 999999;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
                 align-items: center;
+                justify-content: flex-start;
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1251,47 +1294,55 @@
                     rgba(5, 5, 20, 0.98) 100%);
             }
             
-            /* Mobile menu close button - ENHANCED */
+            /* Mobile menu header bar - clean flex row */
+            .mobile-menu-header-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: 1.2rem 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                flex-shrink: 0;
+                z-index: 1000000;
+                position: relative;
+            }
+
+            /* Mobile menu close button */
             .mobile-menu-close {
-                position: absolute;
-                top: 1.5rem;
-                right: 1rem;
-                width: 45px;
-                height: 45px;
-                background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.3));
-                border: 2px solid rgba(239, 68, 68, 0.4);
+                width: 42px;
+                height: 42px;
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(220, 38, 38, 0.35));
+                border: 2px solid rgba(239, 68, 68, 0.45);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 color: #ffffff;
-                font-size: 1.3rem;
+                font-size: 1.1rem;
                 cursor: pointer;
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 1000000;
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
+                flex-shrink: 0;
             }
             
             .mobile-menu-close:hover {
-                background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(220, 38, 38, 0.5));
-                border-color: rgba(239, 68, 68, 0.6);
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.45), rgba(220, 38, 38, 0.55));
+                border-color: rgba(239, 68, 68, 0.7);
                 transform: rotate(90deg) scale(1.1);
                 box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
             }
             
-            /* Mobile menu navigation - ENHANCED ATTRACTIVE DESIGN */
+            /* Mobile menu navigation */
             .mobile-nav-menu {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 1rem;
-                padding: 5rem 1rem 2rem;
-                max-width: 350px;
+                gap: 0.8rem;
+                padding: 1.5rem 1rem 2rem;
+                max-width: 380px;
                 width: 100%;
                 position: relative;
                 z-index: 999998;
-                max-height: 100vh;
+                flex: 1;
                 overflow-y: auto;
             }
             
@@ -1408,16 +1459,12 @@
             .mobile-nav-link[href="#achievements"] i { color: #06b6d4; }
             .mobile-nav-link[href="#contact"] i { color: #ec4899; }
             
-            /* Mobile menu brand - ENHANCED */
+            /* Mobile menu brand */
             .mobile-menu-brand {
-                position: absolute;
-                top: 1.8rem;
-                left: 1rem;
                 font-size: 1.1rem;
                 font-weight: 900;
                 color: #ffffff;
                 text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-                z-index: 1000000;
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
@@ -1425,7 +1472,7 @@
             
             .mobile-menu-brand::before {
                 content: '💻';
-                font-size: 1.5rem;
+                font-size: 1.3rem;
                 animation: brandPulse 2s ease-in-out infinite;
             }
             
@@ -3055,14 +3102,17 @@
     </nav>
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-        <div class="mobile-menu-brand">
-            <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
+
+        <!-- Mobile Menu Header -->
+        <div class="mobile-menu-header-bar">
+            <div class="mobile-menu-brand">
+                <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
+            </div>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-        
-        <button class="mobile-menu-close" onclick="toggleMobileMenu()">
-            <i class="fas fa-times"></i>
-        </button>
-        
+
         <nav class="mobile-nav-menu">
             <div class="mobile-menu-title">Navigation Menu</div>
             
@@ -3132,9 +3182,22 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
-            <iframe class="cv-viewer" id="cvViewer" src="" frameborder="0"></iframe>
-            
+
+            <div class="cv-viewer-wrapper">
+                <!-- Fallback shown by default, hidden when iframe loads -->
+                <div class="cv-fallback" id="cvFallback">
+                    <i class="fas fa-file-pdf"></i>
+                    <h5>Loading CV...</h5>
+                    <p>If the preview doesn't appear, click the button below to open it in a new tab.</p>
+                    <a href="#" id="cvFallbackOpen" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Open CV in New Tab
+                    </a>
+                </div>
+                <iframe class="cv-viewer" id="cvViewer" src="" frameborder="0"
+                        onload="handleCVLoad(this)"
+                        onerror="handleCVError()"></iframe>
+            </div>
+
             <div class="cv-modal-actions">
                 <a href="#" class="cv-action-btn cv-download-btn" id="cvDownloadBtn" target="_blank">
                     <i class="fas fa-download"></i>
@@ -3354,26 +3417,67 @@
 
         // CV Viewer Functions
         let currentCVUrl = '';
+        let currentDownloadUrl = '';
         
         function viewCV(cvId, cvLabel, cvViewRoute, cvDownloadRoute) {
-            const modal = document.getElementById('cvModal');
-            const title = document.getElementById('cvModalTitle');
-            const viewer = document.getElementById('cvViewer');
-            const downloadBtn = document.getElementById('cvDownloadBtn');
+            const modal      = document.getElementById('cvModal');
+            const title      = document.getElementById('cvModalTitle');
+            const viewer     = document.getElementById('cvViewer');
+            const fallback   = document.getElementById('cvFallback');
+            const fallbackBtn= document.getElementById('cvFallbackOpen');
+            const downloadBtn= document.getElementById('cvDownloadBtn');
+
+            // Build absolute URL from relative route
+            const absoluteViewUrl = window.location.origin + cvViewRoute;
+            currentCVUrl     = absoluteViewUrl;
+            currentDownloadUrl = cvDownloadRoute || `/cv/download/${cvId}`;
+
+            title.textContent     = cvLabel;
+            downloadBtn.href      = currentDownloadUrl;
+            fallbackBtn.href      = absoluteViewUrl;
+
+            // Reset state: show fallback while loading
+            fallback.style.display = 'flex';
+            viewer.style.display   = 'none';
+            viewer.src = '';
+
+            // Use Google Docs Viewer to bypass X-Frame-Options & CSP issues
+            // This is reliable for PDFs served from any URL
+            const googleDocsUrl = 'https://docs.google.com/gviewer?embedded=true&url=' + encodeURIComponent(absoluteViewUrl);
             
-            // Use the passed routes instead of hardcoding absolute paths
-            currentCVUrl = cvViewRoute;
-            
-            title.textContent = cvLabel;
-            viewer.src = cvViewRoute;
-            downloadBtn.href = cvDownloadRoute || `/cv/download/${cvId}`;
-            
+            // Set a load timeout — if iframe doesn't signal success within 5s, keep fallback visible  
+            viewer.src = googleDocsUrl;
+            viewer.style.display = 'block';
+
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
+
+        function handleCVLoad(iframe) {
+            // Once loaded, hide the fallback message
+            const fallback = document.getElementById('cvFallback');
+            // Can't reliably detect 404 inside cross-origin iframe, so just hide spinner text
+            if (fallback) {
+                const h5 = fallback.querySelector('h5');
+                const p  = fallback.querySelector('p');
+                if (h5) h5.textContent = 'Having trouble viewing?';
+                if (p) p.textContent = 'Use the button below if the preview doesn\'t load.';
+            }
+        }
+
+        function handleCVError() {
+            const fallback = document.getElementById('cvFallback');
+            const viewer   = document.getElementById('cvViewer');
+            if (fallback) {
+                const h5 = fallback.querySelector('h5');
+                if (h5) h5.textContent = 'Preview unavailable';
+                fallback.style.display = 'flex';
+            }
+            viewer.style.display = 'none';
+        }
         
         function closeCVModal() {
-            const modal = document.getElementById('cvModal');
+            const modal  = document.getElementById('cvModal');
             const viewer = document.getElementById('cvViewer');
             
             modal.classList.remove('active');

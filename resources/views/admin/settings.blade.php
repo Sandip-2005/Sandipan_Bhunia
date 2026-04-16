@@ -21,6 +21,7 @@
                 <div class="relative inline-block">
                     <img id="currentPhoto" 
                          src="{{ isset($settings['profile']) && $settings['profile']->where('key', 'profile_photo')->first() ? asset('uploads/profile/' . $settings['profile']->where('key', 'profile_photo')->first()->value) : asset('images/default-avatar.svg') }}" 
+                         onerror="this.onerror=null; this.src='{{ asset('images/default-avatar.svg') }}';"
                          alt="Profile Photo" 
                          class="w-24 h-24 rounded-xl object-cover border-2 border-white/20 shadow-lg">
                     <div class="absolute -bottom-1 -right-1">
@@ -49,8 +50,9 @@
                     400x400px, max 2MB
                 </small>
             </div>
+        </div> <!-- Close glass-effect -->
     <!-- (CV upload moved to dedicated CVs management page) -->
-    </div>
+    </div> <!-- Close lg:col-span-1 -->
     
     <!-- General Settings - COMPACT -->
     <div class="lg:col-span-2">

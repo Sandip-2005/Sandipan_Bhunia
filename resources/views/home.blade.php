@@ -62,7 +62,7 @@
                                             <i class="fas fa-download me-2"></i>{{ $cv->label }}
                                         </a>
                                         <button
-                                            onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ route('cv.view', $cv->id) }}', '{{ $cv->download_url }}')"
+                                            onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ route('cv.view', $cv->id, false) }}', '{{ $cv->download_url }}')"
                                             class="btn-cv-view" title="View {{ $cv->label }}">
                                             <i class="fas fa-eye me-2"></i>View
                                         </button>
@@ -76,10 +76,11 @@
                 <div class="col-lg-6 text-center">
                     <div class="animate-float">
                         <div class="position-relative d-inline-block">
-                            @if(isset($settings['profile_photo']) && $settings['profile_photo'] && file_exists(public_path('uploads/profile/' . $settings['profile_photo'])))
+                            @if(isset($settings['profile_photo']) && $settings['profile_photo'])
                                 <!-- Profile Photo -->
                                 <div class="position-relative">
                                     <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}"
+                                        onerror="this.onerror=null; this.src='{{ asset('images/default-avatar.svg') }}';"
                                         alt="Sandipan Bhunia"
                                         class="rounded-circle border border-primary shadow-lg profile-image"
                                         style="width: 320px; height: 320px; object-fit: cover; border-width: 4px !important;">
