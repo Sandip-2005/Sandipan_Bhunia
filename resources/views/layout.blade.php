@@ -1773,6 +1773,30 @@
             gap: 8px !important;
         }
 
+        @media (max-width: 768px) {
+            .navbar-custom,
+            .navbar-custom.scrolled {
+                background: transparent !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            .navbar-brand {
+                background: rgba(255, 255, 255, 0.16) !important;
+                color: #ffffff !important;
+                padding: 0.3rem 0.75rem !important;
+                border-radius: 14px !important;
+                max-width: calc(100% - 110px) !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                display: inline-block !important;
+                backdrop-filter: blur(10px) !important;
+                -webkit-backdrop-filter: blur(10px) !important;
+            }
+        }
+
         .navbar-brand {
             border-radius: 0 !important;
             background: transparent !important;
