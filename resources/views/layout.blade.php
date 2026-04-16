@@ -50,6 +50,11 @@
             --blur-effect: blur(20px);
         }
 
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -60,7 +65,6 @@
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--light-bg);
             min-height: 100vh;
-            overflow-x: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.6;
             padding-top: 70px;
@@ -893,12 +897,8 @@
         }
 
         @media (min-width: 992px) {
-            .navbar-custom:not(.scrolled) .navbar-toggler {
+            .navbar-custom .navbar-toggler {
                 display: none !important;
-            }
-
-            .navbar-custom.scrolled .navbar-toggler {
-                display: inline-flex !important;
             }
         }
 
@@ -974,6 +974,7 @@
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             border: 2px solid rgba(255, 255, 255, 0.2);
+            margin-top: 4px;
         }
 
         .navbar-toggler::before {
@@ -1739,115 +1740,6 @@
             }
         }
 
-        /* Strong Navbar Overrides */
-        .navbar-custom {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100% !important;
-            z-index: 9999 !important;
-            background: transparent !important;
-            transition: all 0.3s ease !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-        }
-
-        .navbar-custom.scrolled {
-            background: rgba(15, 23, 42, 0.6) !important;
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16) !important;
-        }
-
-        .navbar-custom .navbar-inner {
-            width: 100% !important;
-            max-width: none !important;
-            padding: 0 1rem !important;
-            margin: 0 auto !important;
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            gap: 8px !important;
-        }
-
-        @media (max-width: 768px) {
-            .navbar-custom,
-            .navbar-custom.scrolled {
-                background: transparent !important;
-                box-shadow: none !important;
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
-            }
-
-            .navbar-brand {
-                background: rgba(255, 255, 255, 0.16) !important;
-                color: #ffffff !important;
-                padding: 0.3rem 0.75rem !important;
-                border-radius: 14px !important;
-                max-width: calc(100% - 110px) !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                display: inline-block !important;
-                backdrop-filter: blur(10px) !important;
-                -webkit-backdrop-filter: blur(10px) !important;
-            }
-        }
-
-        .navbar-brand {
-            border-radius: 0 !important;
-            background: transparent !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: calc(100% - 120px) !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-            white-space: nowrap !important;
-        }
-
-        .navbar-actions {
-            gap: 8px !important;
-        }
-
-        .theme-toggle,
-        .navbar-toggler {
-            width: 34px !important;
-            height: 34px !important;
-            font-size: 16px !important;
-            border-radius: 10px !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-
-        .theme-toggle {
-            display: grid !important;
-            place-items: center !important;
-            background: rgba(255, 255, 255, 0.12) !important;
-            border: 1px solid rgba(255, 255, 255, 0.18) !important;
-        }
-
-        .navbar-toggler {
-            background: rgba(255, 255, 255, 0.14) !important;
-            border: 1px solid rgba(255, 255, 255, 0.18) !important;
-        }
-
-        .navbar-custom .navbar-collapse,
-        .navbar-custom .navbar-nav {
-            display: none !important;
-        }
-
-        body {
-            padding-top: 70px !important;
-        }
-
-        main,
-        section:first-of-type {
-            padding-top: 70px !important;
-        }
-
         /* Enhanced Footer */
         footer {
             background: var(--light-footer-bg) !important;
@@ -2437,6 +2329,7 @@
         .navbar-toggler {
             background: rgba(255, 255, 255, 0.14) !important;
             border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            margin-top: 4px !important;
         }
 
         body {
