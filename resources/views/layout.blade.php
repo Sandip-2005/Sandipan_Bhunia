@@ -63,7 +63,7 @@
             overflow-x: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             line-height: 1.6;
-            padding-top: 75px;
+            padding-top: 70px;
         }
 
         body.dark-mode {
@@ -137,7 +137,7 @@
         /* Mobile spacing adjustments */
         @media (max-width: 768px) {
             body {
-                padding-top: 75px; /* Match fixed navbar height */
+                padding-top: 70px; /* Match fixed navbar height */
             }
             
             section {
@@ -744,38 +744,47 @@
 
         /* Enhanced Navigation - COMPACT & PROFESSIONAL */
         .navbar-custom {
-            background: var(--light-navbar-bg) !important;
-            backdrop-filter: var(--blur-effect);
-            -webkit-backdrop-filter: var(--blur-effect);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0.8rem 0; /* Reduced padding */
-            height: 75px; /* Reduced navbar height */
+            background: transparent !important;
+            transition: all 0.3s ease;
+            padding: 0 1rem;
+            height: 70px;
+            min-height: 70px;
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            z-index: 1050;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: none;
         }
 
-        .dark-mode .navbar-custom {
-            background: var(--dark-navbar-bg) !important;
+        .navbar-custom.scrolled {
+            background: rgba(15, 23, 42, 0.6) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
         }
 
-        .navbar-scrolled {
-            background: transparent !important;
-            box-shadow: none !important;
-            padding: 1rem 0; /* Original padding */
-            border-bottom: none !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
+        .navbar-custom.scrolled .navbar-brand {
+            text-shadow: none;
         }
 
-        .dark-mode .navbar-scrolled {
-            background: transparent !important;
-            border-bottom: none !important;
-            box-shadow: none !important;
+        .navbar-custom .navbar-brand {
+            font-size: 1.1rem !important;
+            font-weight: 900 !important;
+            color: #ffffff !important;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            letter-spacing: 0.8px;
+            text-transform: none;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 100%;
         }
 
         /* Enhanced navbar brand - SUPER VISIBLE & CONTRAST FIXED */
@@ -928,13 +937,18 @@
                 text-shadow: none;
             }
 
+            .navbar-actions {
+                gap: 8px;
+            }
+
             .theme-toggle {
                 margin-right: 0.6rem;
                 background: rgba(255, 255, 255, 0.12);
                 border-color: rgba(255, 255, 255, 0.18);
                 flex-shrink: 0;
-                width: 46px;
-                height: 46px;
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
             }
 
             .navbar-toggler {
@@ -942,8 +956,9 @@
                 border: 1px solid rgba(255, 255, 255, 0.18);
                 margin-left: auto;
                 flex-shrink: 0;
-                width: 52px;
-                height: 52px;
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
             }
 
             .navbar-custom .navbar-collapse,
@@ -2277,20 +2292,18 @@
 <body>
     
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
-        <div class="container d-flex flex-row justify-content-between align-items-center flex-nowrap">
-            <a class="navbar-brand fw-bold mb-0 text-truncate" href="#home" style="max-width: 60%;">
+    <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
+        <div class="navbar-inner d-flex justify-content-between align-items-center w-100" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+            <a class="navbar-brand fw-bold mb-0 text-truncate" href="#home">
                 <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
             </a>
             
-            <div class="d-flex flex-row align-items-center order-lg-3 gap-2 flex-nowrap flex-shrink-0">
-                <!-- Theme Toggle -->
+            <div class="navbar-actions d-flex align-items-center gap-2 flex-nowrap">
                 <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
                     <i class="fas fa-sun theme-icon-light"></i>
                     <i class="fas fa-moon theme-icon-dark"></i>
                 </div>
                 
-                <!-- Mobile Menu Button - Also used as scroll menu button -->
                 <button class="navbar-toggler" type="button" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
                     <div class="hamburger-menu">
                         <span></span>
@@ -2301,7 +2314,7 @@
             </div>
             
             <!-- Desktop Navigation -->
-            <div class="collapse navbar-collapse order-lg-2 d-none d-lg-block" id="navbarNav">
+            <div class="collapse navbar-collapse order-lg-2 d-none d-lg-flex justify-content-center" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#home">Home</a>
@@ -2336,7 +2349,6 @@
             </div>
         </div>
     </nav>
-
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
         <div class="mobile-menu-brand">
@@ -2347,7 +2359,7 @@
             <i class="fas fa-times"></i>
         </button>
         
-        <nav class="mobile-nav-menu">
+        <div class="mobile-nav-menu">
             <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()">
                 <i class="fas fa-home me-2"></i>Home
             </a>
@@ -2386,7 +2398,7 @@
                 </a>
                 @endforeach
             @endif
-        </nav>
+        </div>
     </div>
 
     <!-- CV Viewer Modal -->
@@ -2548,17 +2560,15 @@
         }
         document.body.classList.toggle('dark-mode', isDarkMode);
         
-        // Navbar scroll effect with proper height handling - COMPACT
+        // Navbar scroll effect with proper class and fixed padding
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('mainNavbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-                // Adjust body padding when navbar height changes
-                document.body.style.paddingTop = window.innerWidth <= 576 ? '60px' : '65px';
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-                // Reset body padding to original navbar height
-                document.body.style.paddingTop = window.innerWidth <= 576 ? '70px' : '75px';
+            if (navbar) {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled', 'navbar-scrolled');
+                } else {
+                    navbar.classList.remove('scrolled', 'navbar-scrolled');
+                }
             }
         });
 
@@ -2670,7 +2680,7 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const navbarHeight = window.innerWidth <= 576 ? 70 : 75;
+                    const navbarHeight = 70;
                     const targetPosition = target.offsetTop - navbarHeight - 20; // Reduced spacing
                     
                     window.scrollTo({
@@ -2689,9 +2699,9 @@
 
             // Handle Navbar Scrolled State
             if (scrollPosition > 50) {
-                if(navbar) navbar.classList.add('navbar-scrolled');
+                if(navbar) navbar.classList.add('scrolled', 'navbar-scrolled');
             } else {
-                if(navbar) navbar.classList.remove('navbar-scrolled');
+                if(navbar) navbar.classList.remove('scrolled', 'navbar-scrolled');
             }
             
             // Handle Scroll Top Button visibility
