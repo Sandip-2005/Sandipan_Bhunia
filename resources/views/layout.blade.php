@@ -137,7 +137,7 @@
         /* Mobile spacing adjustments */
         @media (max-width: 768px) {
             body {
-                padding-top: 70px; /* Smaller padding on mobile */
+                padding-top: 75px; /* Match fixed navbar height */
             }
             
             section {
@@ -876,19 +876,20 @@
                 background: transparent !important;
                 border-bottom: none !important;
                 box-shadow: none !important;
+                padding: 0.75rem 0;
+                min-height: 75px;
             }
 
             .navbar-custom.navbar-scrolled {
-                background: rgba(15, 23, 42, 0.82) !important;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-                box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18) !important;
-                backdrop-filter: blur(14px);
-                -webkit-backdrop-filter: blur(14px);
-                transition: all 0.35s ease-in-out;
+                background: rgba(15, 23, 42, 0.6) !important;
+                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16) !important;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                transition: all 0.3s ease;
             }
 
             body.dark-mode .navbar-custom.navbar-scrolled {
-                background: rgba(8, 12, 25, 0.88) !important;
+                background: rgba(8, 12, 25, 0.72) !important;
             }
 
             .navbar-custom .container {
@@ -903,10 +904,13 @@
                 font-size: 1rem !important;
                 letter-spacing: 0.2px;
                 z-index: 2;
-                max-width: calc(100% - 150px);
+                max-width: calc(100% - 148px);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                background: transparent !important;
+                padding: 0;
+                margin: 0;
             }
 
             body:not(.dark-mode) .navbar-custom .navbar-brand,
@@ -925,10 +929,12 @@
             }
 
             .theme-toggle {
-                margin-right: 0.5rem;
+                margin-right: 0.6rem;
                 background: rgba(255, 255, 255, 0.12);
                 border-color: rgba(255, 255, 255, 0.18);
                 flex-shrink: 0;
+                width: 46px;
+                height: 46px;
             }
 
             .navbar-toggler {
@@ -936,9 +942,12 @@
                 border: 1px solid rgba(255, 255, 255, 0.18);
                 margin-left: auto;
                 flex-shrink: 0;
+                width: 52px;
+                height: 52px;
             }
 
-            .navbar-custom .navbar-collapse {
+            .navbar-custom .navbar-collapse,
+            .navbar-nav {
                 display: none !important;
             }
         }
@@ -2212,38 +2221,46 @@
         /* Scroll to Top Button */
         .scroll-top-btn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
+            bottom: 20px;
+            right: 20px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: #ffffff;
-            color: #ef4444; /* red icon matching screenshot */
-            border: 2px solid transparent;
-            font-size: 1.2rem;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.32);
+            font-size: 1.15rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Light drop shadow */
-            z-index: 99;
+            box-shadow: 0 18px 30px rgba(139, 92, 246, 0.24);
+            z-index: 1100;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(20px) scale(0.9);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(24px) scale(0.92);
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease, box-shadow 0.3s ease;
         }
 
         .scroll-top-btn.visible {
             opacity: 1;
             visibility: visible;
             transform: translateY(0) scale(1);
+            animation: floatButton 4s ease-in-out infinite;
         }
 
         .scroll-top-btn:hover {
-            transform: translateY(-5px) scale(1.1);
-            background: #ffffff;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            color: #dc2626;
+            transform: translateY(-2px) scale(1.08);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.35);
+        }
+
+        @keyframes floatButton {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-4px) scale(1.02);
+            }
         }
 
         @media (max-width: 768px) {
@@ -2678,7 +2695,7 @@
             }
             
             // Handle Scroll Top Button visibility
-            if (scrollPosition > 200) {
+            if (scrollPosition > 150) {
                 if(scrollTopBtn) scrollTopBtn.classList.add('visible');
             } else {
                 if(scrollTopBtn) scrollTopBtn.classList.remove('visible');
