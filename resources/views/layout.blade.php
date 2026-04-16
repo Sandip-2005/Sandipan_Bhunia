@@ -744,16 +744,17 @@
 
         /* Enhanced Navigation - COMPACT & PROFESSIONAL */
         .navbar-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 9999;
             background: transparent !important;
             transition: all 0.3s ease;
             padding: 0 1rem;
             height: 70px;
             min-height: 70px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -767,197 +768,121 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
         }
 
-        .navbar-custom.scrolled .navbar-brand {
-            text-shadow: none;
-        }
-
-        .navbar-custom .navbar-brand {
-            font-size: 1.1rem !important;
-            font-weight: 900 !important;
-            color: #ffffff !important;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        .navbar-custom .navbar-inner {
+            width: 100%;
+            max-width: 1200px;
             display: flex;
             align-items: center;
-            gap: 0;
-            letter-spacing: 0.8px;
-            text-transform: none;
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 100%;
+            justify-content: space-between;
+            gap: 8px;
         }
 
-        /* Enhanced navbar brand - SUPER VISIBLE & CONTRAST FIXED */
         .navbar-brand {
             font-size: 1.1rem !important;
             font-weight: 900 !important;
             color: #ffffff !important;
-            transition: all 0.3s ease;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+            gap: 0.5rem;
             letter-spacing: 0.8px;
-            text-transform: none;
             white-space: nowrap;
-            overflow: visible;
-            max-width: none;
-            border-radius: 20px;
-        }
-        
-        /* Glassmorphism badge for scrolled brand name to ensure visibility */
-        .navbar-scrolled .navbar-brand {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 6px 16px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
-        }
-
-        .dark-mode .navbar-scrolled .navbar-brand {
-            background: rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            max-width: 100%;
+            border-radius: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .navbar-brand:hover {
-            transform: scale(1.05);
             color: #ffffff !important;
         }
 
-        /* Brand name span classes */
-        .navbar-brand .brand-initial {
-            color: #a78bfa !important; /* Light purple - visible on dark/gradient navbar */
-            font-weight: 900;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .navbar-brand .brand-name {
-            color: #ffffff !important;
-            font-weight: 900;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+        .theme-toggle {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.08);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .theme-toggle .fas {
+            color: #ffffff;
+            font-size: 16px;
         }
 
         .navbar-toggler {
-            border: none;
-            background: rgba(255,255,255,0.08);
-            width: 54px;
-            height: 54px;
-            border-radius: 18px;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.14);
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            padding: 0;
             transition: all 0.3s ease;
         }
 
         .navbar-toggler:hover {
-            background: rgba(255,255,255,0.16);
+            background: rgba(255, 255, 255, 0.20);
         }
 
-        .theme-toggle {
-            width: 54px;
-            height: 44px;
-            border-radius: 22px;
-            border: 1px solid rgba(255,255,255,0.18);
-            background: rgba(255,255,255,0.08);
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .navbar-toggler .hamburger-menu {
+            width: 18px;
+            height: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .theme-toggle:hover {
-            background: rgba(255,255,255,0.16);
-        }
-
-        .theme-toggle .fas {
+        .navbar-toggler .hamburger-menu span {
+            display: block;
             width: 100%;
-            height: 100%;
-            display: grid;
-            place-items: center;
-            color: #fffffe;
-            font-size: 1rem;
-            transition: color 0.3s ease;
+            height: 2px;
+            background: #ffffff;
         }
 
         @media (max-width: 768px) {
             .navbar-custom {
-                background: transparent !important;
-                border-bottom: none !important;
-                box-shadow: none !important;
-                padding: 0.75rem 0;
-                min-height: 75px;
+                padding: 0 0.75rem;
+                height: 70px;
+                min-height: 70px;
+                box-shadow: none;
             }
 
-            .navbar-custom.navbar-scrolled {
-                background: rgba(15, 23, 42, 0.6) !important;
+            .navbar-custom.scrolled {
                 box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16) !important;
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                transition: all 0.3s ease;
             }
 
-            body.dark-mode .navbar-custom.navbar-scrolled {
-                background: rgba(8, 12, 25, 0.72) !important;
-            }
-
-            .navbar-custom .container {
-                position: relative;
-                justify-content: space-between;
-                align-items: center;
-                gap: 0.75rem;
-                padding: 0 1rem;
-            }
-
-            .navbar-brand {
-                font-size: 1rem !important;
-                letter-spacing: 0.2px;
-                z-index: 2;
-                max-width: calc(100% - 148px);
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                background: transparent !important;
+            .navbar-custom .navbar-inner {
                 padding: 0;
-                margin: 0;
-            }
-
-            body:not(.dark-mode) .navbar-custom .navbar-brand,
-            body:not(.dark-mode) .navbar-custom .theme-toggle,
-            body:not(.dark-mode) .navbar-custom .navbar-toggler,
-            body.dark-mode .navbar-custom .navbar-brand,
-            body.dark-mode .navbar-custom .theme-toggle,
-            body.dark-mode .navbar-custom .navbar-toggler {
-                color: #ffffff !important;
-            }
-
-            .navbar-custom .brand-initial,
-            .navbar-custom .brand-name {
-                color: #ffffff !important;
-                text-shadow: none;
             }
 
             .navbar-actions {
                 gap: 8px;
             }
 
-            .theme-toggle {
-                margin-right: 0.6rem;
-                background: rgba(255, 255, 255, 0.12);
-                border-color: rgba(255, 255, 255, 0.18);
-                flex-shrink: 0;
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-
+            .theme-toggle,
             .navbar-toggler {
-                background: rgba(255, 255, 255, 0.14);
-                border: 1px solid rgba(255, 255, 255, 0.18);
-                margin-left: auto;
-                flex-shrink: 0;
-                width: 36px;
-                height: 36px;
+                width: 34px;
+                height: 34px;
                 font-size: 16px;
             }
 
@@ -967,17 +892,13 @@
             }
         }
 
-        /* Desktop scrolled toggler override */
         @media (min-width: 992px) {
-            .navbar-custom:not(.navbar-scrolled) .navbar-toggler {
+            .navbar-custom:not(.scrolled) .navbar-toggler {
                 display: none !important;
             }
-            .navbar-custom.navbar-scrolled .navbar-toggler {
-                display: flex !important;
-                margin-left: auto;
-            }
-            .navbar-custom.navbar-scrolled .container {
-                justify-content: flex-end;
+
+            .navbar-custom.scrolled .navbar-toggler {
+                display: inline-flex !important;
             }
         }
 
@@ -1018,20 +939,20 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .navbar-scrolled .nav-link {
+        .navbar-custom.scrolled .nav-link {
             color: #374151 !important;
         }
 
-        .navbar-scrolled .nav-link:hover {
+        .navbar-custom.scrolled .nav-link:hover {
             color: #6366f1 !important;
             background: rgba(99, 102, 241, 0.1);
         }
 
-        .dark-mode .navbar-scrolled .nav-link {
+        .dark-mode .navbar-custom.scrolled .nav-link {
             color: #e5e7eb !important;
         }
 
-        .dark-mode .navbar-scrolled .nav-link:hover {
+        .dark-mode .navbar-custom.scrolled .nav-link:hover {
             color: #a78bfa !important;
         }
 
@@ -1081,21 +1002,21 @@
             box-shadow: 0 0 0 0.3rem rgba(99, 102, 241, 0.4);
         }
 
-        .navbar-scrolled .navbar-toggler {
+        .navbar-custom.scrolled .navbar-toggler {
             background: linear-gradient(135deg, rgba(31, 41, 55, 0.15), rgba(55, 65, 81, 0.15));
             border-color: rgba(31, 41, 55, 0.3);
         }
 
-        .navbar-scrolled .navbar-toggler:hover {
+        .navbar-custom.scrolled .navbar-toggler:hover {
             background: linear-gradient(135deg, rgba(31, 41, 55, 0.25), rgba(55, 65, 81, 0.25));
         }
 
-        .dark-mode .navbar-scrolled .navbar-toggler {
+        .dark-mode .navbar-custom.scrolled .navbar-toggler {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.15));
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .dark-mode .navbar-scrolled .navbar-toggler:hover {
+        .dark-mode .navbar-custom.scrolled .navbar-toggler:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.25));
         }
 
@@ -1163,11 +1084,11 @@
             margin-left: 0;
         }
 
-        .navbar-scrolled .hamburger-menu span {
+        .navbar-custom.scrolled .hamburger-menu span {
             background: #1f2937;
         }
 
-        .dark-mode .navbar-scrolled .hamburger-menu span {
+        .dark-mode .navbar-custom.scrolled .hamburger-menu span {
             background: #ffffff;
         }
 
@@ -1951,22 +1872,22 @@
         }
 
         /* Theme toggle on scroll - LIGHT MODE */
-        .navbar-scrolled .theme-toggle {
+        .navbar-custom.scrolled .theme-toggle {
             background: rgba(31, 41, 55, 0.1);
             border-color: rgba(31, 41, 55, 0.2);
         }
 
-        .navbar-scrolled .theme-toggle:hover {
+        .navbar-custom.scrolled .theme-toggle:hover {
             background: rgba(31, 41, 55, 0.2);
         }
 
         /* Theme toggle on scroll - DARK MODE */
-        .dark-mode .navbar-scrolled .theme-toggle {
+        .dark-mode .navbar-custom.scrolled .theme-toggle {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .dark-mode .navbar-scrolled .theme-toggle:hover {
+        .dark-mode .navbar-custom.scrolled .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.2);
         }
 
@@ -2293,7 +2214,7 @@
     
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
-        <div class="navbar-inner d-flex justify-content-between align-items-center w-100" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+        <div class="navbar-inner d-flex justify-content-between align-items-center w-100">
             <a class="navbar-brand fw-bold mb-0 text-truncate" href="#home">
                 <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
             </a>
@@ -2565,9 +2486,9 @@
             const navbar = document.getElementById('mainNavbar');
             if (navbar) {
                 if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled', 'navbar-scrolled');
+                    navbar.classList.add('scrolled');
                 } else {
-                    navbar.classList.remove('scrolled', 'navbar-scrolled');
+                    navbar.classList.remove('scrolled');
                 }
             }
         });
@@ -2699,9 +2620,9 @@
 
             // Handle Navbar Scrolled State
             if (scrollPosition > 50) {
-                if(navbar) navbar.classList.add('scrolled', 'navbar-scrolled');
+                if(navbar) navbar.classList.add('scrolled');
             } else {
-                if(navbar) navbar.classList.remove('scrolled', 'navbar-scrolled');
+                if(navbar) navbar.classList.remove('scrolled');
             }
             
             // Handle Scroll Top Button visibility
