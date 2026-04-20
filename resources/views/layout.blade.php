@@ -3510,8 +3510,36 @@
         
         // Opens the raw PDF URL in a new browser tab
         function openCVFullscreen() {
+            console.log('openCVFullscreen called, currentCVUrl:', currentCVUrl);
+            
             if (currentCVUrl) {
+                console.log('Opening CV in new tab:', currentCVUrl);
                 window.open(currentCVUrl, '_blank');
+            } else {
+                console.warn('currentCVUrl is not set, trying fallback method');
+                // Fallback: try to get CV URL from the download button or construct it
+                const downloadBtn = document.getElementById('cvDownloadBtn');
+                if (downloadBtn && downloadBtn.href) {
+                    // Convert download URL to view URL
+                    const viewUrl = downloadBtn.href.replace('/download/', '/view/');
+                    console.log('Using fallback URL:', viewUrl);
+                    window.open(viewUrl, '_blank');
+                } else {
+                    console.error('No CV URL available for opening in new tab');
+                    // Show professional error message
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'CV Not Available',
+                            text: 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.',
+                            background: '#1f2937',
+                            color: '#ffffff',
+                            confirmButtonColor: '#3b82f6'
+                        });
+                    } else {
+                        alert('CV not available for viewing in new tab. Please try downloading instead.');
+                    }
+                }
             }
         }
 
@@ -3530,7 +3558,6 @@
             img.style.opacity = '1';
             const loader = document.getElementById('profilePhotoLoader');
             if (loader) loader.style.display = 'none';
-        }
         }
         // Close CV modal on escape key
         document.addEventListener('keydown', function(e) {
@@ -3785,32 +3812,6 @@
                 }
             });
         });
-        
-        // Professional Profile Photo Loading Handlers
-        function handleProfilePhotoLoad(img) {
-            // Hide loader and show image with smooth transition
-            const loader = document.getElementById('profilePhotoLoader');
-            if (loader) {
-                loader.style.display = 'none';
-            }
-            img.style.opacity = '1';
-        }
-        
-        function handleProfilePhotoError(img) {
-            // Hide loader
-            const loader = document.getElementById('profilePhotoLoader');
-            if (loader) {
-                loader.style.display = 'none';
-            }
-            
-            // Set fallback image and show with transition
-            img.onerror = null; // Prevent infinite loop
-            img.src = '{{ asset('images/default-avatar.svg') }}';
-            img.style.opacity = '1';
-            
-            // Log error for debugging (only in development)
-            console.warn('Profile photo failed to load, using default avatar');
-        }
     </script>
 
     <style>
