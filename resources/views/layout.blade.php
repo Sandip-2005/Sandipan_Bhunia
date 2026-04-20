@@ -502,33 +502,54 @@
             position: relative;
             flex: 1;
             min-height: 400px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* embed fills the wrapper */
+        .cv-viewer {
+            display: block;
+            width: 100%;
+            flex: 1;
+            min-height: 400px;
+            height: 60vh;
+            border-radius: 12px;
+            border: none;
+            background: #f9fafb;
+            z-index: 2;
+            position: relative;
+        }
+
+        .dark-mode .cv-viewer {
+            background: #111827;
+        }
+
+        /* Fallback: small helper bar shown at the bottom of the wrapper */
         .cv-fallback {
-            position: absolute;
-            inset: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
-            background: #f9fafb;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
+            gap: 0.6rem;
+            background: #f0f4ff;
+            border: 1px solid #c7d7ff;
+            border-radius: 10px;
             color: #6b7280;
             text-align: center;
-            padding: 2rem;
-            z-index: 1;
+            padding: 1rem 1.5rem;
+            margin-top: 0.75rem;
+            flex-shrink: 0;
         }
 
-        .cv-fallback i { font-size: 3rem; color: #d1d5db; }
-        .cv-fallback h5 { color: #374151; margin: 0; font-weight: 700; }
-        .cv-fallback p  { font-size: 0.9rem; margin: 0; }
+        .cv-fallback i { font-size: 1.6rem; color: #93c5fd; }
+        .cv-fallback h5 { color: #374151; margin: 0; font-weight: 700; font-size: 0.95rem; }
+        .cv-fallback p  { font-size: 0.82rem; margin: 0; color: #6b7280; }
         .cv-fallback a  {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            background: #3b82f6; color: #fff; border-radius: 10px;
-            padding: 10px 22px; font-weight: 600; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: #3b82f6; color: #fff; border-radius: 8px;
+            padding: 7px 16px; font-weight: 600; text-decoration: none;
+            font-size: 0.85rem;
             transition: background 0.2s;
         }
         .cv-fallback a:hover { background: #2563eb; color: #fff; }
@@ -3205,18 +3226,17 @@
             </div>
 
             <div class="cv-viewer-wrapper">
-                <!-- Fallback shown by default, hidden when iframe loads -->
+                <!-- PDF embed — browsers render PDFs natively, no 3rd-party service needed -->
+                <embed id="cvViewer" class="cv-viewer" src="" type="application/pdf">
+                <!-- Helper strip shown below the PDF viewer -->
                 <div class="cv-fallback" id="cvFallback">
                     <i class="fas fa-file-pdf"></i>
-                    <h5>Loading CV...</h5>
-                    <p>If the preview doesn't appear, click the button below to open it in a new tab.</p>
+                    <h5 id="cvFallbackTitle">Loading CV...</h5>
+                    <p id="cvFallbackMsg">If the preview doesn't appear, use the button below.</p>
                     <a href="#" id="cvFallbackOpen" target="_blank">
                         <i class="fas fa-external-link-alt"></i> Open CV in New Tab
                     </a>
                 </div>
-                <iframe class="cv-viewer" id="cvViewer" src="" frameborder="0"
-                        onload="handleCVLoad(this)"
-                        onerror="handleCVError()"></iframe>
             </div>
 
             <div class="cv-modal-actions">
@@ -3437,138 +3457,81 @@
         });
 
         // CV Viewer Functions
-        let currentCVUrl = '';       // raw direct URL for open-in-tab
+        let currentCVUrl = '';       // raw direct PDF URL
         let currentDownloadUrl = '';
         
         function viewCV(cvId, cvLabel, cvViewRoute, cvDownloadRoute) {
-            const modal      = document.getElementById('cvModal');
-            const title      = document.getElementById('cvModalTitle');
-            const viewer     = document.getElementById('cvViewer');
-            const fallback   = document.getElementById('cvFallback');
-            const fallbackBtn= document.getElementById('cvFallbackOpen');
-            const downloadBtn= document.getElementById('cvDownloadBtn');
+            const modal       = document.getElementById('cvModal');
+            const title       = document.getElementById('cvModalTitle');
+            const viewer      = document.getElementById('cvViewer');
+            const fallback    = document.getElementById('cvFallback');
+            const fallbackBtn = document.getElementById('cvFallbackOpen');
+            const fallbackTitle = document.getElementById('cvFallbackTitle');
+            const fallbackMsg   = document.getElementById('cvFallbackMsg');
+            const downloadBtn = document.getElementById('cvDownloadBtn');
 
-            // Build absolute URL from relative route
-            const absoluteViewUrl = window.location.origin + cvViewRoute;
-            currentCVUrl       = absoluteViewUrl;          // raw PDF URL
-            currentDownloadUrl = cvDownloadRoute || `/cv/download/${cvId}`;
+            // Build the absolute PDF URL directly (no Google Docs wrapper)
+            const absoluteViewUrl  = window.location.origin + cvViewRoute;
+            currentCVUrl           = absoluteViewUrl;
+            currentDownloadUrl     = cvDownloadRoute || (window.location.origin + '/cv/download/' + cvId);
 
-            title.textContent     = cvLabel;
-            downloadBtn.href      = currentDownloadUrl;
-            // Fallback open-in-new-tab also uses the raw PDF URL
-            fallbackBtn.href      = absoluteViewUrl;
+            title.textContent      = cvLabel;
+            downloadBtn.href       = currentDownloadUrl;
+            fallbackBtn.href       = absoluteViewUrl;
 
-            // Reset state: show fallback while iframe loads
+            // Reset fallback text to "loading" state
+            if (fallbackTitle) fallbackTitle.textContent = 'Loading CV...';
+            if (fallbackMsg)   fallbackMsg.textContent   = 'If the preview doesn\'t appear, use the button below.';
             fallback.style.display = 'flex';
-            viewer.style.display   = 'none';
-            viewer.src = '';
 
-            // Use Google Docs Viewer to bypass X-Frame-Options & CSP issues
-            const googleDocsUrl = 'https://docs.google.com/gviewer?embedded=true&url=' + encodeURIComponent(absoluteViewUrl);
-            
-            // Professional loading with timeout
-            const loadingTimeout = setTimeout(() => {
-                // If iframe doesn't load within 10 seconds, show fallback
-                if (fallback.style.display !== 'none') {
-                    console.warn('CV viewer timed out, showing fallback');
-                }
-            }, 10000);
-            
-            viewer.onload = function() {
-                clearTimeout(loadingTimeout);
-                // Check if the iframe actually loaded content
-                try {
-                    // Hide fallback and show viewer
-                    fallback.style.display = 'none';
-                    viewer.style.display   = 'block';
-                } catch (e) {
-                    // If there's an error accessing iframe content, keep fallback visible
-                    console.warn('CV viewer iframe access restricted, keeping fallback visible');
-                }
-            };
-            
-            viewer.onerror = function() {
-                clearTimeout(loadingTimeout);
-                console.warn('CV viewer failed to load, showing fallback');
-                // Keep fallback visible on error
-            };
-            
-            viewer.src = googleDocsUrl;
-            
-            // Show the modal
+            // Load directly into <embed> — browsers handle PDF natively
+            viewer.setAttribute('src', absoluteViewUrl);
+
+            // After a short delay, check if the embed has rendered
+            // (embed doesn't fire reliable load/error events, so we use a timer)
+            setTimeout(() => {
+                // PDF loaded — reduce fallback to a subtle helper hint
+                if (fallbackTitle) fallbackTitle.textContent = 'Trouble viewing?';
+                if (fallbackMsg)   fallbackMsg.textContent   = 'Open in a new tab for the best experience.';
+            }, 2500);
+
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Debug logging for professional troubleshooting
-            console.log('CV Viewer initialized:', {
-                cvId: cvId,
-                cvLabel: cvLabel,
-                absoluteViewUrl: absoluteViewUrl,
-                googleDocsUrl: googleDocsUrl,
-                currentCVUrl: currentCVUrl
-            });
         }
 
-        function handleCVLoad(iframe) {
-            const fallback = document.getElementById('cvFallback');
-            if (fallback) {
-                const h5 = fallback.querySelector('h5');
-                const p  = fallback.querySelector('p');
-                if (h5) h5.textContent = 'Having trouble viewing?';
-                if (p)  p.textContent  = 'Use the button below if the preview doesn\'t load.';
-            }
-        }
-
-        function handleCVError() {
-            const fallback = document.getElementById('cvFallback');
-            const viewer   = document.getElementById('cvViewer');
-            if (fallback) {
-                const h5 = fallback.querySelector('h5');
-                if (h5) h5.textContent = 'Preview unavailable';
-                fallback.style.display = 'flex';
-            }
-            viewer.style.display = 'none';
-        }
-        
         function closeCVModal() {
             const modal  = document.getElementById('cvModal');
             const viewer = document.getElementById('cvViewer');
             modal.classList.remove('active');
-            viewer.src = '';
+            // Remove src to stop the PDF rendering process
+            viewer.setAttribute('src', '');
             document.body.style.overflow = '';
         }
         
-        // openCVFullscreen opens the REAL CV URL, not the Google Docs wrapper
+        // Opens the raw PDF URL in a new browser tab
         function openCVFullscreen() {
-            console.log('openCVFullscreen called, currentCVUrl:', currentCVUrl);
-            
             if (currentCVUrl) {
-                console.log('Opening CV in new tab:', currentCVUrl);
                 window.open(currentCVUrl, '_blank');
-            } else {
-                console.warn('currentCVUrl is not set, trying fallback method');
-                // Fallback: try to get CV URL from the download button or construct it
-                const downloadBtn = document.getElementById('cvDownloadBtn');
-                if (downloadBtn && downloadBtn.href) {
-                    // Convert download URL to view URL
-                    const viewUrl = downloadBtn.href.replace('/download/', '/view/');
-                    console.log('Using fallback URL:', viewUrl);
-                    window.open(viewUrl, '_blank');
-                } else {
-                    console.error('No CV URL available for opening in new tab');
-                    // Show professional error message
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'CV Not Available',
-                        text: 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.',
-                        background: '#1f2937',
-                        color: '#ffffff',
-                        confirmButtonColor: '#3b82f6'
-                    });
-                }
             }
         }
-        
+
+        // ── Profile Photo helpers (called from home.blade.php) ──────────
+        function handleProfilePhotoLoad(img) {
+            // Photo loaded OK — fade it in and hide the spinner
+            img.style.opacity = '1';
+            const loader = document.getElementById('profilePhotoLoader');
+            if (loader) loader.style.display = 'none';
+        }
+
+        function handleProfilePhotoError(img) {
+            // Photo failed — swap to default avatar and fade in
+            img.onerror = null; // prevent infinite loop
+            img.src = '{{ asset('images/default-avatar.svg') }}';
+            img.style.opacity = '1';
+            const loader = document.getElementById('profilePhotoLoader');
+            if (loader) loader.style.display = 'none';
+        }
+        }
         // Close CV modal on escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
