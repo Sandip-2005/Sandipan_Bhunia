@@ -4050,9 +4050,7 @@
             // Initialize animations
             animateOnScroll();
             
-            // Test notification system
             console.log('Button functionality initialized successfully');
-        });
             
             // Animate skill progress bars with intersection observer
             const skillProgressObserver = new IntersectionObserver((entries) => {

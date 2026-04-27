@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section id="home" class="min-vh-100 d-flex align-items-center">
+    <section id="home" class="d-flex align-items-center">
         <!-- Floating Elements for Visual Appeal -->
         <div class="floating-elements">
             <div class="floating-element" style="top: 10%; left: 10%; animation-delay: 0s;">
