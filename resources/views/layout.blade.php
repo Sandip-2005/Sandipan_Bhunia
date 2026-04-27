@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', $settings['site_title'] ?? 'Sandipan Bhunia - Full Stack Developer')</title>
-    <meta name="description" content="@yield('description', $settings['site_description'] ?? 'Passionate full-stack developer skilled in PHP, Laravel, MySQL, and modern web technologies.')">
-    
+    <meta name="description"
+        content="@yield('description', $settings['site_description'] ?? 'Passionate full-stack developer skilled in PHP, Laravel, MySQL, and modern web technologies.')">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Simple Tailwind for utilities -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Custom Styles -->
     <style>
         :root {
@@ -26,31 +28,32 @@
             --success-color: #10b981;
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
-            
+
             /* Light Mode Backgrounds - Vibrant & Modern */
             --light-bg: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
             --light-card-bg: rgba(255, 255, 255, 0.25);
             --light-navbar-bg: rgba(255, 255, 255, 0.15);
             --light-footer-bg: #1e293b;
-            
+
             /* Dark Mode Backgrounds */
             --dark-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #312e81 50%, #7c2d92 75%, #1e1b4b 100%);
             --dark-card-bg: rgba(255, 255, 255, 0.08);
             --dark-navbar-bg: rgba(0, 0, 0, 0.3);
             --dark-footer-bg: #0f172a;
-            
+
             /* Text Colors */
             --text-light: #f8fafc;
             --text-muted-light: rgba(255, 255, 255, 0.85);
             --text-muted-dark: #94a3b8;
-            
+
             /* Effects */
             --shadow-light: 0 10px 40px rgba(0, 0, 0, 0.15);
             --shadow-dark: 0 10px 40px rgba(0, 0, 0, 0.4);
             --blur-effect: blur(20px);
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             overflow-x: hidden;
         }
@@ -100,19 +103,22 @@
         main {
             position: relative;
             z-index: 1;
-            padding-top: 70px; /* Keep content below fixed navbar */
+            padding-top: 70px;
+            /* Keep content below fixed navbar */
         }
 
         /* Ensure sections don't overlap with navbar - COMPACT SPACING */
         section {
             scroll-margin-top: 90px;
-            padding: 2.5rem 0; /* Reduced gap between modules */
+            padding: 2.5rem 0;
+            /* Reduced gap between modules */
         }
 
         /* Fix hero section height calculation - COMPACT SPACING */
         #home {
             min-height: calc(100vh - 75px);
-            padding: 3rem 0; /* Reduced hero spacing */
+            padding: 3rem 0;
+            /* Reduced hero spacing */
             display: flex;
             align-items: center;
             position: relative;
@@ -126,7 +132,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
                 radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
@@ -142,31 +148,40 @@
         /* Mobile spacing adjustments - COMPACT */
         @media (max-width: 768px) {
             body {
-                padding-top: 70px; /* Match fixed navbar height */
+                padding-top: 70px;
+                /* Match fixed navbar height */
             }
-            
+
             section {
-                padding: 2rem 0; /* Compact mobile spacing */
+                padding: 2rem 0;
+                /* Compact mobile spacing */
             }
-            
+
             #home {
                 min-height: calc(100vh - 70px);
-                padding: 2.5rem 0; /* Compact mobile hero spacing */
+                padding: 2.5rem 0;
+                /* Compact mobile hero spacing */
             }
         }
 
         @media (max-width: 576px) {
             section {
-                padding: 1.5rem 0; /* Very compact mobile spacing */
+                padding: 1.5rem 0;
+                /* Very compact mobile spacing */
             }
-            
+
             #home {
                 padding: 2rem 0;
             }
         }
 
         /* Enhanced Typography with Better Visibility - PROFESSIONAL & ATTRACTIVE SIZES */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-weight: 700;
             letter-spacing: -0.025em;
         }
@@ -174,7 +189,8 @@
         .display-3 {
             font-weight: 800;
             letter-spacing: -0.05em;
-            font-size: 3.5rem !important; /* Larger, more impressive hero title */
+            font-size: 3.5rem !important;
+            /* Larger, more impressive hero title */
             background: linear-gradient(135deg, #ffffff, #f8fafc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -182,7 +198,8 @@
         }
 
         .display-5 {
-            font-size: 2.2rem !important; /* Larger section titles */
+            font-size: 2.2rem !important;
+            /* Larger section titles */
         }
 
         /* ============================================
@@ -214,7 +231,7 @@
         .hero-greeting-text {
             font-size: 0.95rem;
             font-weight: 600;
-            color: rgba(255,255,255,0.75);
+            color: rgba(255, 255, 255, 0.75);
             letter-spacing: 0.06em;
             text-transform: uppercase;
         }
@@ -233,7 +250,7 @@
             display: block;
             font-size: 1.4rem;
             font-weight: 500;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             letter-spacing: 0.08em;
             margin-bottom: 0.1rem;
         }
@@ -282,7 +299,8 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             position: absolute;
-            top: 0; left: 0;
+            top: 0;
+            left: 0;
             z-index: 1;
             filter: blur(20px);
             opacity: 0.65;
@@ -292,16 +310,37 @@
         }
 
         @keyframes nameGlowPulse {
-            0%, 100% { filter: blur(20px); opacity: 0.65; }
-            50%       { filter: blur(28px); opacity: 0.9; }
+
+            0%,
+            100% {
+                filter: blur(20px);
+                opacity: 0.65;
+            }
+
+            50% {
+                filter: blur(28px);
+                opacity: 0.9;
+            }
         }
 
         /* Mobile adjust */
         @media (max-width: 576px) {
-            .hero-firstname { font-size: 2.6rem; }
-            .hero-lastname, .hero-lastname-glow { font-size: 2.8rem; }
-            .hero-im { font-size: 1.1rem; }
-            .hero-greeting-text { font-size: 0.8rem; }
+            .hero-firstname {
+                font-size: 2.6rem;
+            }
+
+            .hero-lastname,
+            .hero-lastname-glow {
+                font-size: 2.8rem;
+            }
+
+            .hero-im {
+                font-size: 1.1rem;
+            }
+
+            .hero-greeting-text {
+                font-size: 0.8rem;
+            }
         }
 
         /* ============================================
@@ -379,14 +418,17 @@
         .btn-cv-view::before {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s ease;
         }
 
         .btn-cv-download:hover::before,
-        .btn-cv-view:hover::before { 
-            left: 100%; 
+        .btn-cv-view:hover::before {
+            left: 100%;
         }
 
         /* Mobile CV buttons */
@@ -410,6 +452,7 @@
         }
 
         @media (max-width: 576px) {
+
             .btn-cv-download,
             .btn-cv-view {
                 padding: 10px 16px;
@@ -426,36 +469,53 @@
         .profile-image {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        
+
         .profile-image:hover {
             transform: scale(1.05);
         }
-        
+
         #profilePhotoLoader {
             background: linear-gradient(135deg, #f8fafc, #e2e8f0);
             border: 2px solid rgba(255, 255, 255, 0.2);
             animation: fadeOutLoader 4s ease-in-out forwards;
         }
-        
+
         @keyframes fadeOutLoader {
-            0% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; display: none; }
+            0% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+            }
         }
-        
+
         .dark-mode #profilePhotoLoader {
             background: linear-gradient(135deg, #1f2937, #374151);
         }
-        
+
         /* Ensure profile photo shows after animation */
         #profilePhoto {
             animation: fadeInPhoto 4.5s ease-in-out forwards;
         }
-        
+
         @keyframes fadeInPhoto {
-            0% { opacity: 0; }
-            85% { opacity: 0; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 0;
+            }
+
+            85% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         /* CV Modal Styles */
@@ -612,17 +672,42 @@
             flex-shrink: 0;
         }
 
-        .cv-fallback i { font-size: 1.6rem; color: #93c5fd; }
-        .cv-fallback h5 { color: #374151; margin: 0; font-weight: 700; font-size: 0.95rem; }
-        .cv-fallback p  { font-size: 0.82rem; margin: 0; color: #6b7280; }
-        .cv-fallback a  {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            background: #3b82f6; color: #fff; border-radius: 8px;
-            padding: 7px 16px; font-weight: 600; text-decoration: none;
+        .cv-fallback i {
+            font-size: 1.6rem;
+            color: #93c5fd;
+        }
+
+        .cv-fallback h5 {
+            color: #374151;
+            margin: 0;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .cv-fallback p {
+            font-size: 0.82rem;
+            margin: 0;
+            color: #6b7280;
+        }
+
+        .cv-fallback a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #3b82f6;
+            color: #fff;
+            border-radius: 8px;
+            padding: 7px 16px;
+            font-weight: 600;
+            text-decoration: none;
             font-size: 0.85rem;
             transition: background 0.2s;
         }
-        .cv-fallback a:hover { background: #2563eb; color: #fff; }
+
+        .cv-fallback a:hover {
+            background: #2563eb;
+            color: #fff;
+        }
 
         .cv-modal-actions {
             display: flex;
@@ -701,6 +786,7 @@
         }
 
         @media (max-width: 576px) {
+
             .btn-cv-download,
             .btn-cv-view {
                 padding: 10px 16px;
@@ -712,7 +798,8 @@
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
             color: rgba(255, 255, 255, 0.95) !important;
             font-weight: 600 !important;
-            font-size: 1.4rem !important; /* Larger subtitle */
+            font-size: 1.4rem !important;
+            /* Larger subtitle */
             margin-bottom: 1.5rem !important;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.5s forwards;
@@ -723,6 +810,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -745,14 +833,16 @@
             color: #ffffff !important;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
             font-weight: 800 !important;
-            font-size: 2.2rem !important; /* Larger section titles */
+            font-size: 2.2rem !important;
+            /* Larger section titles */
         }
 
         body:not(.dark-mode) .lead {
             color: rgba(255, 255, 255, 0.95) !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
             font-weight: 500;
-            font-size: 1.2rem !important; /* Larger lead text */
+            font-size: 1.2rem !important;
+            /* Larger lead text */
             line-height: 1.6;
             opacity: 0;
             animation: fadeInUp 1s ease-out 1s forwards;
@@ -762,7 +852,8 @@
         .section-title {
             color: #ffffff !important;
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
-            font-size: 2.2rem !important; /* Larger section titles */
+            font-size: 2.2rem !important;
+            /* Larger section titles */
             position: relative;
         }
 
@@ -782,7 +873,8 @@
         .dark-mode .hero-title {
             color: #ffffff !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            font-size: 3.5rem !important; /* Larger for dark mode too */
+            font-size: 3.5rem !important;
+            /* Larger for dark mode too */
         }
 
         .dark-mode .hero-title span {
@@ -793,33 +885,42 @@
         /* Mobile typography adjustments - BALANCED & PROFESSIONAL */
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2.5rem !important; /* Larger on mobile */
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem !important; /* Larger on mobile */
+                font-size: 2.5rem !important;
+                /* Larger on mobile */
             }
 
-            .display-5, .section-title {
-                font-size: 1.8rem !important; /* Larger on mobile */
+            .hero-subtitle {
+                font-size: 1.1rem !important;
+                /* Larger on mobile */
+            }
+
+            .display-5,
+            .section-title {
+                font-size: 1.8rem !important;
+                /* Larger on mobile */
             }
 
             .lead {
-                font-size: 1rem !important; /* Larger on mobile */
+                font-size: 1rem !important;
+                /* Larger on mobile */
             }
         }
 
         @media (max-width: 576px) {
             .hero-title {
-                font-size: 2.2rem !important; /* Still readable on small mobile */
+                font-size: 2.2rem !important;
+                /* Still readable on small mobile */
             }
 
             .hero-subtitle {
-                font-size: 1rem !important; /* Still readable on small mobile */
+                font-size: 1rem !important;
+                /* Still readable on small mobile */
             }
 
-            .display-5, .section-title {
-                font-size: 1.6rem !important; /* Still readable on small mobile */
+            .display-5,
+            .section-title {
+                font-size: 1.6rem !important;
+                /* Still readable on small mobile */
             }
         }
 
@@ -940,7 +1041,7 @@
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             letter-spacing: 0.08em;
             white-space: nowrap;
             overflow: hidden;
@@ -1247,10 +1348,12 @@
         .hamburger-menu span:nth-child(1) {
             width: 100%;
         }
+
         .hamburger-menu span:nth-child(2) {
             width: 80%;
             margin-left: auto;
         }
+
         .hamburger-menu span:nth-child(3) {
             width: 60%;
             margin-left: auto;
@@ -1259,10 +1362,12 @@
         .navbar-toggler:hover .hamburger-menu span:nth-child(1) {
             width: 60%;
         }
+
         .navbar-toggler:hover .hamburger-menu span:nth-child(2) {
             width: 100%;
             margin-left: 0;
         }
+
         .navbar-toggler:hover .hamburger-menu span:nth-child(3) {
             width: 80%;
             margin-left: 0;
@@ -1282,10 +1387,12 @@
             background: #ef4444;
             width: 100%;
         }
+
         .navbar-toggler.menu-open .hamburger-menu span:nth-child(2) {
             opacity: 0;
             transform: scaleX(0);
         }
+
         .navbar-toggler.menu-open .hamburger-menu span:nth-child(3) {
             transform: rotate(-45deg) translate(8px, -8px);
             background: #ef4444;
@@ -1299,10 +1406,13 @@
         }
 
         @keyframes menuPulse {
-            0%, 100% { 
+
+            0%,
+            100% {
                 box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
             }
-            50% { 
+
+            50% {
                 box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
             }
         }
@@ -1329,11 +1439,12 @@
 
         /* Enhanced Mobile Menu - FIXED FLASH ISSUE */
         @media (max-width: 991.98px) {
+
             /* Hide navbar links in mobile, only show menu button */
             .navbar-nav {
                 display: none;
             }
-            
+
             /* Mobile menu overlay - FIXED OVERLAP ISSUES */
             .mobile-menu-overlay {
                 position: fixed;
@@ -1341,12 +1452,12 @@
                 left: 0;
                 width: 100vw;
                 height: 100vh;
-                background: linear-gradient(135deg, 
-                    rgba(15, 23, 42, 0.98) 0%, 
-                    rgba(30, 41, 59, 0.98) 25%, 
-                    rgba(51, 65, 85, 0.98) 50%,
-                    rgba(30, 41, 59, 0.98) 75%,
-                    rgba(15, 23, 42, 0.98) 100%);
+                background: linear-gradient(135deg,
+                        rgba(15, 23, 42, 0.98) 0%,
+                        rgba(30, 41, 59, 0.98) 25%,
+                        rgba(51, 65, 85, 0.98) 50%,
+                        rgba(30, 41, 59, 0.98) 75%,
+                        rgba(15, 23, 42, 0.98) 100%);
                 backdrop-filter: blur(25px);
                 -webkit-backdrop-filter: blur(25px);
                 z-index: 999999;
@@ -1363,7 +1474,7 @@
                 min-height: 100vh;
                 min-width: 100vw;
             }
-            
+
             /* Animated background particles */
             .mobile-menu-overlay::before {
                 content: '';
@@ -1372,7 +1483,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: 
+                background:
                     radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
                     radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
                     radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
@@ -1380,28 +1491,38 @@
                 pointer-events: none;
                 z-index: 1;
             }
-            
+
             @keyframes particleFloat {
-                0%, 100% { transform: translateY(0px) rotate(0deg); }
-                33% { transform: translateY(-20px) rotate(1deg); }
-                66% { transform: translateY(-10px) rotate(-1deg); }
+
+                0%,
+                100% {
+                    transform: translateY(0px) rotate(0deg);
+                }
+
+                33% {
+                    transform: translateY(-20px) rotate(1deg);
+                }
+
+                66% {
+                    transform: translateY(-10px) rotate(-1deg);
+                }
             }
-            
+
             .mobile-menu-overlay.active {
                 opacity: 1;
                 visibility: visible;
                 transform: scale(1);
             }
-            
+
             .dark-mode .mobile-menu-overlay {
-                background: linear-gradient(135deg, 
-                    rgba(5, 5, 20, 0.98) 0%, 
-                    rgba(15, 15, 35, 0.98) 25%, 
-                    rgba(25, 25, 45, 0.98) 50%,
-                    rgba(15, 15, 35, 0.98) 75%,
-                    rgba(5, 5, 20, 0.98) 100%);
+                background: linear-gradient(135deg,
+                        rgba(5, 5, 20, 0.98) 0%,
+                        rgba(15, 15, 35, 0.98) 25%,
+                        rgba(25, 25, 45, 0.98) 50%,
+                        rgba(15, 15, 35, 0.98) 75%,
+                        rgba(5, 5, 20, 0.98) 100%);
             }
-            
+
             /* Mobile menu header bar - clean flex row */
             .mobile-menu-header-bar {
                 display: flex;
@@ -1431,14 +1552,14 @@
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 flex-shrink: 0;
             }
-            
+
             .mobile-menu-close:hover {
                 background: linear-gradient(135deg, rgba(239, 68, 68, 0.45), rgba(220, 38, 38, 0.55));
                 border-color: rgba(239, 68, 68, 0.7);
                 transform: rotate(90deg) scale(1.1);
                 box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
             }
-            
+
             /* Mobile menu navigation */
             .mobile-nav-menu {
                 display: flex;
@@ -1453,7 +1574,7 @@
                 flex: 1;
                 overflow-y: auto;
             }
-            
+
             /* Menu title */
             .mobile-menu-title {
                 font-size: 1.5rem;
@@ -1466,7 +1587,7 @@
                 transform: translateY(20px);
                 animation: fadeInUp 0.6s ease-out 0.2s forwards;
             }
-            
+
             .mobile-nav-link {
                 display: flex;
                 align-items: center;
@@ -1492,39 +1613,62 @@
                 -webkit-backdrop-filter: blur(10px);
                 gap: 1rem;
             }
-            
+
             .mobile-nav-link i {
                 font-size: 1.2rem;
                 width: 24px;
                 text-align: center;
                 transition: all 0.3s ease;
             }
-            
+
             .mobile-nav-link .nav-text {
                 flex: 1;
             }
-            
+
             .mobile-nav-link .nav-arrow {
                 font-size: 0.9rem;
                 opacity: 0.7;
                 transition: all 0.3s ease;
             }
-            
+
             .mobile-menu-overlay.active .mobile-nav-link {
                 transform: translateY(0);
                 opacity: 1;
             }
-            
+
             /* Enhanced staggered animation for menu items */
-            .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
-            .mobile-nav-link:nth-child(2) { transition-delay: 0.15s; }
-            .mobile-nav-link:nth-child(3) { transition-delay: 0.2s; }
-            .mobile-nav-link:nth-child(4) { transition-delay: 0.25s; }
-            .mobile-nav-link:nth-child(5) { transition-delay: 0.3s; }
-            .mobile-nav-link:nth-child(6) { transition-delay: 0.35s; }
-            .mobile-nav-link:nth-child(7) { transition-delay: 0.4s; }
-            .mobile-nav-link:nth-child(8) { transition-delay: 0.45s; }
-            
+            .mobile-nav-link:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+
+            .mobile-nav-link:nth-child(2) {
+                transition-delay: 0.15s;
+            }
+
+            .mobile-nav-link:nth-child(3) {
+                transition-delay: 0.2s;
+            }
+
+            .mobile-nav-link:nth-child(4) {
+                transition-delay: 0.25s;
+            }
+
+            .mobile-nav-link:nth-child(5) {
+                transition-delay: 0.3s;
+            }
+
+            .mobile-nav-link:nth-child(6) {
+                transition-delay: 0.35s;
+            }
+
+            .mobile-nav-link:nth-child(7) {
+                transition-delay: 0.4s;
+            }
+
+            .mobile-nav-link:nth-child(8) {
+                transition-delay: 0.45s;
+            }
+
             .mobile-nav-link::before {
                 content: '';
                 position: absolute;
@@ -1535,11 +1679,11 @@
                 background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
                 transition: left 0.8s ease;
             }
-            
+
             .mobile-nav-link:hover::before {
                 left: 100%;
             }
-            
+
             .mobile-nav-link:hover {
                 background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.2));
                 border-color: rgba(255, 255, 255, 0.3);
@@ -1547,26 +1691,46 @@
                 box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
                 color: #ffffff !important;
             }
-            
+
             .mobile-nav-link:hover i {
                 transform: scale(1.2);
                 color: #a78bfa;
             }
-            
+
             .mobile-nav-link:hover .nav-arrow {
                 transform: translateX(5px);
                 opacity: 1;
             }
-            
+
             /* Special styling for different menu items */
-            .mobile-nav-link[href="#home"] i { color: #10b981; }
-            .mobile-nav-link[href="#about"] i { color: #3b82f6; }
-            .mobile-nav-link[href="#projects"] i { color: #8b5cf6; }
-            .mobile-nav-link[href="#upcoming"] i { color: #f59e0b; }
-            .mobile-nav-link[href="#skills"] i { color: #ef4444; }
-            .mobile-nav-link[href="#achievements"] i { color: #06b6d4; }
-            .mobile-nav-link[href="#contact"] i { color: #ec4899; }
-            
+            .mobile-nav-link[href="#home"] i {
+                color: #10b981;
+            }
+
+            .mobile-nav-link[href="#about"] i {
+                color: #3b82f6;
+            }
+
+            .mobile-nav-link[href="#projects"] i {
+                color: #8b5cf6;
+            }
+
+            .mobile-nav-link[href="#upcoming"] i {
+                color: #f59e0b;
+            }
+
+            .mobile-nav-link[href="#skills"] i {
+                color: #ef4444;
+            }
+
+            .mobile-nav-link[href="#achievements"] i {
+                color: #06b6d4;
+            }
+
+            .mobile-nav-link[href="#contact"] i {
+                color: #ec4899;
+            }
+
             /* Mobile menu brand */
             .mobile-menu-brand {
                 font-size: 1.1rem;
@@ -1577,23 +1741,30 @@
                 align-items: center;
                 gap: 0.5rem;
             }
-            
+
             .mobile-menu-brand::before {
                 content: '💻';
                 font-size: 1.3rem;
                 animation: brandPulse 2s ease-in-out infinite;
             }
-            
+
             @keyframes brandPulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.1); }
+
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.1);
+                }
             }
-            
+
             .mobile-menu-brand .brand-initial {
                 color: #a78bfa;
                 text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
             }
-            
+
             /* CV Download button in mobile menu - ENHANCED */
             .mobile-cv-download {
                 display: flex;
@@ -1620,7 +1791,7 @@
                 -webkit-backdrop-filter: blur(10px);
                 gap: 1rem;
             }
-            
+
             .mobile-cv-download::before {
                 content: '';
                 position: absolute;
@@ -1631,17 +1802,17 @@
                 background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
                 transition: left 0.8s ease;
             }
-            
+
             .mobile-cv-download:hover::before {
                 left: 100%;
             }
-            
+
             .mobile-menu-overlay.active .mobile-cv-download {
                 transform: translateY(0);
                 opacity: 1;
                 transition-delay: 0.6s;
             }
-            
+
             .mobile-cv-download:hover {
                 transform: translateY(-6px) scale(1.03);
                 box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
@@ -1649,22 +1820,22 @@
                 border-color: rgba(16, 185, 129, 0.5);
                 background: linear-gradient(135deg, #059669, #047857);
             }
-            
+
             .mobile-cv-download i:first-child {
                 font-size: 1.2rem;
             }
-            
+
             .mobile-cv-download i:last-child {
                 font-size: 1rem;
                 opacity: 0.8;
                 transition: all 0.3s ease;
             }
-            
+
             .mobile-cv-download:hover i:last-child {
                 transform: translateX(3px);
                 opacity: 1;
             }
-            
+
             /* Hide desktop navbar collapse in mobile */
             .navbar-collapse {
                 display: none !important;
@@ -1677,6 +1848,7 @@
                 opacity: 0;
                 transform: translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1684,27 +1856,35 @@
         }
 
         @keyframes float {
-            0%, 100% { 
-                transform: translateY(0px) rotate(0deg); 
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
             }
-            25% { 
-                transform: translateY(-10px) rotate(1deg); 
+
+            25% {
+                transform: translateY(-10px) rotate(1deg);
             }
-            50% { 
-                transform: translateY(-20px) rotate(0deg); 
+
+            50% {
+                transform: translateY(-20px) rotate(0deg);
             }
-            75% { 
-                transform: translateY(-10px) rotate(-1deg); 
+
+            75% {
+                transform: translateY(-10px) rotate(-1deg);
             }
         }
 
         @keyframes pulse {
-            0%, 100% { 
-                transform: scale(1); 
+
+            0%,
+            100% {
+                transform: scale(1);
                 opacity: 1;
             }
-            50% { 
-                transform: scale(1.05); 
+
+            50% {
+                transform: scale(1.05);
                 opacity: 0.8;
             }
         }
@@ -1714,6 +1894,7 @@
                 opacity: 0;
                 transform: translateX(-100px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -1725,6 +1906,7 @@
                 opacity: 0;
                 transform: translateX(100px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -1736,10 +1918,12 @@
                 opacity: 0;
                 transform: scale(0.3) rotate(-10deg);
             }
+
             50% {
                 opacity: 1;
                 transform: scale(1.1) rotate(5deg);
             }
+
             100% {
                 opacity: 1;
                 transform: scale(1) rotate(0deg);
@@ -1776,7 +1960,7 @@
             filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
             border-radius: 50%;
             /* Clean border using box-shadow instead of gradient border-box to avoid overlay issue */
-            box-shadow: 0 0 0 4px #6366f1, 0 0 0 8px rgba(99, 102, 241, 0.3), 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 0 0 4px #6366f1, 0 0 0 8px rgba(99, 102, 241, 0.3), 0 20px 40px rgba(0, 0, 0, 0.3);
             background: transparent;
         }
 
@@ -1813,17 +1997,22 @@
         }
 
         @keyframes floatUpDown {
-            0%, 100% { 
-                transform: translateY(0px) rotate(0deg); 
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
             }
-            25% { 
-                transform: translateY(-20px) rotate(5deg); 
+
+            25% {
+                transform: translateY(-20px) rotate(5deg);
             }
-            50% { 
-                transform: translateY(-40px) rotate(0deg); 
+
+            50% {
+                transform: translateY(-40px) rotate(0deg);
             }
-            75% { 
-                transform: translateY(-20px) rotate(-5deg); 
+
+            75% {
+                transform: translateY(-20px) rotate(-5deg);
             }
         }
 
@@ -1852,12 +2041,14 @@
             backdrop-filter: var(--blur-effect);
             -webkit-backdrop-filter: var(--blur-effect);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px; /* More rounded for modern look */
+            border-radius: 20px;
+            /* More rounded for modern look */
             box-shadow: var(--shadow-light);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            padding: 2rem !important; /* More generous padding */
+            padding: 2rem !important;
+            /* More generous padding */
         }
 
         .dark-mode .handmade-card {
@@ -1872,7 +2063,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px; /* Thicker accent line */
+            height: 4px;
+            /* Thicker accent line */
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
             transform: scaleX(0);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1883,7 +2075,8 @@
         }
 
         .handmade-card:hover {
-            transform: translateY(-8px) scale(1.02); /* More pronounced hover effect */
+            transform: translateY(-8px) scale(1.02);
+            /* More pronounced hover effect */
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
             border-color: rgba(255, 255, 255, 0.3);
         }
@@ -1905,52 +2098,58 @@
 
         /* Professional card content */
         .handmade-card h5 {
-            font-size: 1.25rem !important; /* Good readable size */
+            font-size: 1.25rem !important;
+            /* Good readable size */
             margin-bottom: 1rem !important;
             font-weight: 700;
         }
 
         .handmade-card h6 {
-            font-size: 1.1rem !important; /* Good readable size */
+            font-size: 1.1rem !important;
+            /* Good readable size */
             margin-bottom: 0.75rem !important;
             font-weight: 600;
         }
 
         .handmade-card p {
-            font-size: 1rem !important; /* Good readable size */
+            font-size: 1rem !important;
+            /* Good readable size */
             margin-bottom: 1rem !important;
             line-height: 1.6;
         }
 
         .handmade-card .badge {
-            font-size: 0.8rem !important; /* Good readable size */
+            font-size: 0.8rem !important;
+            /* Good readable size */
             padding: 0.4rem 0.8rem !important;
             font-weight: 500;
         }
 
         .handmade-card small {
-            font-size: 0.85rem !important; /* Good readable size */
+            font-size: 0.85rem !important;
+            /* Good readable size */
         }
 
         /* Mobile card adjustments - PROFESSIONAL */
         @media (max-width: 768px) {
             .handmade-card {
-                padding: 1.5rem !important; /* Good mobile padding */
+                padding: 1.5rem !important;
+                /* Good mobile padding */
                 border-radius: 16px;
             }
-            
+
             .handmade-card h5 {
                 font-size: 1.1rem !important;
             }
-            
+
             .handmade-card h6 {
                 font-size: 1rem !important;
             }
-            
+
             .handmade-card p {
                 font-size: 0.9rem !important;
             }
-            
+
             .handmade-card .badge {
                 font-size: 0.75rem !important;
                 padding: 0.3rem 0.6rem !important;
@@ -1960,49 +2159,57 @@
         /* ============================================
            ENHANCED SKILLS SECTION - ATTRACTIVE DESIGN
         ============================================ */
-        
+
         /* Category Headers - REDUCED SPACING */
         .category-header {
             position: relative;
-            margin-bottom: 1rem; /* Reduced from 1.5rem */
+            margin-bottom: 1rem;
+            /* Reduced from 1.5rem */
         }
-        
+
         .category-title {
             display: flex;
             align-items: center;
-            gap: 0.5rem; /* Reduced from 0.75rem */
-            font-size: 1.4rem; /* Slightly reduced */
+            gap: 0.5rem;
+            /* Reduced from 0.75rem */
+            font-size: 1.4rem;
+            /* Slightly reduced */
             font-weight: 800;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin-bottom: 0.25rem;
         }
-        
+
         .category-icon {
-            font-size: 1.6rem; /* Slightly reduced */
+            font-size: 1.6rem;
+            /* Slightly reduced */
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
         }
-        
+
         .category-line {
-            height: 2px; /* Reduced from 3px */
+            height: 2px;
+            /* Reduced from 3px */
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), transparent);
             border-radius: 2px;
             width: 100%;
-            max-width: 120px; /* Reduced from 150px */
+            max-width: 120px;
+            /* Reduced from 150px */
         }
-        
+
         /* Skill Cards - 3D Flip Design - COMPACT HEIGHT */
         .skill-card {
             perspective: 1000px;
-            height: 200px; /* Reduced from 240px */
+            height: 200px;
+            /* Reduced from 240px */
             cursor: pointer;
-            margin-bottom: 1rem; /* Reduced gap between cards */
+            margin-bottom: 1rem;
+            /* Reduced gap between cards */
         }
-        
+
         .skill-card-inner {
             position: relative;
             width: 100%;
@@ -2011,61 +2218,67 @@
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
         }
-        
+
         /* Skill card FLIP on hover (desktop) and .flipped class (mobile toggle) */
         .skill-card:hover .skill-card-inner,
         .skill-card.flipped .skill-card-inner {
             transform: rotateY(180deg);
         }
-        
+
         .skill-card-front,
         .skill-card-back {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 16px; /* Reduced from 20px */
-            padding: 1rem 0.75rem; /* Reduced padding */
+            border-radius: 16px;
+            /* Reduced from 20px */
+            padding: 1rem 0.75rem;
+            /* Reduced padding */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Reduced shadow */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            /* Reduced shadow */
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .skill-card-front {
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.1) 0%, 
-                rgba(255, 255, 255, 0.05) 100%);
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    rgba(255, 255, 255, 0.05) 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
-        
+
         .skill-card-back {
-            background: linear-gradient(135deg, 
-                rgba(99, 102, 241, 0.15) 0%, 
-                rgba(236, 72, 153, 0.15) 100%);
+            background: linear-gradient(135deg,
+                    rgba(99, 102, 241, 0.15) 0%,
+                    rgba(236, 72, 153, 0.15) 100%);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             transform: rotateY(180deg);
         }
-        
+
         /* Skill Icon - COMPACT SPACING */
         .skill-icon-wrapper {
             position: relative;
-            margin-bottom: 0.75rem; /* Reduced from 1rem */
+            margin-bottom: 0.75rem;
+            /* Reduced from 1rem */
         }
-        
+
         .skill-icon {
-            font-size: 3rem; /* Reduced from 3.5rem */
-            margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+            font-size: 3rem;
+            /* Reduced from 3.5rem */
+            margin-bottom: 0.25rem;
+            /* Reduced from 0.5rem */
             position: relative;
             z-index: 2;
             animation: skillIconFloat 3s ease-in-out infinite;
             filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
         }
-        
+
         .skill-icon-default {
             /* Keep it simple so that emojis retain their native colors */
             background: none;
@@ -2076,85 +2289,111 @@
             color: #ffffff;
             text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
-        
+
         /* Enhanced glow effect */
         .skill-glow {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 100px; /* Increased size */
+            width: 100px;
+            /* Increased size */
             height: 100px;
             background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
             border-radius: 50%;
             animation: skillGlow 2s ease-in-out infinite alternate;
             z-index: 1;
         }
-        
+
         @keyframes skillIconFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
-        
+
         @keyframes skillGlow {
-            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
+            0% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
         }
-        
+
         /* Skill Name - COMPACT SPACING */
         .skill-name,
         .skill-name-back {
-            font-size: 1rem; /* Reduced from 1.1rem */
+            font-size: 1rem;
+            /* Reduced from 1.1rem */
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 0.5rem; /* Reduced from 0.75rem */
+            margin-bottom: 0.5rem;
+            /* Reduced from 0.75rem */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
-        
+
         /* Skill Level - COMPACT SPACING */
         .skill-level {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.25rem;
-            margin-bottom: 0.5rem; /* Reduced from 0.75rem */
+            margin-bottom: 0.5rem;
+            /* Reduced from 0.75rem */
         }
-        
+
         .skill-stars {
             display: flex;
             gap: 0.25rem;
         }
-        
+
         .skill-stars i {
             font-size: 1rem;
             color: #6b7280;
             transition: all 0.3s ease;
             animation: starPulse 2s ease-in-out infinite;
         }
-        
+
         .skill-stars i.active {
             color: #fbbf24;
             text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
         }
-        
+
         @keyframes starPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
-        
+
         .skill-percentage {
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--primary-color);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
-        
+
         /* Skill Progress - COMPACT SPACING */
         .skill-progress-wrapper {
             width: 100%;
-            margin-top: 0.25rem; /* Reduced from 0.5rem */
+            margin-top: 0.25rem;
+            /* Reduced from 0.5rem */
         }
-        
+
         .skill-progress-track {
             width: 100%;
             height: 6px;
@@ -2163,7 +2402,7 @@
             overflow: hidden;
             position: relative;
         }
-        
+
         .skill-progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
@@ -2173,7 +2412,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .skill-progress-fill::after {
             content: '';
             position: absolute;
@@ -2184,12 +2423,17 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             animation: progressShine 2s ease-in-out infinite;
         }
-        
+
         @keyframes progressShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
         }
-        
+
         /* Back Card Content */
         .skill-details {
             text-align: center;
@@ -2198,7 +2442,7 @@
             flex-direction: column;
             justify-content: center;
         }
-        
+
         .skill-description {
             color: rgba(255, 255, 255, 0.9);
             font-size: 0.9rem;
@@ -2206,13 +2450,13 @@
             margin-bottom: 1.5rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
-        
+
         .skill-experience {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
         }
-        
+
         .experience-item {
             display: flex;
             align-items: center;
@@ -2222,82 +2466,98 @@
             font-size: 0.85rem;
             font-weight: 500;
         }
-        
+
         .experience-item i {
             color: var(--accent-color);
             font-size: 1rem;
         }
-        
+
         /* Hover Effects */
         .skill-card:hover .skill-card-front {
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
-        
+
         .skill-card:hover .skill-glow {
             animation-duration: 1s;
         }
-        
+
         /* Mobile Responsive - VERY COMPACT SPACING */
         @media (max-width: 768px) {
             .skill-card {
-                height: 180px; /* Further reduced for mobile */
-                margin-bottom: 0.75rem; /* Reduced mobile gap */
+                height: 180px;
+                /* Further reduced for mobile */
+                margin-bottom: 0.75rem;
+                /* Reduced mobile gap */
             }
-            
+
             .skill-card-front,
             .skill-card-back {
-                padding: 0.75rem 0.5rem; /* Reduced mobile padding */
-                border-radius: 12px; /* Smaller border radius */
+                padding: 0.75rem 0.5rem;
+                /* Reduced mobile padding */
+                border-radius: 12px;
+                /* Smaller border radius */
             }
-            
+
             .skill-icon {
-                font-size: 2.5rem; /* Reduced mobile icon size */
+                font-size: 2.5rem;
+                /* Reduced mobile icon size */
             }
-            
+
             .category-title {
-                font-size: 1.2rem; /* Reduced mobile title */
-                gap: 0.25rem; /* Reduced mobile gap */
+                font-size: 1.2rem;
+                /* Reduced mobile title */
+                gap: 0.25rem;
+                /* Reduced mobile gap */
             }
-            
+
             .skill-name,
             .skill-name-back {
-                font-size: 0.9rem; /* Reduced mobile name size */
-                margin-bottom: 0.25rem; /* Reduced mobile margin */
+                font-size: 0.9rem;
+                /* Reduced mobile name size */
+                margin-bottom: 0.25rem;
+                /* Reduced mobile margin */
             }
-            
+
             .skill-icon-wrapper {
-                margin-bottom: 0.5rem; /* Reduced mobile margin */
+                margin-bottom: 0.5rem;
+                /* Reduced mobile margin */
             }
 
             .category-header {
-                margin-bottom: 0.75rem; /* Reduced mobile category spacing */
+                margin-bottom: 0.75rem;
+                /* Reduced mobile category spacing */
             }
         }
-        
+
         @media (max-width: 576px) {
             .skill-card {
-                height: 160px; /* Very compact for small mobile */
-                margin-bottom: 0.5rem; /* Minimal gap */
+                height: 160px;
+                /* Very compact for small mobile */
+                margin-bottom: 0.5rem;
+                /* Minimal gap */
             }
-            
+
             .skill-icon {
-                font-size: 2.25rem; /* Further reduced */
+                font-size: 2.25rem;
+                /* Further reduced */
             }
-            
+
             .category-title {
                 font-size: 1.1rem;
                 flex-direction: column;
                 gap: 0.25rem;
                 text-align: center;
             }
-            
+
             .skill-card-front,
             .skill-card-back {
-                padding: 0.5rem 0.25rem; /* Minimal padding for small screens */
+                padding: 0.5rem 0.25rem;
+                /* Minimal padding for small screens */
             }
 
             .category-header {
-                margin-bottom: 0.5rem; /* Minimal category spacing */
+                margin-bottom: 0.5rem;
+                /* Minimal category spacing */
             }
         }
 
@@ -2307,12 +2567,12 @@
                 margin-bottom: 1.5rem;
                 border-radius: 20px;
             }
-            
+
             .hero-title {
                 font-size: 2.5rem !important;
                 line-height: 1.2;
             }
-            
+
             .hero-subtitle {
                 font-size: 1.1rem !important;
             }
@@ -2322,12 +2582,14 @@
             }
 
             .btn-handmade {
-                padding: 12px 24px; /* Good mobile size */
+                padding: 12px 24px;
+                /* Good mobile size */
                 font-size: 0.9rem;
             }
 
             .btn-outline-light {
-                padding: 10px 20px; /* Good mobile size */
+                padding: 10px 20px;
+                /* Good mobile size */
                 font-size: 0.9rem;
             }
 
@@ -2457,7 +2719,8 @@
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
         }
 
-        footer h5, footer h6 {
+        footer h5,
+        footer h6 {
             color: #ffffff !important;
             font-weight: 700;
         }
@@ -2502,9 +2765,12 @@
         /* Badge Enhancements - COMPACT */
         .badge {
             font-weight: 500;
-            padding: 0.3em 0.6em; /* Smaller padding */
-            border-radius: 6px; /* Smaller border radius */
-            font-size: 0.7rem; /* Smaller font size */
+            padding: 0.3em 0.6em;
+            /* Smaller padding */
+            border-radius: 6px;
+            /* Smaller border radius */
+            font-size: 0.7rem;
+            /* Smaller font size */
         }
 
         .bg-primary {
@@ -2517,25 +2783,31 @@
 
         /* Form Enhancements - COMPACT */
         .form-control {
-            border-radius: 10px; /* Smaller border radius */
+            border-radius: 10px;
+            /* Smaller border radius */
             border: 2px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
-            padding: 0.6rem 0.8rem; /* Smaller padding */
+            padding: 0.6rem 0.8rem;
+            /* Smaller padding */
             transition: all 0.3s ease;
-            font-size: 0.85rem; /* Smaller font size */
+            font-size: 0.85rem;
+            /* Smaller font size */
         }
 
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.15rem rgba(99, 102, 241, 0.25); /* Smaller focus ring */
+            box-shadow: 0 0 0 0.15rem rgba(99, 102, 241, 0.25);
+            /* Smaller focus ring */
             background: rgba(255, 255, 255, 0.15);
         }
 
         .form-label {
             font-weight: 600;
-            margin-bottom: 0.4rem; /* Smaller margin */
-            font-size: 0.85rem; /* Smaller font size */
+            margin-bottom: 0.4rem;
+            /* Smaller margin */
+            font-size: 0.85rem;
+            /* Smaller font size */
         }
 
         /* Accessibility Improvements */
@@ -2641,7 +2913,8 @@
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border: none;
             border-radius: 16px;
-            padding: 16px 32px; /* More generous padding */
+            padding: 16px 32px;
+            /* More generous padding */
             color: white;
             font-weight: 600;
             text-decoration: none;
@@ -2652,7 +2925,8 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-            font-size: 1rem; /* Good readable size */
+            font-size: 1rem;
+            /* Good readable size */
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -2681,10 +2955,12 @@
         .btn-outline-light {
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 16px;
-            padding: 14px 28px; /* Good padding */
+            padding: 14px 28px;
+            /* Good padding */
             font-weight: 500;
             transition: all 0.3s ease;
-            font-size: 1rem; /* Good readable size */
+            font-size: 1rem;
+            /* Good readable size */
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -2717,7 +2993,8 @@
             color: #ffffff !important;
         }
 
-        footer h5, footer h6 {
+        footer h5,
+        footer h6 {
             color: #ffffff !important;
         }
 
@@ -2742,7 +3019,7 @@
             color: #d1d5db !important;
         }
 
-        .dark-mode footer h5, 
+        .dark-mode footer h5,
         .dark-mode footer h6 {
             color: #ffffff !important;
         }
@@ -2756,7 +3033,7 @@
             color: #d1d5db !important;
         }
 
-        body:not(.dark-mode) footer h5, 
+        body:not(.dark-mode) footer h5,
         body:not(.dark-mode) footer h6 {
             color: #ffffff !important;
         }
@@ -2819,11 +3096,14 @@
             color: inherit !important;
         }
 
-        footer h5, footer h6, footer .fw-bold {
+        footer h5,
+        footer h6,
+        footer .fw-bold {
             color: #ffffff !important;
         }
 
-        footer .footer-text, footer .footer-link {
+        footer .footer-text,
+        footer .footer-link {
             color: #e5e7eb !important;
         }
 
@@ -2832,12 +3112,13 @@
         }
 
         /* Ultimate footer text visibility fix */
-        footer, footer * {
+        footer,
+        footer * {
             visibility: visible !important;
             opacity: 1 !important;
         }
 
-        footer .footer-text, 
+        footer .footer-text,
         footer .footer-link,
         footer p,
         footer span,
@@ -2854,7 +3135,7 @@
         /* ============================================
            MOBILE MENU OVERLAP FIX
         ============================================ */
-        
+
         /* Ensure mobile menu is always on top of everything */
         .mobile-menu-overlay {
             /* Use the highest possible z-index */
@@ -2870,7 +3151,7 @@
             width: 100vw !important;
             height: 100vh !important;
         }
-        
+
         /* Prevent body scroll when menu is open */
         body.menu-open {
             overflow: hidden !important;
@@ -2878,16 +3159,17 @@
             width: 100% !important;
             height: 100% !important;
         }
-        
+
         /* Ensure menu elements are properly layered */
         .mobile-menu-overlay .mobile-menu-close,
         .mobile-menu-overlay .mobile-menu-brand {
             z-index: 2147483647 !important;
         }
-        
+
         .mobile-menu-overlay .mobile-nav-menu {
             z-index: 2147483646 !important;
         }
+
         .notification {
             position: fixed;
             top: 2rem;
@@ -2942,6 +3224,7 @@
                 transform: translateX(100%);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -2962,6 +3245,7 @@
                 font-size: 0.9rem;
             }
         }
+
         /* Scroll to Top Button */
         .scroll-top-btn {
             position: fixed;
@@ -2986,7 +3270,7 @@
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             overflow: hidden;
         }
-        
+
         .scroll-top-btn::before {
             content: '';
             position: absolute;
@@ -3010,7 +3294,7 @@
             box-shadow: 0 15px 35px rgba(245, 87, 108, 0.6);
             background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
         }
-        
+
         .scroll-top-btn:hover::before {
             left: 100%;
         }
@@ -3019,9 +3303,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(245, 87, 108, 0.6), 0 10px 20px rgba(245, 87, 108, 0.4);
             }
+
             70% {
                 box-shadow: 0 0 0 15px rgba(245, 87, 108, 0), 0 15px 30px rgba(245, 87, 108, 0.5);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(245, 87, 108, 0), 0 10px 20px rgba(245, 87, 108, 0.4);
             }
@@ -3083,6 +3369,7 @@
         }
 
         @media (max-width: 768px) {
+
             .navbar-custom,
             .navbar-custom.scrolled,
             .navbar-custom .navbar-inner {
@@ -3168,23 +3455,25 @@
         }
     </style>
 </head>
+
 <body>
-    
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
         <div class="navbar-inner d-flex justify-content-between align-items-center w-100">
             <a class="navbar-brand fw-bold mb-0 text-truncate" href="#home">
                 <span class="brand-initial">S</span>
-                <span class="brand-name">Sandipan <span class="brand-lastname">Bhunia</span></span>
+                <span class="brand-name">andipan <span class="brand-lastname">Bhunia</span></span>
             </a>
-            
+
             <div class="navbar-actions d-flex align-items-center gap-2 flex-nowrap">
                 <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
                     <i class="fas fa-sun theme-icon-light"></i>
                     <i class="fas fa-moon theme-icon-dark"></i>
                 </div>
-                
-                <button class="navbar-toggler" type="button" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
+
+                <button class="navbar-toggler" type="button" onclick="toggleMobileMenu()"
+                    aria-label="Toggle navigation">
                     <div class="hamburger-menu">
                         <span></span>
                         <span></span>
@@ -3192,7 +3481,7 @@
                     </div>
                 </button>
             </div>
-            
+
             <!-- Desktop Navigation -->
             <div class="collapse navbar-collapse order-lg-2 d-none d-lg-flex justify-content-center" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
@@ -3203,24 +3492,24 @@
                         <a class="nav-link text-white" href="#about">About</a>
                     </li>
                     @if($projects->count() > 0)
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#projects">Projects</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#projects">Projects</a>
+                        </li>
                     @endif
                     @if($upcomingProjects->count() > 0)
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#upcoming">In the Lab</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#upcoming">In the Lab</a>
+                        </li>
                     @endif
                     @if($skills->count() > 0)
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#skills">Skills</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#skills">Skills</a>
+                        </li>
                     @endif
                     @if($qaAchievements->count() > 0)
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#achievements">Achievements</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#achievements">Achievements</a>
+                        </li>
                     @endif
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#contact">Contact</a>
@@ -3244,7 +3533,7 @@
 
         <nav class="mobile-nav-menu">
             <div class="mobile-menu-title">Navigation Menu</div>
-            
+
             <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()">
                 <i class="fas fa-home"></i>
                 <span class="nav-text">Home</span>
@@ -3256,47 +3545,47 @@
                 <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
             @if($projects->count() > 0)
-            <a href="#projects" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-code"></i>
-                <span class="nav-text">Projects</span>
-                <i class="fas fa-chevron-right nav-arrow"></i>
-            </a>
+                <a href="#projects" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-code"></i>
+                    <span class="nav-text">Projects</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
             @endif
             @if($upcomingProjects->count() > 0)
-            <a href="#upcoming" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-flask"></i>
-                <span class="nav-text">In the Lab</span>
-                <i class="fas fa-chevron-right nav-arrow"></i>
-            </a>
+                <a href="#upcoming" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-flask"></i>
+                    <span class="nav-text">In the Lab</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
             @endif
             @if($skills->count() > 0)
-            <a href="#skills" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-cogs"></i>
-                <span class="nav-text">Skills</span>
-                <i class="fas fa-chevron-right nav-arrow"></i>
-            </a>
+                <a href="#skills" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-cogs"></i>
+                    <span class="nav-text">Skills</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
             @endif
             @if($qaAchievements->count() > 0)
-            <a href="#achievements" class="mobile-nav-link" onclick="closeMobileMenu()">
-                <i class="fas fa-trophy"></i>
-                <span class="nav-text">Achievements</span>
-                <i class="fas fa-chevron-right nav-arrow"></i>
-            </a>
+                <a href="#achievements" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-trophy"></i>
+                    <span class="nav-text">Achievements</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
             @endif
             <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
                 <i class="fas fa-envelope"></i>
                 <span class="nav-text">Contact</span>
                 <i class="fas fa-chevron-right nav-arrow"></i>
             </a>
-            
+
             <!-- CV Download in Mobile Menu - ENHANCED -->
             @if(isset($publicCvs) && $publicCvs->count() > 0)
                 @foreach($publicCvs as $cv)
-                <a href="{{ $cv->download_url }}" class="mobile-cv-download" target="_blank" onclick="closeMobileMenu()">
-                    <i class="fas fa-download"></i>
-                    <span>{{ $cv->label }}</span>
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
+                    <a href="{{ $cv->download_url }}" class="mobile-cv-download" target="_blank" onclick="closeMobileMenu()">
+                        <i class="fas fa-download"></i>
+                        <span>{{ $cv->label }}</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
                 @endforeach
             @endif
         </nav>
@@ -3315,13 +3604,14 @@
             <div class="cv-viewer-wrapper">
                 <!-- iframe works for both local PDFs and Google Drive /preview URLs -->
                 <iframe id="cvViewer" class="cv-viewer" src="" frameborder="0" allowfullscreen
-                        style="width:100%;height:100%;border:none;"></iframe>
+                    style="width:100%;height:100%;border:none;"></iframe>
                 <!-- Helper strip shown below the PDF viewer -->
                 <div class="cv-fallback" id="cvFallback">
                     <i class="fas fa-file-pdf"></i>
                     <h5 id="cvFallbackTitle">Loading CV...</h5>
                     <p id="cvFallbackMsg">If the preview doesn't appear, use the button below.</p>
-                    <button type="button" id="cvFallbackOpen" onclick="openCVFallback()" style="display:inline-flex;align-items:center;gap:0.4rem;background:#3b82f6;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-weight:600;font-size:0.85rem;cursor:pointer;transition:background 0.2s;">
+                    <button type="button" id="cvFallbackOpen" onclick="openCVFallback()"
+                        style="display:inline-flex;align-items:center;gap:0.4rem;background:#3b82f6;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-weight:600;font-size:0.85rem;cursor:pointer;transition:background 0.2s;">
                         <i class="fas fa-external-link-alt"></i> Open CV in New Tab
                     </button>
                 </div>
@@ -3332,7 +3622,8 @@
                     <i class="fas fa-download"></i>
                     Download CV
                 </a>
-                <button class="cv-action-btn cv-fullscreen-btn" onclick="openCVFullscreen(); return false;" type="button" title="Open CV in New Tab">
+                <button class="cv-action-btn cv-fullscreen-btn" onclick="openCVFullscreen(); return false;"
+                    type="button" title="Open CV in New Tab">
                     <i class="fas fa-expand"></i>
                     Open in New Tab
                 </button>
@@ -3359,38 +3650,49 @@
                         <h5 class="fw-bold mb-3">
                             <span style="color: var(--primary-color);">S</span>andipan Bhunia
                         </h5>
-                        <p class="footer-text mb-4">Full Stack Developer & QA Engineer passionate about creating innovative web solutions and ensuring quality through comprehensive testing.</p>
-                        
+                        <p class="footer-text mb-4">Full Stack Developer & QA Engineer passionate about creating
+                            innovative web solutions and ensuring quality through comprehensive testing.</p>
+
                         <!-- Social Links -->
                         <div class="d-flex gap-3 mb-3">
-                            <a href="{{ $settings['github'] ?? '#' }}" class="footer-link hover-primary" target="_blank" title="GitHub">
+                            <a href="{{ $settings['github'] ?? '#' }}" class="footer-link hover-primary" target="_blank"
+                                title="GitHub">
                                 <i class="fab fa-github fa-lg"></i>
                             </a>
-                            <a href="{{ $settings['linkedin'] ?? '#' }}" class="footer-link hover-primary" target="_blank" title="LinkedIn">
+                            <a href="{{ $settings['linkedin'] ?? '#' }}" class="footer-link hover-primary"
+                                target="_blank" title="LinkedIn">
                                 <i class="fab fa-linkedin fa-lg"></i>
                             </a>
-                            <a href="mailto:{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}" class="footer-link hover-primary" title="Email">
+                            <a href="mailto:{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}"
+                                class="footer-link hover-primary" title="Email">
                                 <i class="fas fa-envelope fa-lg"></i>
                             </a>
-                            <a href="tel:{{ $settings['phone'] ?? '+918972966158' }}" class="footer-link hover-primary" title="Phone">
+                            <a href="tel:{{ $settings['phone'] ?? '+918972966158' }}" class="footer-link hover-primary"
+                                title="Phone">
                                 <i class="fas fa-phone fa-lg"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-2 col-md-6">
                     <h6 class="fw-bold mb-3">Quick Links</h6>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#home" class="footer-link text-decoration-none hover-primary">Home</a></li>
-                        <li class="mb-2"><a href="#about" class="footer-link text-decoration-none hover-primary">About</a></li>
-                        <li class="mb-2"><a href="#projects" class="footer-link text-decoration-none hover-primary">Projects</a></li>
-                        <li class="mb-2"><a href="#skills" class="footer-link text-decoration-none hover-primary">Skills</a></li>
-                        <li class="mb-2"><a href="#achievements" class="footer-link text-decoration-none hover-primary">Achievements</a></li>
-                        <li class="mb-2"><a href="#contact" class="footer-link text-decoration-none hover-primary">Contact</a></li>
+                        <li class="mb-2"><a href="#home" class="footer-link text-decoration-none hover-primary">Home</a>
+                        </li>
+                        <li class="mb-2"><a href="#about"
+                                class="footer-link text-decoration-none hover-primary">About</a></li>
+                        <li class="mb-2"><a href="#projects"
+                                class="footer-link text-decoration-none hover-primary">Projects</a></li>
+                        <li class="mb-2"><a href="#skills"
+                                class="footer-link text-decoration-none hover-primary">Skills</a></li>
+                        <li class="mb-2"><a href="#achievements"
+                                class="footer-link text-decoration-none hover-primary">Achievements</a></li>
+                        <li class="mb-2"><a href="#contact"
+                                class="footer-link text-decoration-none hover-primary">Contact</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6">
                     <h6 class="fw-bold mb-3">Services</h6>
                     <ul class="list-unstyled">
@@ -3402,29 +3704,37 @@
                         <li class="mb-2"><span class="footer-text">Testing & Debugging</span></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6">
                     <h6 class="fw-bold mb-3">Contact Info</h6>
                     <div class="contact-info">
                         <div class="d-flex align-items-center mb-2">
                             <i class="fas fa-envelope text-primary me-2"></i>
-                            <a href="mailto:{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}" class="footer-link text-decoration-none" onclick="return confirmNavigation(event, 'Open your email app?')">
-                                <small class="footer-text">{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}</small>
+                            <a href="mailto:{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com' }}"
+                                class="footer-link text-decoration-none"
+                                onclick="return confirmNavigation(event, 'Open your email app?')">
+                                <small class="footer-text">{{ $settings['email'] ?? 'sandipanbhunia18@gmail.com'
+                                    }}</small>
                             </a>
                         </div>
                         <div class="d-flex align-items-center mb-2">
                             <i class="fas fa-phone text-primary me-2"></i>
-                            <a href="tel:{{ $settings['phone'] ?? '+918972966158' }}" class="footer-link text-decoration-none" onclick="return confirmNavigation(event, 'Open dialer to call?')">
+                            <a href="tel:{{ $settings['phone'] ?? '+918972966158' }}"
+                                class="footer-link text-decoration-none"
+                                onclick="return confirmNavigation(event, 'Open dialer to call?')">
                                 <small class="footer-text">{{ $settings['phone'] ?? '+91 8972966158' }}</small>
                             </a>
                         </div>
                         <div class="d-flex align-items-start mb-3">
                             <i class="fas fa-map-marker-alt text-primary me-2 mt-1"></i>
-                            <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($settings['location'] ?? 'Chaltatalya, Khejuri, Purba Medinipur, 721431, West Bengal, India') }}" target="_blank" rel="noopener noreferrer" class="footer-link text-decoration-none" onclick="return confirmNavigation(event, 'Open location in maps?')">
-                                <small class="footer-text">{{ $settings['location'] ?? 'Chaltatalya, Khejuri, Purba Medinipur, 721431, West Bengal, India' }}</small>
+                            <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($settings['location'] ?? 'Chaltatalya, Khejuri, Purba Medinipur, 721431, West Bengal, India') }}"
+                                target="_blank" rel="noopener noreferrer" class="footer-link text-decoration-none"
+                                onclick="return confirmNavigation(event, 'Open location in maps?')">
+                                <small
+                                    class="footer-text">{{ $settings['location'] ?? 'Chaltatalya, Khejuri, Purba Medinipur, 721431, West Bengal, India' }}</small>
                             </a>
                         </div>
-                        
+
                         <!-- Education Badge -->
                         <div class="mt-3">
                             <span class="badge bg-primary">BCA Student (2023-2026)</span>
@@ -3433,9 +3743,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <hr class="my-4 footer-divider">
-            
+
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <p class="mb-0 footer-text">
@@ -3453,35 +3763,35 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Simple Custom JavaScript -->
     <script>
         // ── Debug logger: silenced in production ──────────────────────────
         const _dbgOn = {{ app()->environment('production') ? 'false' : 'true' }};
-        const dbg     = _dbgOn ? console.log.bind(console)   : () => {};
-        const dbgErr  = _dbgOn ? console.error.bind(console) : () => {};
-        const dbgWarn = _dbgOn ? console.warn.bind(console)  : () => {};
+        const dbg = _dbgOn ? console.log.bind(console) : () => { };
+        const dbgErr = _dbgOn ? console.error.bind(console) : () => { };
+        const dbgWarn = _dbgOn ? console.warn.bind(console) : () => { };
 
         // Theme Toggle - Default to DARK mode for first-time visitors
-        let isDarkMode = localStorage.getItem('darkMode') !== null 
-            ? localStorage.getItem('darkMode') === 'true' 
+        let isDarkMode = localStorage.getItem('darkMode') !== null
+            ? localStorage.getItem('darkMode') === 'true'
             : true; // Default: dark mode
-        
+
         function toggleTheme() {
             isDarkMode = !isDarkMode;
             localStorage.setItem('darkMode', isDarkMode);
             document.body.classList.toggle('dark-mode', isDarkMode);
         }
-        
+
         // Initialize theme
         if (localStorage.getItem('darkMode') === null) {
             localStorage.setItem('darkMode', 'true');
             isDarkMode = true;
         }
         document.body.classList.toggle('dark-mode', isDarkMode);
-        
+
         // Navbar scroll effect with proper class and fixed padding
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const navbar = document.getElementById('mainNavbar');
             if (navbar) {
                 if (window.scrollY > 50) {
@@ -3494,13 +3804,13 @@
 
         // Mobile Menu Functions - FIXED OVERLAP ISSUES
         let mobileMenuOpen = false;
-        
+
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobileMenuOverlay');
             const toggler = document.querySelector('.navbar-toggler');
-            
+
             mobileMenuOpen = !mobileMenuOpen;
-            
+
             if (mobileMenuOpen) {
                 overlay.classList.add('active');
                 toggler.classList.add('menu-open');
@@ -3521,11 +3831,11 @@
                 document.body.style.height = '';
             }
         }
-        
+
         function closeMobileMenu() {
             const overlay = document.getElementById('mobileMenuOverlay');
             const toggler = document.querySelector('.navbar-toggler');
-            
+
             mobileMenuOpen = false;
             overlay.classList.remove('active');
             toggler.classList.remove('menu-open');
@@ -3535,16 +3845,16 @@
             document.body.style.width = '';
             document.body.style.height = '';
         }
-        
+
         // Close mobile menu on escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && mobileMenuOpen) {
                 closeMobileMenu();
             }
         });
-        
+
         // Close mobile menu when clicking outside (on overlay background)
-        document.getElementById('mobileMenuOverlay').addEventListener('click', function(e) {
+        document.getElementById('mobileMenuOverlay').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeMobileMenu();
             }
@@ -3553,7 +3863,7 @@
         // CV Viewer Functions
         let currentCVUrl = '';       // raw direct PDF URL
         let currentDownloadUrl = '';
-        
+
         // Opens the CV in a new tab — used by both the fallback button and openCVFullscreen()
         function openCVFallback() {
             const url = currentCVUrl
@@ -3565,17 +3875,17 @@
                 showNotification('CV URL is not ready yet. Please try again in a moment.', 'error');
             }
         }
-        
+
         function viewCV(cvId, cvLabel, cvEmbedUrl, cvDownloadUrl) {
             dbg('viewCV called:', { cvId, cvLabel, cvEmbedUrl, cvDownloadUrl });
 
-            const modal       = document.getElementById('cvModal');
-            const title       = document.getElementById('cvModalTitle');
-            const viewer      = document.getElementById('cvViewer');
-            const fallback    = document.getElementById('cvFallback');
+            const modal = document.getElementById('cvModal');
+            const title = document.getElementById('cvModalTitle');
+            const viewer = document.getElementById('cvViewer');
+            const fallback = document.getElementById('cvFallback');
             const fallbackBtn = document.getElementById('cvFallbackOpen');
             const fallbackTitle = document.getElementById('cvFallbackTitle');
-            const fallbackMsg   = document.getElementById('cvFallbackMsg');
+            const fallbackMsg = document.getElementById('cvFallbackMsg');
             const downloadBtn = document.getElementById('cvDownloadBtn');
 
             // Check if modal elements exist
@@ -3587,7 +3897,7 @@
 
             // cvEmbedUrl is the complete URL — either a Google Drive /preview URL
             // or an absolute local route. No need to prefix with window.location.origin.
-            currentCVUrl      = cvEmbedUrl;
+            currentCVUrl = cvEmbedUrl;
             currentDownloadUrl = cvDownloadUrl || (window.location.origin + '/cv/download/' + cvId);
 
             dbg('CV URLs:', { currentCVUrl, currentDownloadUrl });
@@ -3625,7 +3935,7 @@
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             dbg('CV modal opened');
-            
+
             // Add event listener to the main fullscreen button as backup
             const fullscreenBtn = document.querySelector('.cv-fullscreen-btn');
             if (fullscreenBtn) {
@@ -3634,7 +3944,7 @@
                 dbg('Fullscreen btn listener attached');
             }
         }
-        
+
         // Separate function to handle fullscreen button clicks
         function handleFullscreenClick(event) {
             event.preventDefault();
@@ -3644,18 +3954,18 @@
         }
 
         function closeCVModal() {
-            const modal  = document.getElementById('cvModal');
+            const modal = document.getElementById('cvModal');
             const viewer = document.getElementById('cvViewer');
             modal.classList.remove('active');
             // Remove src to stop the PDF rendering process
             viewer.setAttribute('src', '');
             document.body.style.overflow = '';
         }
-        
+
         // Opens the raw PDF URL in a new browser tab
         function openCVFullscreen() {
             dbg('openCVFullscreen called — currentCVUrl:', currentCVUrl);
-            
+
             // Visual feedback - briefly change button text
             const mainBtn = document.querySelector('.cv-fullscreen-btn');
             if (mainBtn) {
@@ -3665,7 +3975,7 @@
                     mainBtn.innerHTML = originalText;
                 }, 1500);
             }
-            
+
             if (currentCVUrl) {
                 dbg('Opening CV in new tab:', currentCVUrl);
                 try {
@@ -3698,7 +4008,7 @@
                 }
             } else {
                 dbgWarn('currentCVUrl not set, trying fallbacks');
-                
+
                 const mainBtn = document.querySelector('.cv-fullscreen-btn');
                 if (mainBtn && mainBtn.getAttribute('data-url')) {
                     const dataUrl = mainBtn.getAttribute('data-url');
@@ -3706,14 +4016,14 @@
                     try { window.open(dataUrl, '_blank', 'noopener,noreferrer'); return; }
                     catch (error) { dbgErr('data-url fallback error:', error); }
                 }
-                
+
                 const fallbackBtn = document.getElementById('cvFallbackOpen');
                 if (fallbackBtn && fallbackBtn.href && fallbackBtn.href !== '#') {
                     dbg('Using fallback btn URL:', fallbackBtn.href);
                     try { window.open(fallbackBtn.href, '_blank', 'noopener,noreferrer'); return; }
                     catch (error) { dbgErr('fallback btn error:', error); }
                 }
-                
+
                 const downloadBtn = document.getElementById('cvDownloadBtn');
                 if (downloadBtn && downloadBtn.href) {
                     const viewUrl = downloadBtn.href.replace('/download/', '/view/');
@@ -3721,7 +4031,7 @@
                     try { window.open(viewUrl, '_blank', 'noopener,noreferrer'); return; }
                     catch (error) { dbgErr('converted URL error:', error); }
                 }
-                
+
                 dbgErr('No CV URL available');
                 showNotification('The CV is currently not available for viewing. Please try downloading it instead.', 'error');
             }
@@ -3743,21 +4053,21 @@
             const loader = document.getElementById('profilePhotoLoader');
             if (loader) loader.style.display = 'none';
         }
-        
+
         // Additional profile photo initialization
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const profilePhoto = document.getElementById('profilePhoto');
             const loader = document.getElementById('profilePhotoLoader');
-            
+
             if (profilePhoto && loader) {
                 dbg('Profile photo init — src:', profilePhoto.src);
-                
+
                 if (profilePhoto.complete && profilePhoto.naturalHeight !== 0) {
                     dbg('Profile photo already cached');
                     handleProfilePhotoLoad(profilePhoto);
                 } else {
                     dbg('Profile photo loading...');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         if (loader && loader.style.display !== 'none') {
                             if (profilePhoto.complete && profilePhoto.naturalHeight !== 0) {
                                 dbg('Profile photo loaded (onload missed)');
@@ -3772,7 +4082,7 @@
             }
         });
         // Close CV modal on escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const modal = document.getElementById('cvModal');
                 if (modal.classList.contains('active')) {
@@ -3780,19 +4090,19 @@
                 }
             }
         });
-        
+
         // Close CV modal when clicking outside
-        document.getElementById('cvModal').addEventListener('click', function(e) {
+        document.getElementById('cvModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeCVModal();
             }
         });
 
         // Mobile menu: auto-close when a nav link is clicked on mobile - REMOVED BOOTSTRAP DEPENDENCY
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // No longer needed since we're using custom mobile menu
         });
-        
+
         // Smooth scrolling with proper offset - COMPACT
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -3812,7 +4122,7 @@
                 }
             });
         });
-        
+
         // Advanced scroll animations and navbar state
         function animateOnScroll() {
             var navbar = document.querySelector('.navbar-custom');
@@ -3821,35 +4131,35 @@
 
             // Handle Navbar Scrolled State
             if (scrollPosition > 50) {
-                if(navbar) navbar.classList.add('scrolled');
+                if (navbar) navbar.classList.add('scrolled');
             } else {
-                if(navbar) navbar.classList.remove('scrolled');
+                if (navbar) navbar.classList.remove('scrolled');
             }
-            
+
             // Handle Scroll Top Button visibility
             if (scrollPosition > 150) {
-                if(scrollTopBtn) scrollTopBtn.classList.add('visible');
+                if (scrollTopBtn) scrollTopBtn.classList.add('visible');
             } else {
-                if(scrollTopBtn) scrollTopBtn.classList.remove('visible');
+                if (scrollTopBtn) scrollTopBtn.classList.remove('visible');
             }
 
             const elements = document.querySelectorAll('.handmade-card, .section-animate');
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
                 const elementVisible = 150;
-                
+
                 if (elementTop < window.innerHeight - elementVisible) {
                     element.classList.add('animate-fadeInUp', 'visible');
                 }
             });
         }
-        
+
         // Intersection Observer for better performance
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -3857,20 +4167,20 @@
                 }
             });
         }, observerOptions);
-        
+
         // Observe elements for animation
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const elementsToAnimate = document.querySelectorAll('.handmade-card, .section-animate');
             elementsToAnimate.forEach(el => observer.observe(el));
-            
+
             // Add staggered animation delays
             document.querySelectorAll('.handmade-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.1}s`;
             });
         });
-        
+
         window.addEventListener('scroll', animateOnScroll);
-        
+
         // Scroll To Top Function
         function scrollToTop() {
             window.scrollTo({
@@ -3878,7 +4188,7 @@
                 behavior: 'smooth'
             });
         }
-        
+
         // Confirm external actions for email, phone, and location links
         function confirmNavigation(event, message) {
             if (!confirm(message)) {
@@ -3892,28 +4202,28 @@
         function handleContact(event) {
             event.preventDefault();
             dbg('Contact form submitted');
-            
+
             const form = event.target;
             const formData = new FormData(form);
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            
-            const name    = formData.get('name');
-            const email   = formData.get('email');
+
+            const name = formData.get('name');
+            const email = formData.get('email');
             const subject = formData.get('subject');
             const message = formData.get('message');
-            
+
             dbg('Contact form data:', { name, email, subject });
-            
+
             if (!name || !email || !subject || !message) {
                 showNotification('Please fill in all required fields.', 'error');
                 return;
             }
-            
+
             // Show loading state
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
             submitBtn.disabled = true;
-            
+
             fetch('/contact', {
                 method: 'POST',
                 body: formData,
@@ -3923,47 +4233,47 @@
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-            .then(async response => {
-                dbg('Contact response status:', response.status);
-                const data = await response.json();
-                dbg('Contact response data:', data);
-                
-                if (!response.ok) {
-                    if (data.errors) {
-                        // Validation errors
-                        const errorMessages = Object.values(data.errors).flat().join('\n');
-                        throw new Error('Please fix the following errors:\n' + errorMessages);
+                .then(async response => {
+                    dbg('Contact response status:', response.status);
+                    const data = await response.json();
+                    dbg('Contact response data:', data);
+
+                    if (!response.ok) {
+                        if (data.errors) {
+                            // Validation errors
+                            const errorMessages = Object.values(data.errors).flat().join('\n');
+                            throw new Error('Please fix the following errors:\n' + errorMessages);
+                        }
+                        const message = data.message || 'Please check your form and try again.';
+                        throw new Error(message);
                     }
-                    const message = data.message || 'Please check your form and try again.';
-                    throw new Error(message);
-                }
-                return data;
-            })
-            .then(data => {
-                if (data.success) {
-                    showNotification('Message sent successfully! Thank you for reaching out.', 'success');
-                    form.reset();
-                } else {
-                    throw new Error(data.message || 'Unable to send message.');
-                }
-            })
-            .catch(error => {
-                dbgErr('Contact form error:', error);
-                showNotification(error.message || 'Failed to send message. Please try again or contact directly via email.', 'error');
-            })
-            .finally(() => {
-                // Reset button state
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            });
+                    return data;
+                })
+                .then(data => {
+                    if (data.success) {
+                        showNotification('Message sent successfully! Thank you for reaching out.', 'success');
+                        form.reset();
+                    } else {
+                        throw new Error(data.message || 'Unable to send message.');
+                    }
+                })
+                .catch(error => {
+                    dbgErr('Contact form error:', error);
+                    showNotification(error.message || 'Failed to send message. Please try again or contact directly via email.', 'error');
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
         }
-        
+
         // Notification system
         function showNotification(message, type = 'info') {
             // Remove existing notifications
             const existingNotifications = document.querySelectorAll('.notification');
             existingNotifications.forEach(n => n.remove());
-            
+
             const notification = document.createElement('div');
             notification.className = `notification notification-${type}`;
             notification.innerHTML = `
@@ -3975,9 +4285,9 @@
                     </button>
                 </div>
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             // Auto remove after 8 seconds
             setTimeout(() => {
                 if (notification.parentElement) {
@@ -3985,12 +4295,12 @@
                 }
             }, 8000);
         }
-        
+
         // Initialize on DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Initialize animations
             animateOnScroll();
-            
+
             // Animate skill progress bars with intersection observer
             const skillProgressObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -4005,12 +4315,12 @@
                     }
                 });
             }, { threshold: 0.5 });
-            
+
             // Observe all skill cards
             document.querySelectorAll('.skill-card').forEach(card => {
                 skillProgressObserver.observe(card);
             });
-            
+
             // Add staggered animation delays for skill cards
             document.querySelectorAll('.skill-card').forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.1}s`;
@@ -4021,23 +4331,23 @@
             const isTouchDevice = () => window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
 
             document.querySelectorAll('.skill-card').forEach(card => {
-                card.addEventListener('click', function(e) {
+                card.addEventListener('click', function (e) {
                     if (!isTouchDevice()) return; // desktop uses CSS :hover
-                    
+
                     const isFlipped = this.classList.contains('flipped');
-                    
+
                     // Un-flip all other cards first
                     document.querySelectorAll('.skill-card.flipped').forEach(c => {
                         if (c !== this) c.classList.remove('flipped');
                     });
-                    
+
                     // Toggle this card
                     this.classList.toggle('flipped', !isFlipped);
                 });
             });
 
             // Tap outside to unflip all cards
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!isTouchDevice()) return;
                 if (!e.target.closest('.skill-card')) {
                     document.querySelectorAll('.skill-card.flipped').forEach(c => c.classList.remove('flipped'));
@@ -4056,29 +4366,34 @@
             border-radius: 8px;
             background: #fff;
             color: #333;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 10000;
             animation: slideInRight 0.3s ease-out;
             max-width: 350px;
         }
+
         .notification-content {
             display: flex;
             align-items: center;
             gap: 10px;
             width: 100%;
         }
+
         .notification-success {
             background-color: var(--success-color, #10b981);
             color: #fff;
         }
+
         .notification-error {
             background-color: var(--danger-color, #ef4444);
             color: #fff;
         }
+
         .notification-info {
             background-color: var(--primary-color, #6366f1);
             color: #fff;
         }
+
         .notification-close {
             background: none;
             border: none;
@@ -4087,11 +4402,20 @@
             opacity: 0.8;
             margin-left: auto;
         }
+
         @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
     </style>
     @stack('scripts')
 </body>
+
 </html>
