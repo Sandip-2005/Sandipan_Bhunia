@@ -103,16 +103,16 @@
             padding-top: 70px; /* Keep content below fixed navbar */
         }
 
-        /* Ensure sections don't overlap with navbar - PROFESSIONAL SPACING */
+        /* Ensure sections don't overlap with navbar - IMPROVED SPACING */
         section {
             scroll-margin-top: 90px;
-            padding: 3rem 0; /* Tightened spacing for a cleaner layout */
+            padding: 4rem 0; /* Better section spacing */
         }
 
-        /* Fix hero section height calculation - BETTER SPACING */
+        /* Fix hero section height calculation - IMPROVED SPACING */
         #home {
             min-height: calc(100vh - 75px);
-            padding: 3rem 0; /* Reduced hero top spacing */
+            padding: 4rem 0; /* Better hero spacing */
             display: flex;
             align-items: center;
             position: relative;
@@ -139,23 +139,29 @@
             z-index: 1;
         }
 
-        /* Mobile spacing adjustments */
+        /* Mobile spacing adjustments - IMPROVED */
         @media (max-width: 768px) {
             body {
                 padding-top: 70px; /* Match fixed navbar height */
             }
             
             section {
-                padding: 2.5rem 0; /* Good mobile spacing */
+                padding: 3rem 0; /* Better mobile spacing */
             }
             
             #home {
                 min-height: calc(100vh - 70px);
-                padding: 3rem 0; /* Better mobile spacing */
+                padding: 3rem 0; /* Better mobile hero spacing */
+            }
+        }
+
+        @media (max-width: 576px) {
+            section {
+                padding: 2.5rem 0; /* Compact mobile spacing */
             }
             
-            section {
-                padding: 3rem 0; /* Better mobile section spacing */
+            #home {
+                padding: 2.5rem 0;
             }
         }
 
@@ -299,8 +305,18 @@
         }
 
         /* ============================================
-           CV DOWNLOAD & VIEW BUTTONS
+           CV DOWNLOAD & VIEW BUTTONS - ENHANCED
         ============================================ */
+        .cv-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
         .btn-cv-download {
             display: inline-flex;
             align-items: center;
@@ -308,7 +324,7 @@
             background: linear-gradient(135deg, #10b981, #059669);
             border: none;
             border-radius: 16px;
-            padding: 14px 28px;
+            padding: 14px 24px;
             color: #ffffff;
             font-weight: 600;
             text-decoration: none;
@@ -316,10 +332,11 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             white-space: nowrap;
+            min-height: 50px;
         }
 
         .btn-cv-view {
@@ -329,7 +346,7 @@
             background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             border: none;
             border-radius: 16px;
-            padding: 14px 28px;
+            padding: 14px 24px;
             color: #ffffff;
             font-weight: 600;
             text-decoration: none;
@@ -337,21 +354,23 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             white-space: nowrap;
             cursor: pointer;
+            min-height: 50px;
         }
 
         .btn-cv-download:hover {
-            transform: translateY(-4px) scale(1.05);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
             color: #ffffff;
+            text-decoration: none;
         }
 
         .btn-cv-view:hover {
-            transform: translateY(-4px) scale(1.05);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 35px rgba(59, 130, 246, 0.5);
             color: #ffffff;
         }
@@ -368,6 +387,39 @@
         .btn-cv-download:hover::before,
         .btn-cv-view:hover::before { 
             left: 100%; 
+        }
+
+        /* Mobile CV buttons */
+        @media (max-width: 768px) {
+            .cv-section {
+                padding: 1.25rem;
+                margin-top: 1.5rem;
+            }
+
+            .btn-cv-download,
+            .btn-cv-view {
+                padding: 12px 20px;
+                font-size: 0.85rem;
+                min-height: 48px;
+            }
+
+            .cv-section h6 {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .btn-cv-download,
+            .btn-cv-view {
+                padding: 10px 16px;
+                font-size: 0.8rem;
+                min-height: 44px;
+            }
+
+            .cv-section {
+                padding: 1rem;
+            }
         }
 
         /* Profile Photo Loading Improvements */
@@ -614,19 +666,18 @@
             color: #ffffff;
         }
 
-        /* Mobile CV buttons */
+        /* Mobile CV buttons - Updated */
         @media (max-width: 768px) {
-            .btn-cv-download,
-            .btn-cv-view {
-                padding: 12px 20px;
-                font-size: 0.9rem;
-                flex: 1;
-                margin-bottom: 0.5rem;
+            .cv-section .d-flex {
+                flex-direction: column !important;
+                gap: 0.75rem !important;
             }
 
-            .d-flex.gap-2 {
-                flex-direction: column;
-                gap: 0.5rem !important;
+            .btn-cv-download,
+            .btn-cv-view {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0;
             }
 
             .cv-modal-content {
@@ -3479,6 +3530,13 @@
         let currentDownloadUrl = '';
         
         function viewCV(cvId, cvLabel, cvViewRoute, cvDownloadRoute) {
+            console.log('viewCV function called with parameters:', {
+                cvId: cvId,
+                cvLabel: cvLabel,
+                cvViewRoute: cvViewRoute,
+                cvDownloadRoute: cvDownloadRoute
+            });
+
             const modal       = document.getElementById('cvModal');
             const title       = document.getElementById('cvModalTitle');
             const viewer      = document.getElementById('cvViewer');
@@ -3488,56 +3546,67 @@
             const fallbackMsg   = document.getElementById('cvFallbackMsg');
             const downloadBtn = document.getElementById('cvDownloadBtn');
 
+            // Check if modal elements exist
+            if (!modal) {
+                console.error('CV Modal not found in DOM');
+                alert('CV viewer is not available. Please try downloading the CV directly.');
+                return;
+            }
+
             // Build the absolute PDF URL directly (no Google Docs wrapper)
             const absoluteViewUrl  = window.location.origin + cvViewRoute;
             currentCVUrl           = absoluteViewUrl;
             currentDownloadUrl     = cvDownloadRoute || (window.location.origin + '/cv/download/' + cvId);
 
-            console.log('viewCV called with:', {
-                cvId: cvId,
-                cvLabel: cvLabel,
-                cvViewRoute: cvViewRoute,
+            console.log('CV URLs configured:', {
                 absoluteViewUrl: absoluteViewUrl,
-                currentCVUrl: currentCVUrl
+                currentCVUrl: currentCVUrl,
+                currentDownloadUrl: currentDownloadUrl
             });
 
-            title.textContent      = cvLabel;
-            downloadBtn.href       = currentDownloadUrl;
-            fallbackBtn.href       = absoluteViewUrl;
+            // Update modal content
+            if (title) title.textContent = cvLabel;
+            if (downloadBtn) downloadBtn.href = currentDownloadUrl;
+            if (fallbackBtn) fallbackBtn.href = absoluteViewUrl;
             
             // Also set the main "Open in New Tab" button href as backup
             const mainFullscreenBtn = document.querySelector('.cv-fullscreen-btn');
             if (mainFullscreenBtn) {
-                // Add href as backup, but keep onclick as primary
                 mainFullscreenBtn.setAttribute('data-url', absoluteViewUrl);
+                console.log('Main fullscreen button configured with URL:', absoluteViewUrl);
             }
 
             // Reset fallback text to "loading" state
             if (fallbackTitle) fallbackTitle.textContent = 'Loading CV...';
-            if (fallbackMsg)   fallbackMsg.textContent   = 'If the preview doesn\'t appear, use the button below.';
-            fallback.style.display = 'flex';
+            if (fallbackMsg) fallbackMsg.textContent = 'If the preview doesn\'t appear, use the button below.';
+            if (fallback) fallback.style.display = 'flex';
 
             // Load directly into <embed> — browsers handle PDF natively
-            viewer.setAttribute('src', absoluteViewUrl);
+            if (viewer) {
+                viewer.setAttribute('src', absoluteViewUrl);
+                console.log('CV viewer src set to:', absoluteViewUrl);
+            }
 
             // After a short delay, check if the embed has rendered
-            // (embed doesn't fire reliable load/error events, so we use a timer)
             setTimeout(() => {
-                // PDF loaded — reduce fallback to a subtle helper hint
                 if (fallbackTitle) fallbackTitle.textContent = 'Trouble viewing?';
-                if (fallbackMsg)   fallbackMsg.textContent   = 'Open in a new tab for the best experience.';
+                if (fallbackMsg) fallbackMsg.textContent = 'Open in a new tab for the best experience.';
+                console.log('CV viewer fallback text updated');
             }, 2500);
 
+            // Show modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            console.log('CV modal opened successfully');
             
             // Add event listener to the main fullscreen button as backup
-            const mainFullscreenBtn = document.querySelector('.cv-fullscreen-btn');
-            if (mainFullscreenBtn) {
+            const fullscreenBtn = document.querySelector('.cv-fullscreen-btn');
+            if (fullscreenBtn) {
                 // Remove any existing listeners
-                mainFullscreenBtn.removeEventListener('click', handleFullscreenClick);
+                fullscreenBtn.removeEventListener('click', handleFullscreenClick);
                 // Add new listener
-                mainFullscreenBtn.addEventListener('click', handleFullscreenClick);
+                fullscreenBtn.addEventListener('click', handleFullscreenClick);
+                console.log('Fullscreen button event listener attached');
             }
         }
         
@@ -3570,25 +3639,40 @@
                 mainBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening...';
                 setTimeout(() => {
                     mainBtn.innerHTML = originalText;
-                }, 1000);
+                }, 1500);
             }
             
             if (currentCVUrl) {
                 console.log('Opening CV in new tab:', currentCVUrl);
                 try {
-                    const newWindow = window.open(currentCVUrl, '_blank');
-                    if (!newWindow) {
+                    const newWindow = window.open(currentCVUrl, '_blank', 'noopener,noreferrer');
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
                         console.error('Popup blocked or failed to open');
+                        // Show user-friendly message
+                        if (typeof showNotification === 'function') {
+                            showNotification('Popup blocked! Please allow popups for this site or try the fallback button below.', 'warning');
+                        } else {
+                            alert('Popup blocked! Please allow popups for this site and try again.');
+                        }
                         // Fallback: try using the fallback button's href
                         const fallbackBtn = document.getElementById('cvFallbackOpen');
                         if (fallbackBtn && fallbackBtn.href) {
+                            console.log('Using fallback button as alternative');
                             window.location.href = fallbackBtn.href;
                         }
                     } else {
                         console.log('New tab opened successfully');
+                        if (typeof showNotification === 'function') {
+                            showNotification('CV opened in new tab successfully!', 'success');
+                        }
                     }
                 } catch (error) {
                     console.error('Error opening new tab:', error);
+                    if (typeof showNotification === 'function') {
+                        showNotification('Error opening CV. Please try the download button instead.', 'error');
+                    } else {
+                        alert('Error opening CV. Please try the download button instead.');
+                    }
                 }
             } else {
                 console.warn('currentCVUrl is not set, trying fallback methods');
@@ -3598,16 +3682,24 @@
                 if (mainBtn && mainBtn.getAttribute('data-url')) {
                     const dataUrl = mainBtn.getAttribute('data-url');
                     console.log('Using button data-url:', dataUrl);
-                    window.open(dataUrl, '_blank');
-                    return;
+                    try {
+                        window.open(dataUrl, '_blank', 'noopener,noreferrer');
+                        return;
+                    } catch (error) {
+                        console.error('Error with data-url fallback:', error);
+                    }
                 }
                 
                 // Fallback 2: Use the fallback button's href
                 const fallbackBtn = document.getElementById('cvFallbackOpen');
                 if (fallbackBtn && fallbackBtn.href && fallbackBtn.href !== '#') {
                     console.log('Using fallback button URL:', fallbackBtn.href);
-                    window.open(fallbackBtn.href, '_blank');
-                    return;
+                    try {
+                        window.open(fallbackBtn.href, '_blank', 'noopener,noreferrer');
+                        return;
+                    } catch (error) {
+                        console.error('Error with fallback button:', error);
+                    }
                 }
                 
                 // Fallback 3: Try to get CV URL from the download button
@@ -3616,23 +3708,31 @@
                     // Convert download URL to view URL
                     const viewUrl = downloadBtn.href.replace('/download/', '/view/');
                     console.log('Using converted download URL:', viewUrl);
-                    window.open(viewUrl, '_blank');
-                    return;
+                    try {
+                        window.open(viewUrl, '_blank', 'noopener,noreferrer');
+                        return;
+                    } catch (error) {
+                        console.error('Error with converted URL:', error);
+                    }
                 }
                 
                 // Fallback 4: Show error message
                 console.error('No CV URL available for opening in new tab');
-                if (typeof Swal !== 'undefined') {
+                const errorMessage = 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.';
+                
+                if (typeof showNotification === 'function') {
+                    showNotification(errorMessage, 'error');
+                } else if (typeof Swal !== 'undefined') {
                     Swal.fire({
                         icon: 'error',
                         title: 'CV Not Available',
-                        text: 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.',
+                        text: errorMessage,
                         background: '#1f2937',
                         color: '#ffffff',
                         confirmButtonColor: '#3b82f6'
                     });
                 } else {
-                    alert('CV not available for viewing in new tab. Please try downloading instead.');
+                    alert(errorMessage);
                 }
             }
         }
@@ -3807,14 +3907,28 @@
             return true;
         }
 
-        // Contact form handler - FIXED ERROR HANDLING
+        // Contact form handler - ENHANCED ERROR HANDLING
         function handleContact(event) {
             event.preventDefault();
+            console.log('Contact form submitted');
             
             const form = event.target;
             const formData = new FormData(form);
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
+            
+            // Validate form data
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            console.log('Form data:', { name, email, subject, message });
+            
+            if (!name || !email || !subject || !message) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
             
             // Show loading state
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
@@ -3830,7 +3944,10 @@
                 }
             })
             .then(async response => {
+                console.log('Contact form response status:', response.status);
                 const data = await response.json();
+                console.log('Contact form response data:', data);
+                
                 if (!response.ok) {
                     if (data.errors) {
                         // Validation errors
@@ -3889,9 +4006,40 @@
             }, 8000);
         }
         
-        // Initialize animations
+        // Initialize debugging and button functionality
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded - initializing button functionality');
+            
+            // Check if CV buttons exist
+            const cvDownloadBtns = document.querySelectorAll('.btn-cv-download');
+            const cvViewBtns = document.querySelectorAll('.btn-cv-view');
+            
+            console.log('Found CV download buttons:', cvDownloadBtns.length);
+            console.log('Found CV view buttons:', cvViewBtns.length);
+            
+            // Check if CV modal exists
+            const cvModal = document.getElementById('cvModal');
+            console.log('CV Modal exists:', !!cvModal);
+            
+            // Add click event listeners for debugging
+            cvViewBtns.forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    console.log(`CV View button ${index + 1} clicked`);
+                });
+            });
+            
+            cvDownloadBtns.forEach((btn, index) => {
+                btn.addEventListener('click', function() {
+                    console.log(`CV Download button ${index + 1} clicked`);
+                });
+            });
+            
+            // Initialize animations
             animateOnScroll();
+            
+            // Test notification system
+            console.log('Button functionality initialized successfully');
+        });
             
             // Animate skill progress bars with intersection observer
             const skillProgressObserver = new IntersectionObserver((entries) => {

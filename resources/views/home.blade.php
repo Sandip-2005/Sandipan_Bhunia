@@ -47,29 +47,37 @@
                             {{ $settings['hero_description'] ?? 'Passionate about building dynamic web applications, real-time billing systems, and secure dashboards.' }}
                         </p>
 
-                        <div class="d-flex flex-column flex-sm-row gap-3 flex-wrap">
+                        <!-- Main Action Buttons -->
+                        <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
                             <a href="#projects" class="btn-handmade">
                                 <i class="fas fa-eye me-2"></i>View My Work
                             </a>
                             <a href="#contact" class="btn btn-outline-light rounded-pill px-4 py-2">
                                 <i class="fas fa-envelope me-2"></i>Get In Touch
                             </a>
-                            @if(isset($publicCvs) && $publicCvs->count() > 0)
+                        </div>
+
+                        <!-- CV Download Section -->
+                        @if(isset($publicCvs) && $publicCvs->count() > 0)
+                            <div class="cv-section">
+                                <h6 class="text-white-50 mb-3 fw-semibold">
+                                    <i class="fas fa-file-pdf me-2 text-danger"></i>Download My Resume
+                                </h6>
                                 @foreach($publicCvs as $cv)
-                                    <div class="d-flex gap-2">
-                                        <a href="{{ $cv->download_url }}" class="btn-cv-download" target="_blank"
+                                    <div class="d-flex flex-column flex-sm-row gap-2 mb-3">
+                                        <a href="{{ $cv->download_url }}" class="btn-cv-download flex-fill" target="_blank"
                                             title="Download {{ $cv->label }}">
-                                            <i class="fas fa-download me-2"></i>{{ $cv->label }}
+                                            <i class="fas fa-download me-2"></i>Download {{ $cv->label }}
                                         </a>
                                         <button
                                             onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ route('cv.view', $cv->id, false) }}', '{{ $cv->download_url }}')"
-                                            class="btn-cv-view" title="View {{ $cv->label }}">
-                                            <i class="fas fa-eye me-2"></i>View
+                                            class="btn-cv-view flex-fill" title="View {{ $cv->label }}">
+                                            <i class="fas fa-eye me-2"></i>Preview {{ $cv->label }}
                                         </button>
                                     </div>
                                 @endforeach
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
