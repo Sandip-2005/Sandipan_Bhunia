@@ -77,26 +77,59 @@
                     <div class="animate-float">
                         <div class="position-relative d-inline-block">
                             @if(isset($settings['profile_photo']) && $settings['profile_photo'])
-                                <!-- Profile Photo with Professional Loading -->
-                                <div class="position-relative">
-                                    <img src="{{ asset($settings['profile_photo']) }}"
-                                        onerror="handleProfilePhotoError(this)"
-                                        onload="handleProfilePhotoLoad(this)"
+                                <!-- Profile Photo with Simplified Loading -->
+                                <div class="position-relative" id="profilePhotoContainer">
+                                    <img src="{{ asset($settings['profile_photo']) }}?v={{ time() }}"
                                         alt="Sandipan Bhunia"
                                         class="shadow-lg profile-image"
-                                        style="width: 320px; height: 320px; object-fit: cover; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease;"
-                                        id="profilePhoto">
+                                        style="width: 320px; height: 320px; object-fit: cover; border-radius: 50%;"
+                                        id="profilePhoto"
+                                        onload="this.style.opacity='1'; document.getElementById('profilePhotoLoader').style.display='none';"
+                                        onerror="this.src='{{ asset('images/default-avatar.svg') }}'; this.style.opacity='1'; document.getElementById('profilePhotoLoader').style.display='none';">
                                     <!-- Loading placeholder -->
-                                    <div id="profilePhotoLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-light rounded-circle" style="width: 320px; height: 320px;">
+                                    <div id="profilePhotoLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-light rounded-circle" style="width: 320px; height: 320px; z-index: 10;">
                                         <div class="spinner-border text-primary" role="status">
                                             <span class="visually-hidden">Loading...</span>
                                         </div>
                                     </div>
-                                    <div
-                                        class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge">
+                                    <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-3 shadow profile-badge" style="z-index: 11;">
                                         <i class="fas fa-code text-white fa-2x"></i>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                // Immediate check for cached image
+                                (function() {
+                                    const img = document.getElementById('profilePhoto');
+                                    const loader = document.getElementById('profilePhotoLoader');
+                                    
+                                    if (img && loader) {
+                                        // Set initial opacity
+                                        img.style.opacity = '0';
+                                        img.style.transition = 'opacity 0.3s ease';
+                                        
+                                        // Check if already loaded
+                                        if (img.complete && img.naturalHeight !== 0) {
+                                            img.style.opacity = '1';
+                                            loader.style.display = 'none';
+                                        } else {
+                                            // Fallback timeout
+                                            setTimeout(function() {
+                                                if (loader.style.display !== 'none') {
+                                                    if (img.complete && img.naturalHeight !== 0) {
+                                                        img.style.opacity = '1';
+                                                        loader.style.display = 'none';
+                                                    } else {
+                                                        img.src = '{{ asset('images/default-avatar.svg') }}';
+                                                        img.style.opacity = '1';
+                                                        loader.style.display = 'none';
+                                                    }
+                                                }
+                                            }, 3000);
+                                        }
+                                    }
+                                })();
+                                </script>
                             @else
                                 <!-- Default Professional Avatar -->
                                 <div class="position-relative">

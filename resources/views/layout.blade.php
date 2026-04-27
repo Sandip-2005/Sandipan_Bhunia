@@ -382,10 +382,28 @@
         #profilePhotoLoader {
             background: linear-gradient(135deg, #f8fafc, #e2e8f0);
             border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: fadeOutLoader 4s ease-in-out forwards;
+        }
+        
+        @keyframes fadeOutLoader {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; display: none; }
         }
         
         .dark-mode #profilePhotoLoader {
             background: linear-gradient(135deg, #1f2937, #374151);
+        }
+        
+        /* Ensure profile photo shows after animation */
+        #profilePhoto {
+            animation: fadeInPhoto 4.5s ease-in-out forwards;
+        }
+        
+        @keyframes fadeInPhoto {
+            0% { opacity: 0; }
+            85% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         /* CV Modal Styles */
@@ -3244,7 +3262,7 @@
                     <i class="fas fa-download"></i>
                     Download CV
                 </a>
-                <button class="cv-action-btn cv-fullscreen-btn" onclick="openCVFullscreen()">
+                <button class="cv-action-btn cv-fullscreen-btn" onclick="openCVFullscreen(); return false;" type="button" title="Open CV in New Tab">
                     <i class="fas fa-expand"></i>
                     Open in New Tab
                 </button>
@@ -3475,9 +3493,24 @@
             currentCVUrl           = absoluteViewUrl;
             currentDownloadUrl     = cvDownloadRoute || (window.location.origin + '/cv/download/' + cvId);
 
+            console.log('viewCV called with:', {
+                cvId: cvId,
+                cvLabel: cvLabel,
+                cvViewRoute: cvViewRoute,
+                absoluteViewUrl: absoluteViewUrl,
+                currentCVUrl: currentCVUrl
+            });
+
             title.textContent      = cvLabel;
             downloadBtn.href       = currentDownloadUrl;
             fallbackBtn.href       = absoluteViewUrl;
+            
+            // Also set the main "Open in New Tab" button href as backup
+            const mainFullscreenBtn = document.querySelector('.cv-fullscreen-btn');
+            if (mainFullscreenBtn) {
+                // Add href as backup, but keep onclick as primary
+                mainFullscreenBtn.setAttribute('data-url', absoluteViewUrl);
+            }
 
             // Reset fallback text to "loading" state
             if (fallbackTitle) fallbackTitle.textContent = 'Loading CV...';
@@ -3497,6 +3530,23 @@
 
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Add event listener to the main fullscreen button as backup
+            const mainFullscreenBtn = document.querySelector('.cv-fullscreen-btn');
+            if (mainFullscreenBtn) {
+                // Remove any existing listeners
+                mainFullscreenBtn.removeEventListener('click', handleFullscreenClick);
+                // Add new listener
+                mainFullscreenBtn.addEventListener('click', handleFullscreenClick);
+            }
+        }
+        
+        // Separate function to handle fullscreen button clicks
+        function handleFullscreenClick(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log('Fullscreen button clicked via event listener');
+            openCVFullscreen();
         }
 
         function closeCVModal() {
@@ -3510,55 +3560,139 @@
         
         // Opens the raw PDF URL in a new browser tab
         function openCVFullscreen() {
-            console.log('openCVFullscreen called, currentCVUrl:', currentCVUrl);
+            console.log('openCVFullscreen called');
+            console.log('currentCVUrl:', currentCVUrl);
+            
+            // Visual feedback - briefly change button text
+            const mainBtn = document.querySelector('.cv-fullscreen-btn');
+            if (mainBtn) {
+                const originalText = mainBtn.innerHTML;
+                mainBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening...';
+                setTimeout(() => {
+                    mainBtn.innerHTML = originalText;
+                }, 1000);
+            }
             
             if (currentCVUrl) {
                 console.log('Opening CV in new tab:', currentCVUrl);
-                window.open(currentCVUrl, '_blank');
+                try {
+                    const newWindow = window.open(currentCVUrl, '_blank');
+                    if (!newWindow) {
+                        console.error('Popup blocked or failed to open');
+                        // Fallback: try using the fallback button's href
+                        const fallbackBtn = document.getElementById('cvFallbackOpen');
+                        if (fallbackBtn && fallbackBtn.href) {
+                            window.location.href = fallbackBtn.href;
+                        }
+                    } else {
+                        console.log('New tab opened successfully');
+                    }
+                } catch (error) {
+                    console.error('Error opening new tab:', error);
+                }
             } else {
-                console.warn('currentCVUrl is not set, trying fallback method');
-                // Fallback: try to get CV URL from the download button or construct it
+                console.warn('currentCVUrl is not set, trying fallback methods');
+                
+                // Fallback 1: Use the button's data-url attribute
+                const mainBtn = document.querySelector('.cv-fullscreen-btn');
+                if (mainBtn && mainBtn.getAttribute('data-url')) {
+                    const dataUrl = mainBtn.getAttribute('data-url');
+                    console.log('Using button data-url:', dataUrl);
+                    window.open(dataUrl, '_blank');
+                    return;
+                }
+                
+                // Fallback 2: Use the fallback button's href
+                const fallbackBtn = document.getElementById('cvFallbackOpen');
+                if (fallbackBtn && fallbackBtn.href && fallbackBtn.href !== '#') {
+                    console.log('Using fallback button URL:', fallbackBtn.href);
+                    window.open(fallbackBtn.href, '_blank');
+                    return;
+                }
+                
+                // Fallback 3: Try to get CV URL from the download button
                 const downloadBtn = document.getElementById('cvDownloadBtn');
                 if (downloadBtn && downloadBtn.href) {
                     // Convert download URL to view URL
                     const viewUrl = downloadBtn.href.replace('/download/', '/view/');
-                    console.log('Using fallback URL:', viewUrl);
+                    console.log('Using converted download URL:', viewUrl);
                     window.open(viewUrl, '_blank');
+                    return;
+                }
+                
+                // Fallback 4: Show error message
+                console.error('No CV URL available for opening in new tab');
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'CV Not Available',
+                        text: 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.',
+                        background: '#1f2937',
+                        color: '#ffffff',
+                        confirmButtonColor: '#3b82f6'
+                    });
                 } else {
-                    console.error('No CV URL available for opening in new tab');
-                    // Show professional error message
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'CV Not Available',
-                            text: 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.',
-                            background: '#1f2937',
-                            color: '#ffffff',
-                            confirmButtonColor: '#3b82f6'
-                        });
-                    } else {
-                        alert('CV not available for viewing in new tab. Please try downloading instead.');
-                    }
+                    alert('CV not available for viewing in new tab. Please try downloading instead.');
                 }
             }
         }
 
         // ── Profile Photo helpers (called from home.blade.php) ──────────
         function handleProfilePhotoLoad(img) {
+            console.log('Profile photo loaded successfully:', img.src);
             // Photo loaded OK — fade it in and hide the spinner
             img.style.opacity = '1';
             const loader = document.getElementById('profilePhotoLoader');
-            if (loader) loader.style.display = 'none';
+            if (loader) {
+                loader.style.display = 'none';
+                console.log('Profile photo loader hidden');
+            }
         }
 
         function handleProfilePhotoError(img) {
+            console.log('Profile photo failed to load:', img.src);
             // Photo failed — swap to default avatar and fade in
             img.onerror = null; // prevent infinite loop
             img.src = '{{ asset('images/default-avatar.svg') }}';
             img.style.opacity = '1';
             const loader = document.getElementById('profilePhotoLoader');
-            if (loader) loader.style.display = 'none';
+            if (loader) {
+                loader.style.display = 'none';
+                console.log('Profile photo loader hidden after error');
+            }
         }
+        
+        // Additional profile photo initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePhoto = document.getElementById('profilePhoto');
+            const loader = document.getElementById('profilePhotoLoader');
+            
+            if (profilePhoto && loader) {
+                console.log('Profile photo setup - Image src:', profilePhoto.src);
+                
+                // Check if image is already loaded (cached)
+                if (profilePhoto.complete && profilePhoto.naturalHeight !== 0) {
+                    console.log('Profile photo already loaded from cache');
+                    handleProfilePhotoLoad(profilePhoto);
+                } else {
+                    console.log('Profile photo loading...');
+                    
+                    // Set a timeout as fallback in case onload doesn't fire
+                    setTimeout(function() {
+                        if (loader && loader.style.display !== 'none') {
+                            console.log('Profile photo timeout - checking if loaded');
+                            if (profilePhoto.complete && profilePhoto.naturalHeight !== 0) {
+                                console.log('Profile photo loaded but onload didn\'t fire');
+                                handleProfilePhotoLoad(profilePhoto);
+                            } else {
+                                console.log('Profile photo failed to load within timeout');
+                                handleProfilePhotoError(profilePhoto);
+                            }
+                        }
+                    }, 5000); // 5 second timeout
+                }
+            }
+        });
         // Close CV modal on escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
