@@ -21,7 +21,7 @@
 
         <div class="container">
             <div class="row align-items-center g-3">
-                <div class="col-lg-6 mb-3 mb-lg-0">
+                <div class="col-lg-6 mb-3 mb-lg-0 order-2 order-lg-1">
                     <div class="animate-fadeInUp">
 
                         <!-- Unique Name Hero Block -->
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 text-center">
+                <div class="col-lg-6 text-center order-1 order-lg-2 mb-4 mb-lg-0">
                     <div class="animate-float">
                         <div class="position-relative d-inline-block">
                             @if(isset($settings['profile_photo']) && $settings['profile_photo'])

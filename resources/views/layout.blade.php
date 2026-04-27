@@ -2384,19 +2384,18 @@
                 padding-right: 1.5rem;
             }
 
-            /* Mobile profile image */
-            #home img,
-            #home .bg-primary.rounded-circle {
-                width: 240px !important;
-                height: 240px !important;
+            /* Mobile profile image - resize ONLY the photo and loader,
+               NOT the .bg-primary badge which would cover the photo */
+            #profilePhoto,
+            #profilePhotoLoader {
+                width: 220px !important;
+                height: 220px !important;
             }
 
             #home .profile-badge {
-                padding: 0.75rem !important;
-            }
-
-            #home .fa-code {
-                font-size: 1.5rem !important;
+                width: 52px !important;
+                height: 52px !important;
+                padding: 0.6rem !important;
             }
         }
 
@@ -2422,11 +2421,17 @@
                 flex-direction: column !important;
             }
 
-            /* Mobile profile image */
-            #home img,
-            #home .bg-primary.rounded-circle {
-                width: 200px !important;
-                height: 200px !important;
+            /* Mobile profile image small screens */
+            #profilePhoto,
+            #profilePhotoLoader {
+                width: 180px !important;
+                height: 180px !important;
+            }
+
+            #home .profile-badge {
+                width: 44px !important;
+                height: 44px !important;
+                padding: 0.5rem !important;
             }
         }
 
@@ -3315,9 +3320,9 @@
                     <i class="fas fa-file-pdf"></i>
                     <h5 id="cvFallbackTitle">Loading CV...</h5>
                     <p id="cvFallbackMsg">If the preview doesn't appear, use the button below.</p>
-                    <a href="#" id="cvFallbackOpen" target="_blank">
+                    <button type="button" id="cvFallbackOpen" onclick="openCVFallback()" style="display:inline-flex;align-items:center;gap:0.4rem;background:#3b82f6;color:#fff;border:none;border-radius:8px;padding:7px 16px;font-weight:600;font-size:0.85rem;cursor:pointer;transition:background 0.2s;">
                         <i class="fas fa-external-link-alt"></i> Open CV in New Tab
-                    </a>
+                    </button>
                 </div>
             </div>
 
@@ -3541,6 +3546,18 @@
         // CV Viewer Functions
         let currentCVUrl = '';       // raw direct PDF URL
         let currentDownloadUrl = '';
+        
+        // Opens the CV in a new tab — used by both the fallback button and openCVFullscreen()
+        function openCVFallback() {
+            const url = currentCVUrl
+                || (document.getElementById('cvDownloadBtn') || {}).href
+                || '';
+            if (url && url !== '#') {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            } else {
+                showNotification('CV URL is not ready yet. Please try again in a moment.', 'error');
+            }
+        }
         
         function viewCV(cvId, cvLabel, cvViewRoute, cvDownloadRoute) {
             console.log('viewCV function called with parameters:', {
@@ -3831,12 +3848,15 @@
         // Smooth scrolling with proper offset - COMPACT
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const href = this.getAttribute('href');
+                // Only intercept pure in-page anchors like #home, #about etc.
+                // Do NOT intercept links whose href was dynamically changed to a full URL.
+                if (!href || href === '#' || href.indexOf('://') !== -1 || href.indexOf('//') === 0) return;
+                const target = document.querySelector(href);
                 if (target) {
+                    e.preventDefault();
                     const navbarHeight = 70;
-                    const targetPosition = target.offsetTop - navbarHeight - 20; // Reduced spacing
-                    
+                    const targetPosition = target.offsetTop - navbarHeight - 20;
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
