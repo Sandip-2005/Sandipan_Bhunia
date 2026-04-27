@@ -20,12 +20,12 @@
         </div>
 
         <div class="container">
-            <div class="row align-items-center g-5">
-                <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="row align-items-center g-3">
+                <div class="col-lg-6 mb-3 mb-lg-0">
                     <div class="animate-fadeInUp">
 
                         <!-- Unique Name Hero Block -->
-                        <div class="hero-name-block mb-4">
+                        <div class="hero-name-block mb-3">
                             <div class="hero-greeting">
                                 <span class="hero-greeting-line"></span>
                                 <span class="hero-greeting-text">Hello, World! 👋</span>
@@ -40,15 +40,15 @@
                             </h1>
                         </div>
 
-                        <h2 class="h3 text-white-50 mb-4 hero-subtitle">
+                        <h2 class="h3 text-white-50 mb-3 hero-subtitle">
                             {{ $settings['hero_subtitle'] ?? 'Full Stack Developer & QA Engineer' }}
                         </h2>
-                        <p class="lead text-white-50 mb-5">
+                        <p class="lead text-white-50 mb-4">
                             {{ $settings['hero_description'] ?? 'Passionate about building dynamic web applications, real-time billing systems, and secure dashboards.' }}
                         </p>
 
                         <!-- Main Action Buttons -->
-                        <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
+                        <div class="d-flex flex-column flex-sm-row gap-2 mb-3">
                             <a href="#projects" class="btn-handmade">
                                 <i class="fas fa-eye me-2"></i>View My Work
                             </a>
@@ -60,11 +60,11 @@
                         <!-- CV Download Section -->
                         @if(isset($publicCvs) && $publicCvs->count() > 0)
                             <div class="cv-section">
-                                <h6 class="text-white-50 mb-3 fw-semibold">
+                                <h6 class="text-white-50 mb-2 fw-semibold">
                                     <i class="fas fa-file-pdf me-2 text-danger"></i>Download My Resume
                                 </h6>
                                 @foreach($publicCvs as $cv)
-                                    <div class="d-flex flex-column flex-sm-row gap-2 mb-3">
+                                    <div class="d-flex flex-column flex-sm-row gap-2 mb-2">
                                         <a href="{{ $cv->download_url }}" class="btn-cv-download flex-fill" target="_blank"
                                             title="Download {{ $cv->label }}">
                                             <i class="fas fa-download me-2"></i>Download {{ $cv->label }}

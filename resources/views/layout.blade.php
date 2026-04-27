@@ -103,16 +103,16 @@
             padding-top: 70px; /* Keep content below fixed navbar */
         }
 
-        /* Ensure sections don't overlap with navbar - IMPROVED SPACING */
+        /* Ensure sections don't overlap with navbar - COMPACT SPACING */
         section {
             scroll-margin-top: 90px;
-            padding: 4rem 0; /* Better section spacing */
+            padding: 2.5rem 0; /* Reduced gap between modules */
         }
 
-        /* Fix hero section height calculation - IMPROVED SPACING */
+        /* Fix hero section height calculation - COMPACT SPACING */
         #home {
             min-height: calc(100vh - 75px);
-            padding: 4rem 0; /* Better hero spacing */
+            padding: 3rem 0; /* Reduced hero spacing */
             display: flex;
             align-items: center;
             position: relative;
@@ -139,29 +139,29 @@
             z-index: 1;
         }
 
-        /* Mobile spacing adjustments - IMPROVED */
+        /* Mobile spacing adjustments - COMPACT */
         @media (max-width: 768px) {
             body {
                 padding-top: 70px; /* Match fixed navbar height */
             }
             
             section {
-                padding: 3rem 0; /* Better mobile spacing */
+                padding: 2rem 0; /* Compact mobile spacing */
             }
             
             #home {
                 min-height: calc(100vh - 70px);
-                padding: 3rem 0; /* Better mobile hero spacing */
+                padding: 2.5rem 0; /* Compact mobile hero spacing */
             }
         }
 
         @media (max-width: 576px) {
             section {
-                padding: 2.5rem 0; /* Compact mobile spacing */
+                padding: 1.5rem 0; /* Very compact mobile spacing */
             }
             
             #home {
-                padding: 2.5rem 0;
+                padding: 2rem 0;
             }
         }
 
@@ -1961,25 +1961,25 @@
            ENHANCED SKILLS SECTION - ATTRACTIVE DESIGN
         ============================================ */
         
-        /* Category Headers */
+        /* Category Headers - REDUCED SPACING */
         .category-header {
             position: relative;
-            margin-bottom: 1.5rem; /* Reduced from 2rem */
+            margin-bottom: 1rem; /* Reduced from 1.5rem */
         }
         
         .category-title {
             display: flex;
             align-items: center;
-            gap: 0.75rem; /* Reduced from 1rem */
-            font-size: 1.6rem; /* Slightly reduced */
+            gap: 0.5rem; /* Reduced from 0.75rem */
+            font-size: 1.4rem; /* Slightly reduced */
             font-weight: 800;
             color: #ffffff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+            margin-bottom: 0.25rem;
         }
         
         .category-icon {
-            font-size: 1.8rem; /* Slightly reduced */
+            font-size: 1.6rem; /* Slightly reduced */
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1988,18 +1988,19 @@
         }
         
         .category-line {
-            height: 3px; /* Slightly reduced */
+            height: 2px; /* Reduced from 3px */
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), transparent);
             border-radius: 2px;
             width: 100%;
-            max-width: 150px; /* Reduced from 200px */
+            max-width: 120px; /* Reduced from 150px */
         }
         
-        /* Skill Cards - 3D Flip Design - REDUCED HEIGHT */
+        /* Skill Cards - 3D Flip Design - COMPACT HEIGHT */
         .skill-card {
             perspective: 1000px;
-            height: 240px; /* Reduced from 280px */
+            height: 200px; /* Reduced from 240px */
             cursor: pointer;
+            margin-bottom: 1rem; /* Reduced gap between cards */
         }
         
         .skill-card-inner {
@@ -2023,13 +2024,13 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 20px; /* Slightly reduced */
-            padding: 1.5rem 1rem; /* Reduced padding */
+            border-radius: 16px; /* Reduced from 20px */
+            padding: 1rem 0.75rem; /* Reduced padding */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Reduced shadow */
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
@@ -2050,20 +2051,19 @@
             transform: rotateY(180deg);
         }
         
-        /* Skill Icon - ENHANCED VISIBILITY */
+        /* Skill Icon - COMPACT SPACING */
         .skill-icon-wrapper {
             position: relative;
-            margin-bottom: 1rem; /* Reduced from 1.5rem */
+            margin-bottom: 0.75rem; /* Reduced from 1rem */
         }
         
         .skill-icon {
-            font-size: 3.5rem; /* Better balance */
-            margin-bottom: 0.5rem;
+            font-size: 3rem; /* Reduced from 3.5rem */
+            margin-bottom: 0.25rem; /* Reduced from 0.5rem */
             position: relative;
             z-index: 2;
             animation: skillIconFloat 3s ease-in-out infinite;
-            /* Subtler shadow for cleaner look */
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
         }
         
         .skill-icon-default {
@@ -2101,23 +2101,23 @@
             100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
         }
         
-        /* Skill Name - REDUCED SPACING */
+        /* Skill Name - COMPACT SPACING */
         .skill-name,
         .skill-name-back {
-            font-size: 1.1rem; /* Slightly reduced */
+            font-size: 1rem; /* Reduced from 1.1rem */
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 0.75rem; /* Reduced from 1rem */
+            margin-bottom: 0.5rem; /* Reduced from 0.75rem */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        /* Skill Level - REDUCED SPACING */
+        /* Skill Level - COMPACT SPACING */
         .skill-level {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.25rem; /* Reduced from 0.5rem */
-            margin-bottom: 0.75rem; /* Reduced from 1rem */
+            gap: 0.25rem;
+            margin-bottom: 0.5rem; /* Reduced from 0.75rem */
         }
         
         .skill-stars {
@@ -2149,10 +2149,10 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         
-        /* Skill Progress - REDUCED SPACING */
+        /* Skill Progress - COMPACT SPACING */
         .skill-progress-wrapper {
             width: 100%;
-            margin-top: 0.5rem; /* Reduced from 1rem */
+            margin-top: 0.25rem; /* Reduced from 0.5rem */
         }
         
         .skill-progress-track {
@@ -2237,54 +2237,67 @@
             animation-duration: 1s;
         }
         
-        /* Mobile Responsive - COMPACT SPACING */
+        /* Mobile Responsive - VERY COMPACT SPACING */
         @media (max-width: 768px) {
             .skill-card {
-                height: 200px; /* Further reduced for mobile */
+                height: 180px; /* Further reduced for mobile */
+                margin-bottom: 0.75rem; /* Reduced mobile gap */
             }
             
             .skill-card-front,
             .skill-card-back {
-                padding: 1rem 0.75rem; /* Reduced mobile padding */
+                padding: 0.75rem 0.5rem; /* Reduced mobile padding */
+                border-radius: 12px; /* Smaller border radius */
             }
             
             .skill-icon {
-                font-size: 3rem; /* Reduced mobile icon size */
+                font-size: 2.5rem; /* Reduced mobile icon size */
             }
             
             .category-title {
-                font-size: 1.4rem; /* Reduced mobile title */
+                font-size: 1.2rem; /* Reduced mobile title */
+                gap: 0.25rem; /* Reduced mobile gap */
             }
             
             .skill-name,
             .skill-name-back {
-                font-size: 1rem; /* Reduced mobile name size */
+                font-size: 0.9rem; /* Reduced mobile name size */
+                margin-bottom: 0.25rem; /* Reduced mobile margin */
             }
             
             .skill-icon-wrapper {
-                margin-bottom: 0.75rem; /* Reduced mobile margin */
+                margin-bottom: 0.5rem; /* Reduced mobile margin */
+            }
+
+            .category-header {
+                margin-bottom: 0.75rem; /* Reduced mobile category spacing */
             }
         }
         
         @media (max-width: 576px) {
             .skill-card {
-                height: 180px; /* Further reduced for small mobile */
+                height: 160px; /* Very compact for small mobile */
+                margin-bottom: 0.5rem; /* Minimal gap */
             }
             
             .skill-icon {
-                font-size: 2.5rem; /* Further reduced */
+                font-size: 2.25rem; /* Further reduced */
             }
             
             .category-title {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 flex-direction: column;
-                gap: 0.25rem; /* Reduced gap */
+                gap: 0.25rem;
                 text-align: center;
             }
             
             .skill-card-front,
             .skill-card-back {
-                padding: 0.75rem 0.5rem; /* Minimal padding for small screens */
+                padding: 0.5rem 0.25rem; /* Minimal padding for small screens */
+            }
+
+            .category-header {
+                margin-bottom: 0.5rem; /* Minimal category spacing */
             }
         }
 
