@@ -25,9 +25,11 @@
                             $profilePhotoSetting = $settings['profile']->where('key', 'profile_photo')->first();
                             $profilePhoto = $profilePhotoSetting ? $profilePhotoSetting->value : null;
                         }
+                        // Handle both old uploads path and new assets path
+                        $photoUrl = $profilePhoto ? asset($profilePhoto) : asset('images/default-avatar.svg');
                     @endphp
                     <img id="currentPhoto" 
-                         src="{{ $profilePhoto ? asset('uploads/profile/' . $profilePhoto) : asset('images/default-avatar.svg') }}" 
+                         src="{{ $photoUrl }}" 
                          onerror="this.onerror=null; this.src='{{ asset('images/default-avatar.svg') }}';"
                          alt="Profile Photo" 
                          class="w-24 h-24 rounded-xl object-cover border-2 border-white/20 shadow-lg">

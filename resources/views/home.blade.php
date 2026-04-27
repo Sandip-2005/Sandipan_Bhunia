@@ -79,7 +79,7 @@
                             @if(isset($settings['profile_photo']) && $settings['profile_photo'])
                                 <!-- Profile Photo with Professional Loading -->
                                 <div class="position-relative">
-                                    <img src="{{ asset('uploads/profile/' . $settings['profile_photo']) }}"
+                                    <img src="{{ asset($settings['profile_photo']) }}"
                                         onerror="handleProfilePhotoError(this)"
                                         onload="handleProfilePhotoLoad(this)"
                                         alt="Sandipan Bhunia"

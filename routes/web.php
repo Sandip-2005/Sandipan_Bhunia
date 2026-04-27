@@ -262,7 +262,14 @@ Route::get('/cv/download', function () {
 
 Route::get('/cv/view/{cv}', function (\App\Models\Cv $cv) {
     if (!$cv->is_public) { abort(403, 'This CV is private.'); }
-    $filePath = public_path('uploads/cv/' . $cv->filename);
+    
+    // Handle both old uploads path and new assets path
+    $filePath = public_path($cv->filename);
+    if (!file_exists($filePath)) {
+        // Fallback to old uploads path
+        $filePath = public_path('uploads/cv/' . $cv->filename);
+    }
+    
     if (!file_exists($filePath)) { abort(404, 'CV file not found.'); }
     
     $extension = strtolower(pathinfo($cv->filename, PATHINFO_EXTENSION));
@@ -276,7 +283,14 @@ Route::get('/cv/view/{cv}', function (\App\Models\Cv $cv) {
 
 Route::get('/cv/download/{cv}', function (\App\Models\Cv $cv) {
     if (!$cv->is_public) { abort(403, 'This CV is private.'); }
-    $filePath = public_path('uploads/cv/' . $cv->filename);
+    
+    // Handle both old uploads path and new assets path
+    $filePath = public_path($cv->filename);
+    if (!file_exists($filePath)) {
+        // Fallback to old uploads path
+        $filePath = public_path('uploads/cv/' . $cv->filename);
+    }
+    
     if (!file_exists($filePath)) { abort(404, 'CV file not found.'); }
     return response()->download($filePath, $cv->original_name);
 })->name('cv.download.multi');

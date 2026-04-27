@@ -132,33 +132,33 @@ class AdminController extends Controller
                     ], 400);
                 }
                 
-                $filename = 'profile_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $filename = 'sandipan-profile.jpg'; // Use consistent filename for assets
                 
-                // Create uploads directory if it doesn't exist with proper permissions
-                $uploadPath = public_path('uploads/profile');
+                // Create assets directory if it doesn't exist with proper permissions
+                $uploadPath = public_path('assets/images');
                 if (!file_exists($uploadPath)) {
                     if (!mkdir($uploadPath, 0755, true)) {
-                        \Log::error('Failed to create upload directory');
+                        \Log::error('Failed to create assets directory');
                         return response()->json([
                             'success' => false,
-                            'message' => 'Failed to create upload directory. Please check permissions.'
+                            'message' => 'Failed to create assets directory. Please check permissions.'
                         ], 500);
                     }
                 }
                 
                 // Check if directory is writable
                 if (!is_writable($uploadPath)) {
-                    \Log::error('Upload directory not writable');
+                    \Log::error('Assets directory not writable');
                     return response()->json([
                         'success' => false,
-                        'message' => 'Upload directory is not writable. Please check permissions.'
+                        'message' => 'Assets directory is not writable. Please check permissions.'
                     ], 500);
                 }
                 
                 // Delete old profile photo if exists
                 $oldPhoto = Setting::where('key', 'profile_photo')->first();
                 if ($oldPhoto && $oldPhoto->value) {
-                    $oldPath = public_path('uploads/profile/' . $oldPhoto->value);
+                    $oldPath = public_path($oldPhoto->value);
                     if (file_exists($oldPath)) {
                         @unlink($oldPath);
                         \Log::info('Deleted old profile photo: ' . $oldPhoto->value);
@@ -169,11 +169,11 @@ class AdminController extends Controller
                 if ($file->move($uploadPath, $filename)) {
                     \Log::info('File moved successfully: ' . $filename);
                     
-                    // Save to settings
+                    // Save to settings with assets path
                     $setting = Setting::updateOrCreate(
                         ['key' => 'profile_photo'],
                         [
-                            'value' => $filename, 
+                            'value' => 'assets/images/' . $filename, 
                             'type' => 'image', 
                             'group' => 'profile'
                         ]
@@ -184,7 +184,7 @@ class AdminController extends Controller
                     return response()->json([
                         'success' => true,
                         'message' => 'Profile photo updated successfully!',
-                        'photo_url' => asset('uploads/profile/' . $filename)
+                        'photo_url' => asset('assets/images/' . $filename)
                     ]);
                 } else {
                     \Log::error('Failed to move uploaded file');
