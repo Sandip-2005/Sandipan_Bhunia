@@ -3175,7 +3175,7 @@
         <div class="navbar-inner d-flex justify-content-between align-items-center w-100">
             <a class="navbar-brand fw-bold mb-0 text-truncate" href="#home">
                 <span class="brand-initial">S</span>
-                <span class="brand-name">andipan <span class="brand-lastname">Bhunia</span></span>
+                <span class="brand-name">Sandipan <span class="brand-lastname">Bhunia</span></span>
             </a>
             
             <div class="navbar-actions d-flex align-items-center gap-2 flex-nowrap">
@@ -3235,7 +3235,7 @@
         <!-- Mobile Menu Header -->
         <div class="mobile-menu-header-bar">
             <div class="mobile-menu-brand">
-                <span class="brand-initial">S</span><span class="brand-name">andipan Bhunia</span>
+                <span class="brand-initial">S</span><span class="brand-name">Sandipan Bhunia</span>
             </div>
             <button class="mobile-menu-close" onclick="toggleMobileMenu()">
                 <i class="fas fa-times"></i>
