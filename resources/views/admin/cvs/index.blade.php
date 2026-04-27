@@ -69,7 +69,7 @@
                             <a href="{{ $cv->download_url }}" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center hover:bg-blue-500/40 transition-colors" title="Download">
                                 <i class="fas fa-download"></i>
                             </a>
-                            <button onclick="openEditModal({{ $cv->id }}, '{{ addslashes($cv->label) }}', {{ $cv->is_public ? 'true' : 'false' }}, {{ $cv->sort_order }})" class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/40 transition-colors" title="Edit">
+                            <button onclick="openEditModal({{ $cv->id }}, '{{ addslashes($cv->label) }}', {{ $cv->is_public ? 'true' : 'false' }}, {{ $cv->sort_order }}, '{{ addslashes($cv->google_drive_url ?? '') }}')" class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/40 transition-colors" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
                             <form action="{{ route('admin.cvs.destroy', $cv->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this CV?');">
@@ -118,9 +118,17 @@
             </div>
             
             <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Google Drive URL <span class="text-gray-500 text-xs">(recommended for Render hosting)</span></label>
+                <input type="url" name="google_drive_url" id="cvGoogleDriveUrl"
+                    class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                    placeholder="https://drive.google.com/file/d/...">
+                <p class="text-xs text-gray-500 mt-1">Paste the sharing link from Google Drive. File upload is not required when this is set.</p>
+            </div>
+
+            <div>
                 <label class="block text-sm font-medium text-gray-300 mb-1">File <span id="fileRequiredStar" class="text-red-400">*</span></label>
                 <input type="file" name="cv_file" id="cvFile" accept=".pdf,.doc,.docx" class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 text-gray-400 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-500/20 file:text-purple-300 hover:file:bg-purple-500/30">
-                <p class="text-xs text-gray-500 mt-1" id="fileHelpText">PDF, DOC, DOCX up to 5MB.</p>
+                <p class="text-xs text-gray-500 mt-1" id="fileHelpText">PDF, DOC, DOCX up to 5MB. Not required if Google Drive URL is set.</p>
             </div>
             
             <div class="grid grid-cols-2 gap-4">
@@ -184,20 +192,21 @@
         showModal();
     }
 
-    function openEditModal(id, label, isPublic, sortOrder) {
+    function openEditModal(id, label, isPublic, sortOrder, driveUrl) {
         form.action = `/secret-gateway/cvs/${id}`;
         methodInput.value = 'PUT';
         modalTitle.textContent = 'Edit CV';
         
         document.getElementById('cvLabel').value = label;
         document.getElementById('cvSortOrder').value = sortOrder;
+        document.getElementById('cvGoogleDriveUrl').value = driveUrl || '';
         
         toggleInput.checked = isPublic;
         toggleInput.dispatchEvent(new Event('change'));
         
         fileInput.required = false;
         fileRequiredStar.style.display = 'none';
-        fileHelpText.textContent = 'Leave empty to keep existing file. PDF, DOC, DOCX up to 5MB.';
+        fileHelpText.textContent = 'Leave empty to keep existing file. Not required if Google Drive URL is set.';
 
         showModal();
     }

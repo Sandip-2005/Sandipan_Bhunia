@@ -70,7 +70,7 @@
                                             <i class="fas fa-download me-2"></i>Download {{ $cv->label }}
                                         </a>
                                         <button
-                                            onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ route('cv.view', $cv->id, false) }}', '{{ $cv->download_url }}')"
+                                            onclick="viewCV('{{ $cv->id }}', '{{ addslashes($cv->label) }}', '{{ $cv->embed_url }}', '{{ $cv->download_url }}')"
                                             class="btn-cv-view flex-fill" title="View {{ $cv->label }}">
                                             <i class="fas fa-eye me-2"></i>Preview {{ $cv->label }}
                                         </button>

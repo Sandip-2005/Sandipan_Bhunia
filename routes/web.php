@@ -262,35 +262,41 @@ Route::get('/cv/download', function () {
 
 Route::get('/cv/view/{cv}', function (\App\Models\Cv $cv) {
     if (!$cv->is_public) { abort(403, 'This CV is private.'); }
-    
-    // Handle both old uploads path and new assets path
+
+    // Prefer Google Drive — works on any host, never depends on local disk
+    if ($cv->google_drive_url) {
+        return redirect($cv->embed_url);
+    }
+
+    // Fall back to local file
     $filePath = public_path($cv->filename);
     if (!file_exists($filePath)) {
-        // Fallback to old uploads path
         $filePath = public_path('uploads/cv/' . $cv->filename);
     }
-    
+
     if (!file_exists($filePath)) { abort(404, 'CV file not found.'); }
-    
+
     $extension = strtolower(pathinfo($cv->filename, PATHINFO_EXTENSION));
-    
-    // Return the file for inline viewing
     return response()->file($filePath, [
-        'Content-Type' => $extension === 'pdf' ? 'application/pdf' : mime_content_type($filePath),
-        'Content-Disposition' => 'inline; filename="' . $cv->original_name . '"'
+        'Content-Type'        => $extension === 'pdf' ? 'application/pdf' : mime_content_type($filePath),
+        'Content-Disposition' => 'inline; filename="' . $cv->original_name . '"',
     ]);
 })->name('cv.view');
 
 Route::get('/cv/download/{cv}', function (\App\Models\Cv $cv) {
     if (!$cv->is_public) { abort(403, 'This CV is private.'); }
-    
-    // Handle both old uploads path and new assets path
+
+    // Prefer Google Drive download
+    if ($cv->google_drive_url) {
+        return redirect($cv->download_url);
+    }
+
+    // Fall back to local file
     $filePath = public_path($cv->filename);
     if (!file_exists($filePath)) {
-        // Fallback to old uploads path
         $filePath = public_path('uploads/cv/' . $cv->filename);
     }
-    
+
     if (!file_exists($filePath)) { abort(404, 'CV file not found.'); }
     return response()->download($filePath, $cv->original_name);
 })->name('cv.download.multi');

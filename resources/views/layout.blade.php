@@ -3313,8 +3313,9 @@
             </div>
 
             <div class="cv-viewer-wrapper">
-                <!-- PDF embed — browsers render PDFs natively, no 3rd-party service needed -->
-                <embed id="cvViewer" class="cv-viewer" src="" type="application/pdf">
+                <!-- iframe works for both local PDFs and Google Drive /preview URLs -->
+                <iframe id="cvViewer" class="cv-viewer" src="" frameborder="0" allowfullscreen
+                        style="width:100%;height:100%;border:none;"></iframe>
                 <!-- Helper strip shown below the PDF viewer -->
                 <div class="cv-fallback" id="cvFallback">
                     <i class="fas fa-file-pdf"></i>
@@ -3455,6 +3456,12 @@
     
     <!-- Simple Custom JavaScript -->
     <script>
+        // ── Debug logger: silenced in production ──────────────────────────
+        const _dbgOn = {{ app()->environment('production') ? 'false' : 'true' }};
+        const dbg     = _dbgOn ? console.log.bind(console)   : () => {};
+        const dbgErr  = _dbgOn ? console.error.bind(console) : () => {};
+        const dbgWarn = _dbgOn ? console.warn.bind(console)  : () => {};
+
         // Theme Toggle - Default to DARK mode for first-time visitors
         let isDarkMode = localStorage.getItem('darkMode') !== null 
             ? localStorage.getItem('darkMode') === 'true' 
@@ -3559,13 +3566,8 @@
             }
         }
         
-        function viewCV(cvId, cvLabel, cvViewRoute, cvDownloadRoute) {
-            console.log('viewCV function called with parameters:', {
-                cvId: cvId,
-                cvLabel: cvLabel,
-                cvViewRoute: cvViewRoute,
-                cvDownloadRoute: cvDownloadRoute
-            });
+        function viewCV(cvId, cvLabel, cvEmbedUrl, cvDownloadUrl) {
+            dbg('viewCV called:', { cvId, cvLabel, cvEmbedUrl, cvDownloadUrl });
 
             const modal       = document.getElementById('cvModal');
             const title       = document.getElementById('cvModalTitle');
@@ -3578,32 +3580,27 @@
 
             // Check if modal elements exist
             if (!modal) {
-                console.error('CV Modal not found in DOM');
+                dbgErr('CV Modal not found in DOM');
                 alert('CV viewer is not available. Please try downloading the CV directly.');
                 return;
             }
 
-            // Build the absolute PDF URL directly (no Google Docs wrapper)
-            const absoluteViewUrl  = window.location.origin + cvViewRoute;
-            currentCVUrl           = absoluteViewUrl;
-            currentDownloadUrl     = cvDownloadRoute || (window.location.origin + '/cv/download/' + cvId);
+            // cvEmbedUrl is the complete URL — either a Google Drive /preview URL
+            // or an absolute local route. No need to prefix with window.location.origin.
+            currentCVUrl      = cvEmbedUrl;
+            currentDownloadUrl = cvDownloadUrl || (window.location.origin + '/cv/download/' + cvId);
 
-            console.log('CV URLs configured:', {
-                absoluteViewUrl: absoluteViewUrl,
-                currentCVUrl: currentCVUrl,
-                currentDownloadUrl: currentDownloadUrl
-            });
+            dbg('CV URLs:', { currentCVUrl, currentDownloadUrl });
 
             // Update modal content
             if (title) title.textContent = cvLabel;
             if (downloadBtn) downloadBtn.href = currentDownloadUrl;
-            if (fallbackBtn) fallbackBtn.href = absoluteViewUrl;
-            
-            // Also set the main "Open in New Tab" button href as backup
+
+            // Also set the main "Open in New Tab" button
             const mainFullscreenBtn = document.querySelector('.cv-fullscreen-btn');
             if (mainFullscreenBtn) {
-                mainFullscreenBtn.setAttribute('data-url', absoluteViewUrl);
-                console.log('Main fullscreen button configured with URL:', absoluteViewUrl);
+                mainFullscreenBtn.setAttribute('data-url', currentCVUrl);
+                dbg('Fullscreen btn URL set:', currentCVUrl);
             }
 
             // Reset fallback text to "loading" state
@@ -3613,30 +3610,28 @@
 
             // Load directly into <embed> — browsers handle PDF natively
             if (viewer) {
-                viewer.setAttribute('src', absoluteViewUrl);
-                console.log('CV viewer src set to:', absoluteViewUrl);
+                viewer.setAttribute('src', currentCVUrl);
+                dbg('CV viewer src:', currentCVUrl);
             }
 
             // After a short delay, check if the embed has rendered
             setTimeout(() => {
                 if (fallbackTitle) fallbackTitle.textContent = 'Trouble viewing?';
                 if (fallbackMsg) fallbackMsg.textContent = 'Open in a new tab for the best experience.';
-                console.log('CV viewer fallback text updated');
+                dbg('CV fallback text updated');
             }, 2500);
 
             // Show modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            console.log('CV modal opened successfully');
+            dbg('CV modal opened');
             
             // Add event listener to the main fullscreen button as backup
             const fullscreenBtn = document.querySelector('.cv-fullscreen-btn');
             if (fullscreenBtn) {
-                // Remove any existing listeners
                 fullscreenBtn.removeEventListener('click', handleFullscreenClick);
-                // Add new listener
                 fullscreenBtn.addEventListener('click', handleFullscreenClick);
-                console.log('Fullscreen button event listener attached');
+                dbg('Fullscreen btn listener attached');
             }
         }
         
@@ -3644,7 +3639,7 @@
         function handleFullscreenClick(event) {
             event.preventDefault();
             event.stopPropagation();
-            console.log('Fullscreen button clicked via event listener');
+            dbg('Fullscreen btn clicked');
             openCVFullscreen();
         }
 
@@ -3659,8 +3654,7 @@
         
         // Opens the raw PDF URL in a new browser tab
         function openCVFullscreen() {
-            console.log('openCVFullscreen called');
-            console.log('currentCVUrl:', currentCVUrl);
+            dbg('openCVFullscreen called — currentCVUrl:', currentCVUrl);
             
             // Visual feedback - briefly change button text
             const mainBtn = document.querySelector('.cv-fullscreen-btn');
@@ -3673,31 +3667,29 @@
             }
             
             if (currentCVUrl) {
-                console.log('Opening CV in new tab:', currentCVUrl);
+                dbg('Opening CV in new tab:', currentCVUrl);
                 try {
                     const newWindow = window.open(currentCVUrl, '_blank', 'noopener,noreferrer');
                     if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-                        console.error('Popup blocked or failed to open');
-                        // Show user-friendly message
+                        dbgErr('Popup blocked or failed to open');
                         if (typeof showNotification === 'function') {
                             showNotification('Popup blocked! Please allow popups for this site or try the fallback button below.', 'warning');
                         } else {
                             alert('Popup blocked! Please allow popups for this site and try again.');
                         }
-                        // Fallback: try using the fallback button's href
                         const fallbackBtn = document.getElementById('cvFallbackOpen');
                         if (fallbackBtn && fallbackBtn.href) {
-                            console.log('Using fallback button as alternative');
+                            dbg('Using fallback btn as alternative');
                             window.location.href = fallbackBtn.href;
                         }
                     } else {
-                        console.log('New tab opened successfully');
+                        dbg('New tab opened successfully');
                         if (typeof showNotification === 'function') {
                             showNotification('CV opened in new tab successfully!', 'success');
                         }
                     }
                 } catch (error) {
-                    console.error('Error opening new tab:', error);
+                    dbgErr('Error opening new tab:', error);
                     if (typeof showNotification === 'function') {
                         showNotification('Error opening CV. Please try the download button instead.', 'error');
                     } else {
@@ -3705,91 +3697,51 @@
                     }
                 }
             } else {
-                console.warn('currentCVUrl is not set, trying fallback methods');
+                dbgWarn('currentCVUrl not set, trying fallbacks');
                 
-                // Fallback 1: Use the button's data-url attribute
                 const mainBtn = document.querySelector('.cv-fullscreen-btn');
                 if (mainBtn && mainBtn.getAttribute('data-url')) {
                     const dataUrl = mainBtn.getAttribute('data-url');
-                    console.log('Using button data-url:', dataUrl);
-                    try {
-                        window.open(dataUrl, '_blank', 'noopener,noreferrer');
-                        return;
-                    } catch (error) {
-                        console.error('Error with data-url fallback:', error);
-                    }
+                    dbg('Using btn data-url:', dataUrl);
+                    try { window.open(dataUrl, '_blank', 'noopener,noreferrer'); return; }
+                    catch (error) { dbgErr('data-url fallback error:', error); }
                 }
                 
-                // Fallback 2: Use the fallback button's href
                 const fallbackBtn = document.getElementById('cvFallbackOpen');
                 if (fallbackBtn && fallbackBtn.href && fallbackBtn.href !== '#') {
-                    console.log('Using fallback button URL:', fallbackBtn.href);
-                    try {
-                        window.open(fallbackBtn.href, '_blank', 'noopener,noreferrer');
-                        return;
-                    } catch (error) {
-                        console.error('Error with fallback button:', error);
-                    }
+                    dbg('Using fallback btn URL:', fallbackBtn.href);
+                    try { window.open(fallbackBtn.href, '_blank', 'noopener,noreferrer'); return; }
+                    catch (error) { dbgErr('fallback btn error:', error); }
                 }
                 
-                // Fallback 3: Try to get CV URL from the download button
                 const downloadBtn = document.getElementById('cvDownloadBtn');
                 if (downloadBtn && downloadBtn.href) {
-                    // Convert download URL to view URL
                     const viewUrl = downloadBtn.href.replace('/download/', '/view/');
-                    console.log('Using converted download URL:', viewUrl);
-                    try {
-                        window.open(viewUrl, '_blank', 'noopener,noreferrer');
-                        return;
-                    } catch (error) {
-                        console.error('Error with converted URL:', error);
-                    }
+                    dbg('Using converted download URL:', viewUrl);
+                    try { window.open(viewUrl, '_blank', 'noopener,noreferrer'); return; }
+                    catch (error) { dbgErr('converted URL error:', error); }
                 }
                 
-                // Fallback 4: Show error message
-                console.error('No CV URL available for opening in new tab');
-                const errorMessage = 'The CV is currently not available for viewing in a new tab. Please try downloading it instead.';
-                
-                if (typeof showNotification === 'function') {
-                    showNotification(errorMessage, 'error');
-                } else if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'CV Not Available',
-                        text: errorMessage,
-                        background: '#1f2937',
-                        color: '#ffffff',
-                        confirmButtonColor: '#3b82f6'
-                    });
-                } else {
-                    alert(errorMessage);
-                }
+                dbgErr('No CV URL available');
+                showNotification('The CV is currently not available for viewing. Please try downloading it instead.', 'error');
             }
         }
 
         // ── Profile Photo helpers (called from home.blade.php) ──────────
         function handleProfilePhotoLoad(img) {
-            console.log('Profile photo loaded successfully:', img.src);
-            // Photo loaded OK — fade it in and hide the spinner
+            dbg('Profile photo loaded:', img.src);
             img.style.opacity = '1';
             const loader = document.getElementById('profilePhotoLoader');
-            if (loader) {
-                loader.style.display = 'none';
-                console.log('Profile photo loader hidden');
-            }
+            if (loader) loader.style.display = 'none';
         }
 
         function handleProfilePhotoError(img) {
-            console.log('Profile photo failed to load:', img.src);
-            // Photo failed — swap to default avatar and fade in
-            img.onerror = null; // prevent infinite loop
+            dbg('Profile photo failed, falling back to default:', img.src);
+            img.onerror = null;
             img.src = '{{ asset('images/default-avatar.svg') }}';
             img.style.opacity = '1';
             const loader = document.getElementById('profilePhotoLoader');
-            if (loader) {
-                loader.style.display = 'none';
-                console.log('Profile photo loader hidden after error');
-            }
+            if (loader) loader.style.display = 'none';
         }
         
         // Additional profile photo initialization
@@ -3798,28 +3750,24 @@
             const loader = document.getElementById('profilePhotoLoader');
             
             if (profilePhoto && loader) {
-                console.log('Profile photo setup - Image src:', profilePhoto.src);
+                dbg('Profile photo init — src:', profilePhoto.src);
                 
-                // Check if image is already loaded (cached)
                 if (profilePhoto.complete && profilePhoto.naturalHeight !== 0) {
-                    console.log('Profile photo already loaded from cache');
+                    dbg('Profile photo already cached');
                     handleProfilePhotoLoad(profilePhoto);
                 } else {
-                    console.log('Profile photo loading...');
-                    
-                    // Set a timeout as fallback in case onload doesn't fire
+                    dbg('Profile photo loading...');
                     setTimeout(function() {
                         if (loader && loader.style.display !== 'none') {
-                            console.log('Profile photo timeout - checking if loaded');
                             if (profilePhoto.complete && profilePhoto.naturalHeight !== 0) {
-                                console.log('Profile photo loaded but onload didn\'t fire');
+                                dbg('Profile photo loaded (onload missed)');
                                 handleProfilePhotoLoad(profilePhoto);
                             } else {
-                                console.log('Profile photo failed to load within timeout');
+                                dbg('Profile photo timed out — using fallback');
                                 handleProfilePhotoError(profilePhoto);
                             }
                         }
-                    }, 5000); // 5 second timeout
+                    }, 5000);
                 }
             }
         });
@@ -3943,20 +3891,19 @@
         // Contact form handler - ENHANCED ERROR HANDLING
         function handleContact(event) {
             event.preventDefault();
-            console.log('Contact form submitted');
+            dbg('Contact form submitted');
             
             const form = event.target;
             const formData = new FormData(form);
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
-            // Validate form data
-            const name = formData.get('name');
-            const email = formData.get('email');
+            const name    = formData.get('name');
+            const email   = formData.get('email');
             const subject = formData.get('subject');
             const message = formData.get('message');
             
-            console.log('Form data:', { name, email, subject, message });
+            dbg('Contact form data:', { name, email, subject });
             
             if (!name || !email || !subject || !message) {
                 showNotification('Please fill in all required fields.', 'error');
@@ -3977,9 +3924,9 @@
                 }
             })
             .then(async response => {
-                console.log('Contact form response status:', response.status);
+                dbg('Contact response status:', response.status);
                 const data = await response.json();
-                console.log('Contact form response data:', data);
+                dbg('Contact response data:', data);
                 
                 if (!response.ok) {
                     if (data.errors) {
@@ -4001,7 +3948,7 @@
                 }
             })
             .catch(error => {
-                console.error('Contact form error:', error);
+                dbgErr('Contact form error:', error);
                 showNotification(error.message || 'Failed to send message. Please try again or contact directly via email.', 'error');
             })
             .finally(() => {
@@ -4039,38 +3986,10 @@
             }, 8000);
         }
         
-        // Initialize debugging and button functionality
+        // Initialize on DOMContentLoaded
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded - initializing button functionality');
-            
-            // Check if CV buttons exist
-            const cvDownloadBtns = document.querySelectorAll('.btn-cv-download');
-            const cvViewBtns = document.querySelectorAll('.btn-cv-view');
-            
-            console.log('Found CV download buttons:', cvDownloadBtns.length);
-            console.log('Found CV view buttons:', cvViewBtns.length);
-            
-            // Check if CV modal exists
-            const cvModal = document.getElementById('cvModal');
-            console.log('CV Modal exists:', !!cvModal);
-            
-            // Add click event listeners for debugging
-            cvViewBtns.forEach((btn, index) => {
-                btn.addEventListener('click', function() {
-                    console.log(`CV View button ${index + 1} clicked`);
-                });
-            });
-            
-            cvDownloadBtns.forEach((btn, index) => {
-                btn.addEventListener('click', function() {
-                    console.log(`CV Download button ${index + 1} clicked`);
-                });
-            });
-            
             // Initialize animations
             animateOnScroll();
-            
-            console.log('Button functionality initialized successfully');
             
             // Animate skill progress bars with intersection observer
             const skillProgressObserver = new IntersectionObserver((entries) => {
